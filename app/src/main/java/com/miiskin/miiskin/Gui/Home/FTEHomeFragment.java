@@ -1,10 +1,9 @@
-package com.miiskin.miiskin.Gui;
+package com.miiskin.miiskin.Gui.Home;
 
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;

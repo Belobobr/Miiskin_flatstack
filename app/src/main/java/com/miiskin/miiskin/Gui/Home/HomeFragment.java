@@ -1,4 +1,4 @@
-package com.miiskin.miiskin.Gui;
+package com.miiskin.miiskin.Gui.Home;
 
 import android.app.Fragment;
 import android.database.Cursor;

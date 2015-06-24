@@ -1,10 +1,6 @@
-package com.miiskin.miiskin.Gui;
+package com.miiskin.miiskin.Gui.Home;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.Fragment;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;

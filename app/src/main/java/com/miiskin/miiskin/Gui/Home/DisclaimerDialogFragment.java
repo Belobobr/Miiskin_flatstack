@@ -1,15 +1,11 @@
-package com.miiskin.miiskin.Gui;
+package com.miiskin.miiskin.Gui.Home;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
-import android.view.ContextThemeWrapper;
-import android.view.KeyEvent;
 
 import com.miiskin.miiskin.R;
 

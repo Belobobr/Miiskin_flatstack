@@ -22,7 +22,7 @@ public class MiiskinDbHelper extends SQLiteOpenHelper {
                     MolePhotoSequence.COLUMN_NAME_LAST_PHOTO_TIME + TEXT_TYPE + COMMA_SEP +
                     MolePhotoSequence.COLUMN_NAME_POSITION_OF_MOLE + TEXT_TYPE + COMMA_SEP +
                     MolePhotoSequence.COLUMN_NAME_USER_BIRTH_DATE + TEXT_TYPE + COMMA_SEP +
-                    MolePhotoSequence.COLUMN_NAME_USER_GENDER + TEXT_TYPE + COMMA_SEP +
+                    MolePhotoSequence.COLUMN_NAME_USER_GENDER + TEXT_TYPE +
             " )";
 
     private static final String SQL_DELETE_ENTRIES =

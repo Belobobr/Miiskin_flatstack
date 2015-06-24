@@ -48,6 +48,15 @@ public class TaskManager {
         }
     }
 
+    public Cursor getDataById(String taskId) {
+        WeakReference<Cursor> weakReference = cachedCursors.get(taskId);
+        if (weakReference != null) {
+            return weakReference.get();
+        } else {
+            return null;
+        }
+    }
+
     public void executeTask(final String taskId) {
         Task task = null;
 

@@ -4,6 +4,8 @@ import android.app.Fragment;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +23,9 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
 
     Cursor moleSequenceListCursor;
     ListView mListView;
-    FrameLayout mEmptyView;
+    CoordinatorLayout mEmptyView;
     FrameLayout mProgressView;
+    FloatingActionButton mFloatingActionButton;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -61,8 +64,10 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mListView = (ListView)view.findViewById(R.id.listView);
-        mEmptyView = (FrameLayout)view.findViewById(R.id.emptyView);
+        mEmptyView = (CoordinatorLayout)view.findViewById(R.id.emptyView);
         mProgressView = (FrameLayout)view.findViewById(R.id.progressView);
+        mFloatingActionButton = (FloatingActionButton)view.findViewById(R.id.fab);
+        mFloatingActionButton.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab));
     }
 
     @Override

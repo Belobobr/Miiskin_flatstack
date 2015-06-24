@@ -13,11 +13,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9981aa61-a763-45e8-a317-6016ea0039e6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/left_arm_selected.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/right_arm_selected.png" />
-      <change type="MOVED" beforePath="C:\Work\miiskin\miiskin_android\app\src\main\res\drawable\upper.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/no_body_part_selected.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/CreateSequenceActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/CreateSequenceActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/GeneralAreaFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/GeneralAreaFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Miiskin.iws" />
@@ -104,7 +101,7 @@
       <file leaf-file-name="CreateSequenceActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/CreateSequenceActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="782">
+            <state vertical-scroll-proportion="0.0" vertical-offset="155" max-vertical-offset="782">
               <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -113,11 +110,24 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="toolbar.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/toolbar.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-1.8888888" vertical-offset="0" max-vertical-offset="221">
+              <caret line="3" column="47" selection-start-line="3" selection-start-column="47" selection-end-line="3" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.04" vertical-offset="113" max-vertical-offset="646">
-              <caret line="17" column="18" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
+            <state vertical-scroll-proportion="-12.92" vertical-offset="0" max-vertical-offset="680">
+              <caret line="19" column="57" selection-start-line="19" selection-start-column="57" selection-end-line="19" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -139,17 +149,19 @@
       <file leaf-file-name="GeneralAreaFragment.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/GeneralAreaFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2706422" vertical-offset="937" max-vertical-offset="3519">
-              <caret line="69" column="57" selection-start-line="69" selection-start-column="49" selection-end-line="69" selection-end-column="57" />
+            <state vertical-scroll-proportion="-2.1582568" vertical-offset="2698" max-vertical-offset="3570">
+              <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2409#2448#0" expanded="true" />
-                <element signature="e#2529#2685#0" expanded="true" />
-                <element signature="e#2674#2675#0" expanded="true" />
-                <element signature="e#2984#3831#0" expanded="true" />
-                <element signature="e#3495#3787#0" expanded="true" />
-                <element signature="e#3763#3764#0" expanded="true" />
-                <element signature="e#3820#3821#0" expanded="true" />
+                <element signature="e#2429#2585#0" expanded="true" />
+                <element signature="e#2574#2575#0" expanded="true" />
+                <element signature="e#2884#3731#0" expanded="true" />
+                <element signature="e#3395#3687#0" expanded="true" />
+                <element signature="e#3663#3664#0" expanded="true" />
+                <element signature="e#3720#3721#0" expanded="true" />
+                <element signature="e#5377#5409#0" expanded="true" />
+                <element signature="e#5617#5650#0" expanded="true" />
+                <element signature="e#5881#5920#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1487,12 +1499,12 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Home/DisclaimerDialogFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/LoadSequenceList.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/SpecificLocationFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Home/HomeFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_create_secuence.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_general_area.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/CreateSequenceActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/GeneralAreaFragment.java" />
       </list>
     </option>
@@ -3111,7 +3123,11 @@
       <created>1435176803117</created>
       <updated>1435176803117</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="create sequence general area&#10;&#10;">
+      <created>1435179054829</created>
+      <updated>1435179054829</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -3181,30 +3197,11 @@
           <properties />
           <option name="timeStamp" value="11" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/CreateSequenceActivity.java</url>
-          <line>20</line>
-          <properties />
-          <option name="timeStamp" value="42" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/GeneralAreaFragment.java</url>
-          <line>48</line>
-          <properties />
-          <option name="timeStamp" value="43" />
-        </line-breakpoint>
       </breakpoints>
       <option name="time" value="44" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values-v11/values-v11.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.56" vertical-offset="594" max-vertical-offset="3026">
-          <caret line="49" column="86" selection-start-line="49" selection-start-column="86" selection-end-line="49" selection-end-column="86" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values-v21/values-v21.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.56" vertical-offset="2770" max-vertical-offset="4794">
@@ -3590,9 +3587,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/toolbar.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.8888888" vertical-offset="0" max-vertical-offset="221">
+          <caret line="3" column="47" selection-start-line="3" selection-start-column="47" selection-end-line="3" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.92" vertical-offset="0" max-vertical-offset="680">
+          <caret line="19" column="57" selection-start-line="19" selection-start-column="57" selection-end-line="19" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/CreateSequenceActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="782">
+        <state vertical-scroll-proportion="0.0" vertical-offset="155" max-vertical-offset="782">
           <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -3600,27 +3616,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.04" vertical-offset="113" max-vertical-offset="646">
-          <caret line="17" column="18" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/GeneralAreaFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2706422" vertical-offset="937" max-vertical-offset="3519">
-          <caret line="69" column="57" selection-start-line="69" selection-start-column="49" selection-end-line="69" selection-end-column="57" />
+        <state vertical-scroll-proportion="-2.1582568" vertical-offset="2698" max-vertical-offset="3570">
+          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2409#2448#0" expanded="true" />
-            <element signature="e#2529#2685#0" expanded="true" />
-            <element signature="e#2674#2675#0" expanded="true" />
-            <element signature="e#2984#3831#0" expanded="true" />
-            <element signature="e#3495#3787#0" expanded="true" />
-            <element signature="e#3763#3764#0" expanded="true" />
-            <element signature="e#3820#3821#0" expanded="true" />
+            <element signature="e#2429#2585#0" expanded="true" />
+            <element signature="e#2574#2575#0" expanded="true" />
+            <element signature="e#2884#3731#0" expanded="true" />
+            <element signature="e#3395#3687#0" expanded="true" />
+            <element signature="e#3663#3664#0" expanded="true" />
+            <element signature="e#3720#3721#0" expanded="true" />
+            <element signature="e#5377#5409#0" expanded="true" />
+            <element signature="e#5617#5650#0" expanded="true" />
+            <element signature="e#5881#5920#0" expanded="true" />
           </folding>
         </state>
       </provider>

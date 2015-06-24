@@ -16,6 +16,8 @@
     <string name="how_to_get_started">How to get started</string>
     <string name="how_to_get_started_description">Start by taking a picture of a mole that worries you or that you want to monitor.</string>
     <string name="please_select_the_general_area">Please select the general area of your mole</string>
+    <string name="left_upper_arm_selected">Left upper arm selected</string>
+    <string name="right_upper_arm_selected">Right upper arm selected</string>
     <string name="front">Front</string>
     <string name="rear">Rear</string>
 

@@ -67,7 +67,6 @@ public class GeneralAreaFragment extends Fragment {
 
         CreateSequenceActivity createSequenceActivity = (CreateSequenceActivity)getActivity();
         createSequenceActivity.mActionBarToolbar.setNavigationIcon(R.drawable.ic_action_clear);
-        createSequenceActivity.mActionBarToolbar.setTitle(R.string.please_select_the_general_area);
         createSequenceActivity.mActionBarToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,16 +140,20 @@ public class GeneralAreaFragment extends Fragment {
     }
 
     private void checkTouchZone() {
+        CreateSequenceActivity createSequenceActivity = (CreateSequenceActivity)getActivity();
         switch (bodyPartColorTouched) {
             case BodyPartColors.LEFT_ARM_COLOR :
                 loadBodyImageView(R.drawable.left_arm_selected);
+                createSequenceActivity.mActionBarToolbar.setTitle(R.string.left_upper_arm_selected);
                 break;
             case BodyPartColors.RIGHT_ARM_COLOR :
                 loadBodyImageView(R.drawable.right_arm_selected);
+                createSequenceActivity.mActionBarToolbar.setTitle(R.string.right_upper_arm_selected);
                 break;
             case BodyPartColors.NOT_BODY_COLOR :
             default:
                 loadBodyImageView(R.drawable.no_body_part_selected);
+                createSequenceActivity.mActionBarToolbar.setTitle(R.string.please_select_the_general_area);
                 break;
         }
     }

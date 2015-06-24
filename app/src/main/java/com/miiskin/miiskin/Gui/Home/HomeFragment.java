@@ -1,6 +1,7 @@
 package com.miiskin.miiskin.Gui.Home;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import com.miiskin.miiskin.Gui.CreateSequence.CreateSequenceActivity;
 import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.Task.LoadSequenceList;
 import com.miiskin.miiskin.Storage.Task.TaskManager;
@@ -68,6 +70,13 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
         mProgressView = (FrameLayout)view.findViewById(R.id.progressView);
         mFloatingActionButton = (FloatingActionButton)view.findViewById(R.id.fab);
         mFloatingActionButton.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab));
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CreateSequenceActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

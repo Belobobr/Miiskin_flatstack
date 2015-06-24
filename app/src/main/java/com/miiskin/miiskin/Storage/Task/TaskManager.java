@@ -68,6 +68,7 @@ public class TaskManager {
                     notifyDataChangeListener(taskId);
                 }
             };
+            asyncTask.execute(task);
         }
     }
 

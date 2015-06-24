@@ -3,7 +3,12 @@ package com.miiskin.miiskin.Gui;
 import android.app.Fragment;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.Task.TaskManager;
 
 /**
@@ -22,6 +27,11 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        if (moleSequenceListCursor == null) {
+
+        } else {
+
+        }
     }
 
     @Override
@@ -36,8 +46,14 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
         super.onPause();
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_fte_home,  container, false);
+    }
+
     @Override
     public void onDataChanged(String dataId) {
-        
+
     }
 }

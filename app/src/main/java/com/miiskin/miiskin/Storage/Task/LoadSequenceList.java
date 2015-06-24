@@ -18,8 +18,10 @@ public class LoadSequenceList extends Task{
         super(context);
     }
 
-
-
+    @Override
+    public String getTaskId() {
+        return TASK_ID;
+    }
 
     @Override
     public Cursor execute() {

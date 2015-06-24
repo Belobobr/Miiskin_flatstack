@@ -41,13 +41,13 @@ public class LoadSequenceList extends Task{
                 MolePhotoSequence.COLUMN_NAME_DATE_OF_CREATION_SEQUENCE + " DESC";
 
         Cursor c = db.query(
-                MolePhotoSequence.TABLE_NAME,  // The table to query
-                projection,                               // The columns to return
-                null,                                     // The columns for the WHERE clause
-                null,                                     // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                sortOrder                                 // The sort order
+                MolePhotoSequence.TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                sortOrder
         );
 
         return c;

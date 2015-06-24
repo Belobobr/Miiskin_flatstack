@@ -1,10 +1,14 @@
 package com.miiskin.miiskin.Gui;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -12,7 +16,7 @@ import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.Preferences;
 
 
-public class HomeActivity extends Activity implements FTEHomeFragment.FteCompleteListener{
+public class HomeActivity extends ActionBarActivity implements FTEHomeFragment.FteCompleteListener, DisclaimerDialogFragment.DisclaimerDialogListener{
 
     @Override
     public void onFteCompleteDonePressed() {
@@ -22,13 +26,27 @@ public class HomeActivity extends Activity implements FTEHomeFragment.FteComplet
     }
 
     @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        setFteDisclaimer(false);
+    }
+
+    @Override
+    public void onDialogBackButtonPressed() {
+        setFteDisclaimer(false);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        Toolbar mActionBarToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        setSupportActionBar(mActionBarToolbar);
+        mActionBarToolbar.setNavigationIcon(R.drawable.launcher_icon);
+
         SharedPreferences settings = getSharedPreferences(Preferences.MAIN_PREFERENCES, 0);
         boolean fte = settings.getBoolean(Preferences.FirstTimeUse.FTE, true);
-        boolean fteDisclaimer = settings.getBoolean(Preferences.FirstTimeUse.FTE_SHOW_DISCLAIMER, false);
+        boolean fteDisclaimer = settings.getBoolean(Preferences.FirstTimeUse.FTE_SHOW_DISCLAIMER, true);
 
 
         if (savedInstanceState == null) {
@@ -37,7 +55,8 @@ public class HomeActivity extends Activity implements FTEHomeFragment.FteComplet
                 getFragmentManager().beginTransaction().add(R.id.main_layout, fteHomeFragment).commit();
 
                 if (fteDisclaimer) {
-
+                    DialogFragment dialog = new DisclaimerDialogFragment();
+                    dialog.show(getFragmentManager(), DisclaimerDialogFragment.TAG);
                 }
             } else {
                 HomeFragment homeFragment = HomeFragment.newInstance();
@@ -51,16 +70,11 @@ public class HomeActivity extends Activity implements FTEHomeFragment.FteComplet
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -77,4 +91,15 @@ public class HomeActivity extends Activity implements FTEHomeFragment.FteComplet
         editor.putBoolean(Preferences.FirstTimeUse.FTE, fteDisclaimer);
         editor.commit();
     }
+
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().findFragmentByTag(DisclaimerDialogFragment.TAG) != null) {
+            setFteDisclaimer(false);
+            super.onBackPressed();
+        }
+        super.onBackPressed();
+    }
+
+
 }

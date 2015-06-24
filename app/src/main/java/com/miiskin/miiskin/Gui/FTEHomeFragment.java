@@ -36,6 +36,7 @@ public class FTEHomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -44,12 +45,22 @@ public class FTEHomeFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_fte_home,  container, false);
     }
 
+    private String[] populateYearOfBirth() {
+        int from = Preferences.UserInfo.DATE_OF_BIRTH_FROM;
+        int to = Preferences.UserInfo.DATE_OF_BIRTH_TO;
+        String arrayOfBirth[] = new String[to - from + 1];
+        for(int i = 0; i <= to - from; i++) {
+            arrayOfBirth[i] = String.valueOf(from + i);
+        }
+        return arrayOfBirth;
+    }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Spinner spinner = (Spinner) view.findViewById(R.id.year_of_birth);
-        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.year_of_birth, android.R.layout.simple_spinner_item);
+
+        final ArrayAdapter<String> adapter =  new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, populateYearOfBirth());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

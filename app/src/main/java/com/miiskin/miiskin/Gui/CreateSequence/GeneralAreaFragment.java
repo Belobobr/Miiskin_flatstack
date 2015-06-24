@@ -1,15 +1,14 @@
 package com.miiskin.miiskin.Gui.CreateSequence;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,6 +23,8 @@ import com.miiskin.miiskin.R;
  */
 public class GeneralAreaFragment extends Fragment {
 
+    private static final String BODY_PART_COLOR_TOUCHED = "BODY_PART_COLOR_TOUCHED";
+
     private ImageView bodyImageView;
     private ImageView bodyImageViewOverlay;
 
@@ -33,17 +34,22 @@ public class GeneralAreaFragment extends Fragment {
     }
 
     public static class BodyPartColors {
+        public static final int NOT_BODY_COLOR = 0xFFFFFFFF;
         public static final int RIGHT_ARM_COLOR       = 0xFF0000FF;
         public static final int LEFT_ARM_COLOR      = 0xFF00FF00;
     }
 
     Integer xCoord;
     Integer yCoord;
-    int colorTouched;
+    int prevColorTouched;
+    int bodyPartColorTouched = BodyPartColors.NOT_BODY_COLOR;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            bodyPartColorTouched = savedInstanceState.getInt(BODY_PART_COLOR_TOUCHED);
+        }
     }
 
     @Nullable
@@ -59,7 +65,21 @@ public class GeneralAreaFragment extends Fragment {
         bodyImageViewOverlay = (ImageView)view.findViewById(R.id.bodyImageViewOverlay);
 
 
+        CreateSequenceActivity createSequenceActivity = (CreateSequenceActivity)getActivity();
+        createSequenceActivity.mActionBarToolbar.setNavigationIcon(R.drawable.ic_action_clear);
+        createSequenceActivity.mActionBarToolbar.setTitle(R.string.please_select_the_general_area);
+        createSequenceActivity.mActionBarToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+    }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(BODY_PART_COLOR_TOUCHED, bodyPartColorTouched);
     }
 
     @Override
@@ -68,11 +88,7 @@ public class GeneralAreaFragment extends Fragment {
         bodyImageView.post(new Runnable() {
             @Override
             public void run() {
-                final Bitmap bm = decodeSampledBitmapFromResource(getResources(), R.drawable.upper, bodyImageView.getWidth(), bodyImageView.getHeight());
-                if (bm!=null) {
-                    bodyImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                    bodyImageView.setImageBitmap(bm);
-                }
+                checkTouchZone();
 
                 final Bitmap bm2 = decodeSampledBitmapFromResource(getResources(), R.drawable.lower, bodyImageViewOverlay.getWidth(), bodyImageViewOverlay.getHeight());
                 if (bm2!=null) {
@@ -91,7 +107,14 @@ public class GeneralAreaFragment extends Fragment {
                 }
             }
         });
+    }
 
+    private void loadBodyImageView(int resId) {
+        final Bitmap bm = decodeSampledBitmapFromResource(getResources(), resId, bodyImageView.getWidth(), bodyImageView.getHeight());
+        if (bm!=null) {
+            bodyImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            bodyImageView.setImageBitmap(bm);
+        }
     }
 
     private void DecodeActionDownEvent(View v, MotionEvent ev, Bitmap bm2)
@@ -105,20 +128,29 @@ public class GeneralAreaFragment extends Fragment {
         yCoord = Integer.valueOf((int)touchPoint[1]);
 
         try {
-            colorTouched = ((BitmapDrawable)bodyImageViewOverlay.getDrawable()).getBitmap().getPixel(xCoord,yCoord);
-            checkTouchZone();
+            prevColorTouched = bodyPartColorTouched;
+            bodyPartColorTouched = ((BitmapDrawable)bodyImageViewOverlay.getDrawable()).getBitmap().getPixel(xCoord,yCoord);
         } catch (IllegalArgumentException e) {
-            colorTouched = Color.WHITE; // nothing happens when touching white
+            prevColorTouched = bodyPartColorTouched;
+            bodyPartColorTouched = BodyPartColors.NOT_BODY_COLOR; // nothing happens when touching white
+        }
+
+        if (prevColorTouched != bodyPartColorTouched) {
+            checkTouchZone();
         }
     }
 
     private void checkTouchZone() {
-        switch ( colorTouched) {
+        switch (bodyPartColorTouched) {
             case BodyPartColors.LEFT_ARM_COLOR :
-                showToast("Left_arm_selected");
+                loadBodyImageView(R.drawable.left_arm_selected);
                 break;
             case BodyPartColors.RIGHT_ARM_COLOR :
-                showToast("Right_arm_selected");
+                loadBodyImageView(R.drawable.right_arm_selected);
+                break;
+            case BodyPartColors.NOT_BODY_COLOR :
+            default:
+                loadBodyImageView(R.drawable.no_body_part_selected);
                 break;
         }
     }

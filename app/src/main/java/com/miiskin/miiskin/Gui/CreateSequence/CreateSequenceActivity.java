@@ -29,14 +29,6 @@ public class CreateSequenceActivity extends ActionBarActivity {
         if (fragment == null) {
             fragment = GeneralAreaFragment.newInstance();
             getFragmentManager().beginTransaction().add(R.id.main_layout, fragment).commit();
-            mActionBarToolbar.setNavigationIcon(R.drawable.ic_action_clear);
-            mActionBarToolbar.setTitle(R.string.please_select_the_general_area);
-            mActionBarToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
         }
     }
 

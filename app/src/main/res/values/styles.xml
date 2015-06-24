@@ -5,4 +5,11 @@
         <item name="colorPrimaryDark">@color/purple</item>
     </style>
 
+
+    <style name="DisclaimerAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/green</item>
+        <item name="colorAccent">#FFFFFF</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+    </style>
+
 </resources>

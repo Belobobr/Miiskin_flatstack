@@ -1,15 +1,17 @@
 package com.miiskin.miiskin.Gui;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 
 import com.miiskin.miiskin.R;
+
 
 /**
  * Created by Newshka on 24.06.2015.
@@ -56,7 +58,7 @@ public class DisclaimerDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.DisclaimerAlertDialog);
         builder.setTitle(R.string.disclaimer);
         builder.setMessage(R.string.disclaimer_dialog_text)
                 .setPositiveButton(R.string.start_using_miiskin, new DialogInterface.OnClickListener() {

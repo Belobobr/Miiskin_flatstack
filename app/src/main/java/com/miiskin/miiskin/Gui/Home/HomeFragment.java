@@ -95,16 +95,16 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
             mListView.setVisibility(View.GONE);
         } else {
             if (moleSequenceListCursor.getCount() == 0) {
+                mEmptyView.setVisibility(View.VISIBLE);
+                mListView.setVisibility(View.GONE);
+                mProgressView.setVisibility(View.GONE);
+            } else {
                 if (mSequenceCursorAdapter == null) {
                     mSequenceCursorAdapter = new SequenceCursorAdapter(getActivity(), moleSequenceListCursor);
                 } else {
                     mSequenceCursorAdapter.changeCursor(moleSequenceListCursor);
                 }
                 mListView.setAdapter(mSequenceCursorAdapter);
-                mEmptyView.setVisibility(View.VISIBLE);
-                mListView.setVisibility(View.GONE);
-                mProgressView.setVisibility(View.GONE);
-            } else {
                 mListView.setVisibility(View.VISIBLE);
                 mEmptyView.setVisibility(View.GONE);
                 mProgressView.setVisibility(View.GONE);

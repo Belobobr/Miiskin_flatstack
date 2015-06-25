@@ -28,6 +28,7 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
     CoordinatorLayout mEmptyView;
     FrameLayout mProgressView;
     FloatingActionButton mFloatingActionButton;
+    SequenceCursorAdapter mSequenceCursorAdapter;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -94,6 +95,12 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
             mListView.setVisibility(View.GONE);
         } else {
             if (moleSequenceListCursor.getCount() == 0) {
+                if (mSequenceCursorAdapter == null) {
+                    mSequenceCursorAdapter = new SequenceCursorAdapter(getActivity(), moleSequenceListCursor);
+                } else {
+                    mSequenceCursorAdapter.changeCursor(moleSequenceListCursor);
+                }
+                mListView.setAdapter(mSequenceCursorAdapter);
                 mEmptyView.setVisibility(View.VISIBLE);
                 mListView.setVisibility(View.GONE);
                 mProgressView.setVisibility(View.GONE);

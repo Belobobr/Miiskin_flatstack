@@ -20,7 +20,8 @@ public class MiiskinDbHelper extends SQLiteOpenHelper {
                     MolePhotoSequence.COLUMN_NAME_ANATOMICAL_SECTION + TEXT_TYPE + COMMA_SEP +
                     MolePhotoSequence.COLUMN_NAME_DATE_OF_CREATION_SEQUENCE + TEXT_TYPE + COMMA_SEP +
                     MolePhotoSequence.COLUMN_NAME_LAST_PHOTO_TIME + TEXT_TYPE + COMMA_SEP +
-                    MolePhotoSequence.COLUMN_NAME_POSITION_OF_MOLE + TEXT_TYPE + COMMA_SEP +
+                    MolePhotoSequence.COLUMN_NAME_X_POSITION_OF_MOLE + TEXT_TYPE + COMMA_SEP +
+                    MolePhotoSequence.COLUMN_NAME_Y_POSITION_OF_MOLE + TEXT_TYPE + COMMA_SEP +
                     MolePhotoSequence.COLUMN_NAME_USER_BIRTH_DATE + TEXT_TYPE + COMMA_SEP +
                     MolePhotoSequence.COLUMN_NAME_USER_GENDER + TEXT_TYPE +
             " )";

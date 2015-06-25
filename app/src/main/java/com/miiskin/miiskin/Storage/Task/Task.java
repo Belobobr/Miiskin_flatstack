@@ -11,9 +11,9 @@ import com.miiskin.miiskin.Storage.MiiskinDbHelper;
 public abstract class Task {
 
     protected Context mContext;
-    protected Object mParams;
+    protected Object[] mParams;
     protected MiiskinDbHelper mDbHelper;
-    abstract public Cursor execute();
+    abstract public Object execute();
     abstract public String getTaskId();
 
     protected Task(Context context) {

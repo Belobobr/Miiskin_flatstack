@@ -8,12 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.miiskin.miiskin.Data.BodyPart;
+import com.miiskin.miiskin.Data.SequenceData;
 import com.miiskin.miiskin.Gui.ViewSequence.ViewSequenceActivity;
 import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.Task.SaveCreatedSequenceToDatabase;
 import com.miiskin.miiskin.Storage.Task.TaskManager;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by Newshka on 24.06.2015.
@@ -22,10 +24,6 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
     TaskManager.DataChangeListener {
 
     Toolbar mActionBarToolbar;
-
-    public static class SequenceData implements Serializable {
-        BodyPart mBodyPart;
-    }
 
     private static final String SEQUENCE_DATA_TAG = "SEQUENCE_DATA_TAG ";
     private SequenceData mSequenceData;
@@ -78,7 +76,7 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
     }
 
     private void updateUi() {
-        Integer sequenceId = (Integer)TaskManager.getInstance(getApplicationContext()).getDataById(SaveCreatedSequenceToDatabase.TASK_ID);
+        Long sequenceId = (Long)TaskManager.getInstance(getApplicationContext()).getDataById(SaveCreatedSequenceToDatabase.TASK_ID);
         if (sequenceId != null) {
             showCreatedSequenceScreen(sequenceId);
         }
@@ -90,13 +88,13 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
         getFragmentManager().beginTransaction().replace(R.id.main_layout, fragment, SpecificLocationFragment.TAG).addToBackStack(null).commit();
     }
 
-    public void showCreatedSequenceScreen(Integer sequenceId) {
+    public void showCreatedSequenceScreen(long sequenceId) {
         Intent intent = new Intent(this, ViewSequenceActivity.class);
         startActivity(intent);
     }
 
     public void saveCreatedSequenceToDatabase() {
-        TaskManager.getInstance(getApplicationContext()).executeTask(SaveCreatedSequenceToDatabase.TASK_ID);
+        TaskManager.getInstance(getApplicationContext()).executeTask(SaveCreatedSequenceToDatabase.TASK_ID, new Object[] {mSequenceData});
     }
 
     @Override
@@ -106,9 +104,13 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
     }
 
     @Override
-    public void onSpecificLocationSelected() {
+    public void onSpecificLocationSelected(float bodyPartRelativePointX, float bodyPartRelativePointY) {
+        mSequenceData.bodyPartRelativePointX = bodyPartRelativePointX;
+        mSequenceData.bodyPartRelativePointY = bodyPartRelativePointY;
+        mSequenceData.mDateOfCreation = new Date();
         saveCreatedSequenceToDatabase();
     }
+
 
     @Override
     public void onBackPressed() {

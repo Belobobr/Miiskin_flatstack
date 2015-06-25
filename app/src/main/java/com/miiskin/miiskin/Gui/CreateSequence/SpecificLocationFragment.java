@@ -58,7 +58,7 @@ public class SpecificLocationFragment extends Fragment {
     }
 
     public interface SpecificLocationSelectedListener {
-        public void onSpecificLocationSelected();
+        public void onSpecificLocationSelected(float bodyPartRelativePointX, float bodyPartRelativePointY);
     }
 
     private SpecificLocationSelectedListener mListener;
@@ -154,7 +154,7 @@ public class SpecificLocationFragment extends Fragment {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onSpecificLocationSelected();
+                mListener.onSpecificLocationSelected(bodyPartRelativePointX, bodyPartRelativePointY);
             }
         });
     }

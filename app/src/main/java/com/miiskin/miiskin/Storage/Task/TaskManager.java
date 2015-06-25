@@ -73,7 +73,7 @@ public class TaskManager {
         if (task != null) {
             AsyncTask<Task, Void, Object> asyncTask = new AsyncTask<Task, Void, Object>() {
                 @Override
-                protected Cursor doInBackground(Task... params) {
+                protected Object doInBackground(Task... params) {
                     return params[0].execute();
                 }
 

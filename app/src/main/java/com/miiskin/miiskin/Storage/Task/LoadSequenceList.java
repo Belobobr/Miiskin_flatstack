@@ -28,7 +28,7 @@ public class LoadSequenceList extends Task{
     }
 
     @Override
-    public Cursor execute() {
+    public Object execute() {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         String[] projection = {
@@ -36,7 +36,8 @@ public class LoadSequenceList extends Task{
                 MolePhotoSequence.COLUMN_NAME_DATE_OF_CREATION_SEQUENCE,
                 MolePhotoSequence.COLUMN_NAME_LAST_PHOTO_TIME,
                 MolePhotoSequence.COLUMN_NAME_ANATOMICAL_SECTION,
-                MolePhotoSequence.COLUMN_NAME_POSITION_OF_MOLE,
+                MolePhotoSequence.COLUMN_NAME_X_POSITION_OF_MOLE,
+                MolePhotoSequence.COLUMN_NAME_Y_POSITION_OF_MOLE,
                 MolePhotoSequence.COLUMN_NAME_USER_GENDER,
                 MolePhotoSequence.COLUMN_NAME_USER_BIRTH_DATE
         };

@@ -17,7 +17,7 @@ public class TaskManager {
     private static volatile TaskManager instance;
     private TaskManager() { }
 
-    public Map<String, WeakReference<Cursor>> cachedCursors = new HashMap<>();
+    public Map<String, WeakReference<Object>> cachedCursors = new HashMap<>();
     public Context mContext;
     private List<DataChangeListener> mDataChangeListeners = new ArrayList<DataChangeListener>();
 
@@ -48,8 +48,8 @@ public class TaskManager {
         }
     }
 
-    public Cursor getDataById(String taskId) {
-        WeakReference<Cursor> weakReference = cachedCursors.get(taskId);
+    public Object getDataById(String taskId) {
+        WeakReference<Object> weakReference = cachedCursors.get(taskId);
         if (weakReference != null) {
             return weakReference.get();
         } else {
@@ -58,22 +58,28 @@ public class TaskManager {
     }
 
     public void executeTask(final String taskId) {
+        this.executeTask(taskId, null);
+    }
+
+    public void executeTask(final String taskId, Object params[]) {
         Task task = null;
 
         if (taskId.equals(LoadSequenceList.TASK_ID)) {
-            task = new LoadSequenceList(mContext);
+            task = new LoadSequenceList(mContext, params);
+        } else if (taskId.equals(SaveCreatedSequenceToDatabase.TASK_ID)) {
+            task = new SaveCreatedSequenceToDatabase(mContext, params);
         }
 
         if (task != null) {
-            AsyncTask<Task, Void, Cursor> asyncTask = new AsyncTask<Task, Void, Cursor>() {
+            AsyncTask<Task, Void, Object> asyncTask = new AsyncTask<Task, Void, Object>() {
                 @Override
                 protected Cursor doInBackground(Task... params) {
                     return params[0].execute();
                 }
 
                 @Override
-                protected void onPostExecute(Cursor cursor) {
-                    cachedCursors.put(taskId, new WeakReference<Cursor>(cursor));
+                protected void onPostExecute(Object object) {
+                    cachedCursors.put(taskId, new WeakReference<Object>(object));
                     notifyDataChangeListener(taskId);
                 }
             };

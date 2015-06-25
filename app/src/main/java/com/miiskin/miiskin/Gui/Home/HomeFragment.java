@@ -87,7 +87,7 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
     }
 
     private void updateGui() {
-        moleSequenceListCursor  = TaskManager.getInstance(getActivity().getApplicationContext()).getDataById(LoadSequenceList.TASK_ID);
+        moleSequenceListCursor  = (Cursor)TaskManager.getInstance(getActivity().getApplicationContext()).getDataById(LoadSequenceList.TASK_ID);
         if (moleSequenceListCursor == null) {
             mProgressView.setVisibility(View.VISIBLE);
             mEmptyView.setVisibility(View.GONE);

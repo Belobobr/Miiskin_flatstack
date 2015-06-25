@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +13,7 @@ import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.Preferences;
 
 
-public class HomeActivity extends ActionBarActivity implements FTEHomeFragment.FteCompleteListener, DisclaimerDialogFragment.DisclaimerDialogListener{
+public class HomeActivity extends AppCompatActivity implements FTEHomeFragment.FteCompleteListener, DisclaimerDialogFragment.DisclaimerDialogListener{
 
     @Override
     public void onFteCompleteDonePressed() {

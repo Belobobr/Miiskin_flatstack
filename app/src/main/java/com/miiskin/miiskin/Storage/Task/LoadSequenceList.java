@@ -15,7 +15,11 @@ public class LoadSequenceList extends Task{
     public static String TASK_ID = "LoadSequenceList";
 
     public LoadSequenceList(Context context) {
-        super(context);
+        this(context, null);
+    }
+
+    public LoadSequenceList(Context context, Object params[]) {
+        super(context, params);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.miiskin.miiskin.Gui.CreateSequence;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,7 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.miiskin.miiskin.Data.BodyPart;
 import com.miiskin.miiskin.R;
 
 /**
@@ -23,15 +26,24 @@ import com.miiskin.miiskin.R;
  */
 public class GeneralAreaFragment extends Fragment {
 
+    public final static String TAG = "GENERAL_AREA_FRAGMENT";
+
     private static final String BODY_PART_COLOR_TOUCHED = "BODY_PART_COLOR_TOUCHED";
 
     private ImageView bodyImageView;
     private ImageView bodyImageViewOverlay;
+    private FloatingActionButton mFloatingActionButton;
 
     public static GeneralAreaFragment newInstance() {
         GeneralAreaFragment fragment = new GeneralAreaFragment();
         return fragment;
     }
+
+    public interface GeneralAreaSelectedListener {
+        public void onGeneralAreaSelected(BodyPart bodyPart);
+    }
+
+    private GeneralAreaSelectedListener mListener;
 
     public static class BodyPartColors {
         public static final int NOT_BODY_COLOR = 0xFFFFFFFF;
@@ -43,12 +55,26 @@ public class GeneralAreaFragment extends Fragment {
     Integer yCoord;
     int prevColorTouched;
     int bodyPartColorTouched = BodyPartColors.NOT_BODY_COLOR;
+    BodyPart mBodyPart;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             bodyPartColorTouched = savedInstanceState.getInt(BODY_PART_COLOR_TOUCHED);
+        }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        super.onAttach(activity);
+        try {
+            mListener = (GeneralAreaSelectedListener) activity;
+
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement NoticeDialogListener");
         }
     }
 
@@ -71,6 +97,14 @@ public class GeneralAreaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
+            }
+        });
+
+        mFloatingActionButton = (FloatingActionButton)view.findViewById(R.id.fab);
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onGeneralAreaSelected(mBodyPart);
             }
         });
     }
@@ -143,24 +177,27 @@ public class GeneralAreaFragment extends Fragment {
         CreateSequenceActivity createSequenceActivity = (CreateSequenceActivity)getActivity();
         switch (bodyPartColorTouched) {
             case BodyPartColors.LEFT_ARM_COLOR :
+                mBodyPart = BodyPart.LeftUpperArm;
                 loadBodyImageView(R.drawable.left_arm_selected);
+                mFloatingActionButton.setEnabled(true);
+                mFloatingActionButton.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab));
                 createSequenceActivity.mActionBarToolbar.setTitle(R.string.left_upper_arm_selected);
                 break;
             case BodyPartColors.RIGHT_ARM_COLOR :
+                mBodyPart = BodyPart.RightUpperArm;
                 loadBodyImageView(R.drawable.right_arm_selected);
+                mFloatingActionButton.setEnabled(true);
+                mFloatingActionButton.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab));
                 createSequenceActivity.mActionBarToolbar.setTitle(R.string.right_upper_arm_selected);
                 break;
             case BodyPartColors.NOT_BODY_COLOR :
             default:
                 loadBodyImageView(R.drawable.no_body_part_selected);
+                mFloatingActionButton.setEnabled(false);
+                mFloatingActionButton.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab_semitrasparent));
                 createSequenceActivity.mActionBarToolbar.setTitle(R.string.please_select_the_general_area);
                 break;
         }
-    }
-
-    private void showToast(String text) {
-        Toast toast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
-        toast.show();
     }
 
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,

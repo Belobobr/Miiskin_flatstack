@@ -57,17 +57,8 @@ public class TaskManager {
         }
     }
 
+
     public void executeTask(Task task, final String taskId) {
-        this.executeTask(task, taskId, null);
-    }
-
-    public void executeTask(Task task, final String taskId, Object params[]) {
-
-        if (taskId.equals(LoadSequenceList.TASK_ID)) {
-            task = new LoadSequenceList(mContext, params);
-        } else if (taskId.equals(SaveCreatedSequenceToDatabase.TASK_ID)) {
-            task = new SaveCreatedSequenceToDatabase(mContext, params);
-        }
 
         if (task != null) {
             AsyncTask<Task, Void, Object> asyncTask = new AsyncTask<Task, Void, Object>() {

@@ -10,10 +10,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.miiskin.miiskin.Gui.CreateSequence.CreateSequenceActivity;
+import com.miiskin.miiskin.Gui.ViewSequence.ViewSequenceActivity;
 import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.Task.LoadSequenceList;
 import com.miiskin.miiskin.Storage.Task.TaskManager;
@@ -42,7 +44,7 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         if (moleSequenceListCursor == null) {
-            TaskManager.getInstance(getActivity().getApplicationContext()).executeTask(LoadSequenceList.TASK_ID);
+            TaskManager.getInstance(getActivity().getApplicationContext()).executeTask(new LoadSequenceList(getActivity().getApplicationContext()), LoadSequenceList.TASK_ID);
         }
     }
 
@@ -117,6 +119,13 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
                     mSequenceCursorAdapter.changeCursor(moleSequenceListCursor);
                 }
                 mManySequenceListView.setAdapter(mSequenceCursorAdapter);
+                mManySequenceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(HomeFragment.this.getActivity(), ViewSequenceActivity.class);
+                        startActivity(intent);
+                    }
+                });
                 mManySequence.setVisibility(View.VISIBLE);
                 mEmptyView.setVisibility(View.GONE);
                 mProgressView.setVisibility(View.GONE);

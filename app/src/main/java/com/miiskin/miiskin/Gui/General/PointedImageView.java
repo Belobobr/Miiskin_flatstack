@@ -99,7 +99,7 @@ public class PointedImageView extends ImageView {
             Bundle bundle = (Bundle) state;
             this.xRelativeCord = bundle.getFloat("xRelativeCord");
             this.yRelativeCord = bundle.getFloat("yRelativeCord");
-            this.mPointerSize = bundle.getFloat("mPointerSize");
+            this.mPointerSize = bundle.getFloat("pointerSize");
             state = bundle.getParcelable("instanceState");
         }
         super.onRestoreInstanceState(state);

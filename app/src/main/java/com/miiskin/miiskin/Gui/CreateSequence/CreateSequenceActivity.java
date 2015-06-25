@@ -62,7 +62,7 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
 
     @Override
     public void onDataChanged(String dataId) {
-        if (dataId.equals(SaveCreatedSequenceToDatabase.TASK_ID)) {
+        if (dataId.equals(taskId)) {
             updateUi();
         }
     }
@@ -100,7 +100,7 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
 
     public void saveCreatedSequenceToDatabase() {
         taskId = UUID.randomUUID().toString();
-        TaskManager.getInstance(getApplicationContext()).executeTask(taskId, new Object[] {mSequenceData});
+        TaskManager.getInstance(getApplicationContext()).executeTask(new SaveCreatedSequenceToDatabase(getApplicationContext(), new Object[] {mSequenceData}), taskId);
     }
 
     @Override

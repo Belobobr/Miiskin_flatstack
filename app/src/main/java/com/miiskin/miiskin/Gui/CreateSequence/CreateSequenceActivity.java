@@ -82,6 +82,7 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
 
     private void updateUi() {
         Long sequenceId = (Long)TaskManager.getInstance(getApplicationContext()).getDataById(taskId);
+        mSequenceData.mId = String.valueOf(sequenceId);
         if (sequenceId != null) {
             showCreatedSequenceScreen(sequenceId);
         }
@@ -95,6 +96,7 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
 
     public void showCreatedSequenceScreen(long sequenceId) {
         Intent intent = new Intent(this, ViewSequenceActivity.class);
+        intent.putExtra(ViewSequenceActivity.EXTRA_SEQUENCE_DATA, mSequenceData);
         startActivity(intent);
     }
 

@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import com.miiskin.miiskin.Data.SequenceData;
 import com.miiskin.miiskin.Gui.CreateSequence.CreateSequenceActivity;
 import com.miiskin.miiskin.Gui.ViewSequence.ViewSequenceActivity;
 import com.miiskin.miiskin.R;
@@ -122,7 +123,10 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
                 mManySequenceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        moleSequenceListCursor.moveToPosition(position);
+                        SequenceData sequenceData = SequenceData.createFromCursor(moleSequenceListCursor);
                         Intent intent = new Intent(HomeFragment.this.getActivity(), ViewSequenceActivity.class);
+                        intent.putExtra(ViewSequenceActivity.EXTRA_SEQUENCE_DATA, sequenceData);
                         startActivity(intent);
                     }
                 });

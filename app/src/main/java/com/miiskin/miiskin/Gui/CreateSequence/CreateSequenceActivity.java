@@ -16,6 +16,7 @@ import com.miiskin.miiskin.Storage.Task.TaskManager;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by Newshka on 24.06.2015.
@@ -26,13 +27,16 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
     Toolbar mActionBarToolbar;
 
     private static final String SEQUENCE_DATA_TAG = "SEQUENCE_DATA_TAG ";
+    private static final String TASK_ID = "TASK_ID";
     private SequenceData mSequenceData;
+    private String taskId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null)  {
             mSequenceData = (SequenceData)savedInstanceState.getSerializable(SEQUENCE_DATA_TAG);
+            taskId = savedInstanceState.getString(TASK_ID);
         } else {
             mSequenceData = new SequenceData();
         }
@@ -53,6 +57,7 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(SEQUENCE_DATA_TAG, mSequenceData);
+        outState.putSerializable(TASK_ID, taskId);
     }
 
     @Override
@@ -76,7 +81,7 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
     }
 
     private void updateUi() {
-        Long sequenceId = (Long)TaskManager.getInstance(getApplicationContext()).getDataById(SaveCreatedSequenceToDatabase.TASK_ID);
+        Long sequenceId = (Long)TaskManager.getInstance(getApplicationContext()).getDataById(taskId);
         if (sequenceId != null) {
             showCreatedSequenceScreen(sequenceId);
         }
@@ -94,7 +99,8 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
     }
 
     public void saveCreatedSequenceToDatabase() {
-        TaskManager.getInstance(getApplicationContext()).executeTask(SaveCreatedSequenceToDatabase.TASK_ID, new Object[] {mSequenceData});
+        taskId = UUID.randomUUID().toString();
+        TaskManager.getInstance(getApplicationContext()).executeTask(taskId, new Object[] {mSequenceData});
     }
 
     @Override

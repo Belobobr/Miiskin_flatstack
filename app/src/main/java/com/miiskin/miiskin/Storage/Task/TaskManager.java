@@ -57,12 +57,11 @@ public class TaskManager {
         }
     }
 
-    public void executeTask(final String taskId) {
-        this.executeTask(taskId, null);
+    public void executeTask(Task task, final String taskId) {
+        this.executeTask(task, taskId, null);
     }
 
-    public void executeTask(final String taskId, Object params[]) {
-        Task task = null;
+    public void executeTask(Task task, final String taskId, Object params[]) {
 
         if (taskId.equals(LoadSequenceList.TASK_ID)) {
             task = new LoadSequenceList(mContext, params);

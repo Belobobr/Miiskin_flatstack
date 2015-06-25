@@ -24,10 +24,12 @@ import com.miiskin.miiskin.Storage.Task.TaskManager;
 public class HomeFragment extends Fragment implements TaskManager.DataChangeListener {
 
     Cursor moleSequenceListCursor;
-    ListView mListView;
+    ListView mManySequenceListView;
+    CoordinatorLayout mManySequence;
     CoordinatorLayout mEmptyView;
     FrameLayout mProgressView;
-    FloatingActionButton mFloatingActionButton;
+    FloatingActionButton mNoSequenceFab;
+    FloatingActionButton mManySequenceFab;
     SequenceCursorAdapter mSequenceCursorAdapter;
 
     public static HomeFragment newInstance() {
@@ -66,12 +68,22 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mListView = (ListView)view.findViewById(R.id.listView);
+        mManySequenceListView = (ListView)view.findViewById(R.id.manySequenceListView);
+        mManySequence = (CoordinatorLayout)view.findViewById(R.id.manySequence);
         mEmptyView = (CoordinatorLayout)view.findViewById(R.id.emptyView);
         mProgressView = (FrameLayout)view.findViewById(R.id.progressView);
-        mFloatingActionButton = (FloatingActionButton)view.findViewById(R.id.fab);
-        mFloatingActionButton.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab));
-        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+        mNoSequenceFab = (FloatingActionButton)view.findViewById(R.id.fabNoSequence);
+        mNoSequenceFab.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab));
+        mNoSequenceFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CreateSequenceActivity.class);
+                startActivity(intent);
+            }
+        });
+        mManySequenceFab = (FloatingActionButton)view.findViewById(R.id.fabManySequence);
+        mManySequenceFab.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab));
+        mManySequenceFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CreateSequenceActivity.class);
@@ -92,11 +104,11 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
         if (moleSequenceListCursor == null) {
             mProgressView.setVisibility(View.VISIBLE);
             mEmptyView.setVisibility(View.GONE);
-            mListView.setVisibility(View.GONE);
+            mManySequence.setVisibility(View.GONE);
         } else {
             if (moleSequenceListCursor.getCount() == 0) {
                 mEmptyView.setVisibility(View.VISIBLE);
-                mListView.setVisibility(View.GONE);
+                mManySequence.setVisibility(View.GONE);
                 mProgressView.setVisibility(View.GONE);
             } else {
                 if (mSequenceCursorAdapter == null) {
@@ -104,8 +116,8 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
                 } else {
                     mSequenceCursorAdapter.changeCursor(moleSequenceListCursor);
                 }
-                mListView.setAdapter(mSequenceCursorAdapter);
-                mListView.setVisibility(View.VISIBLE);
+                mManySequenceListView.setAdapter(mSequenceCursorAdapter);
+                mManySequence.setVisibility(View.VISIBLE);
                 mEmptyView.setVisibility(View.GONE);
                 mProgressView.setVisibility(View.GONE);
             }

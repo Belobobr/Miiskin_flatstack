@@ -1,11 +1,13 @@
 package com.miiskin.miiskin.Gui.ViewSequence;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.miiskin.miiskin.Gui.Home.HomeActivity;
 import com.miiskin.miiskin.R;
 
 public class ViewSequenceActivity extends AppCompatActivity {
@@ -39,5 +41,12 @@ public class ViewSequenceActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

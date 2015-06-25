@@ -1,12 +1,14 @@
 package com.miiskin.miiskin.Gui.General;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.widget.ImageView;
 import android.graphics.Paint;
 
@@ -19,6 +21,7 @@ public class PointedImageView extends ImageView {
     private float yRelativeCord = -1;
     private Paint mTextPaint;
     private float mPointerSize;
+    private float DEFAULT_POINT_SIZE = 8;
 
     public PointedImageView(Context context) {
         super(context);
@@ -38,7 +41,9 @@ public class PointedImageView extends ImageView {
     private void init() {
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setColor(0xFF0000FF);
-        mPointerSize = 30;
+        Resources r = getResources();
+        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_POINT_SIZE, r.getDisplayMetrics());
+        mPointerSize = px;
     }
 
     public void removePoint() {
@@ -70,6 +75,12 @@ public class PointedImageView extends ImageView {
         this.yRelativeCord = yRelativeCord;
     }
 
+    public void setPointerSize(float pointerSize) {
+        Resources r = getResources();
+        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, pointerSize, r.getDisplayMetrics());
+        mPointerSize = px;
+    }
+
     @Override
     public Parcelable onSaveInstanceState() {
 
@@ -77,6 +88,7 @@ public class PointedImageView extends ImageView {
         bundle.putParcelable("instanceState", super.onSaveInstanceState());
         bundle.putFloat("xRelativeCord", this.xRelativeCord);
         bundle.putFloat("yRelativeCord", this.yRelativeCord);
+        bundle.putFloat("pointerSize", this.mPointerSize);
         return bundle;
     }
 
@@ -87,6 +99,7 @@ public class PointedImageView extends ImageView {
             Bundle bundle = (Bundle) state;
             this.xRelativeCord = bundle.getFloat("xRelativeCord");
             this.yRelativeCord = bundle.getFloat("yRelativeCord");
+            this.mPointerSize = bundle.getFloat("mPointerSize");
             state = bundle.getParcelable("instanceState");
         }
         super.onRestoreInstanceState(state);

@@ -35,6 +35,8 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null)  {
             mSequenceData = (SequenceData)savedInstanceState.getSerializable(SEQUENCE_DATA_TAG);
+        } else {
+            mSequenceData = new SequenceData();
         }
 
         setContentView(R.layout.activity_create_secuence);

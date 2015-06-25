@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.miiskin.miiskin.Data.BodyPart;
+import com.miiskin.miiskin.Gui.General.PointedImageView;
 import com.miiskin.miiskin.R;
 
 /**
@@ -33,16 +34,17 @@ public class SpecificLocationFragment extends Fragment {
 
     public static class BodyPartColors {
         public static final int NOT_BODY_COLOR = 0xFFFFFFFF;
-        public static final int BODY_COLOR = 0xFF0000FF;
+        public static final int BODY_COLOR = 0xFFFF0000;
     }
 
-    Integer xCord;
-    Integer yCord;
     int prevColorTouched;
     int bodyPartColorTouched = BodyPartColors.NOT_BODY_COLOR;
     BodyPart mBodyPart;
+    float bodyPartRelativePointX;
+    float bodyPartRelativePointY;
 
-    private ImageView bodyImageView;
+
+    private PointedImageView bodyImageView;
     private ImageView bodyImageViewOverlay;
     private FloatingActionButton mFloatingActionButton;
 
@@ -70,8 +72,8 @@ public class SpecificLocationFragment extends Fragment {
             mBodyPart = (BodyPart)arguments.getSerializable(CHOSEN_BODY_PART);
         }
         if (savedInstanceState != null) {
-            xCord = savedInstanceState.getInt(BODY_PART_X_CORD);
-            yCord = savedInstanceState.getInt(BODY_PART_Y_CORD);
+            bodyPartRelativePointX = savedInstanceState.getFloat(BODY_PART_X_CORD);
+            bodyPartRelativePointY = savedInstanceState.getFloat(BODY_PART_Y_CORD);
             bodyPartColorTouched = savedInstanceState.getInt(BODY_PART_COLOR_TOUCHED);
             mBodyPart = (BodyPart)savedInstanceState.getSerializable(CHOSEN_BODY_PART);
         }
@@ -81,8 +83,8 @@ public class SpecificLocationFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(BODY_PART_COLOR_TOUCHED, bodyPartColorTouched);
-        outState.putInt(BODY_PART_X_CORD, xCord);
-        outState.putInt(BODY_PART_Y_CORD, yCord);
+        outState.putFloat(BODY_PART_X_CORD, bodyPartRelativePointX);
+        outState.putFloat(BODY_PART_Y_CORD, bodyPartRelativePointY);
         outState.putSerializable(CHOSEN_BODY_PART, mBodyPart);
     }
 
@@ -136,7 +138,7 @@ public class SpecificLocationFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        bodyImageView = (ImageView)view.findViewById(R.id.bodyImageView);
+        bodyImageView = (PointedImageView)view.findViewById(R.id.bodyImageView);
         bodyImageViewOverlay = (ImageView)view.findViewById(R.id.bodyImageViewOverlay);
 
         final CreateSequenceActivity createSequenceActivity = (CreateSequenceActivity)getActivity();
@@ -173,8 +175,26 @@ public class SpecificLocationFragment extends Fragment {
         bodyImageView.getImageMatrix().invert(inverse);
         float[] touchPoint = new float[] {ev.getX(), ev.getY()};
         inverse.mapPoints(touchPoint);
-        xCord = Integer.valueOf((int)touchPoint[0]);
-        yCord = Integer.valueOf((int)touchPoint[1]);
+        int xCord = Integer.valueOf((int)touchPoint[0]);
+        int yCord = Integer.valueOf((int)touchPoint[1]);
+        int bitmapWidth = ((BitmapDrawable)bodyImageView.getDrawable()).getBitmap().getWidth();
+        int bitmapHeight = ((BitmapDrawable)bodyImageView.getDrawable()).getBitmap().getHeight();
+
+        //constrain position to image frame
+        if (xCord < 0) {
+            xCord = 0;
+        } else if (xCord > bitmapWidth) {
+            xCord = bitmapWidth;
+        }
+
+        if (yCord < 0) {
+            yCord = 0;
+        } else if (yCord > bitmapHeight) {
+            yCord = bitmapHeight;
+        }
+
+        bodyPartRelativePointX = (float)xCord / bitmapWidth ;
+        bodyPartRelativePointY = (float)yCord / bitmapHeight ;
 
         try {
             prevColorTouched = bodyPartColorTouched;
@@ -184,25 +204,31 @@ public class SpecificLocationFragment extends Fragment {
             bodyPartColorTouched = BodyPartColors.NOT_BODY_COLOR; // nothing happens when touching white
         }
 
-        if (prevColorTouched != bodyPartColorTouched) {
-            checkTouchZone();
+        int bodyPartColor = checkTouchZone();
+        if (bodyPartColor == BodyPartColors.BODY_COLOR) {
+            bodyImageView.setPoint(bodyPartRelativePointX, bodyPartRelativePointY);
+            bodyImageView.invalidate();
+        } else {
+            bodyImageView.removePoint();
+            bodyImageView.invalidate();
         }
     }
 
-    private void checkTouchZone() {
+
+    private int checkTouchZone() {
         CreateSequenceActivity createSequenceActivity = (CreateSequenceActivity)getActivity();
         switch (bodyPartColorTouched) {
             case BodyPartColors.BODY_COLOR :
                 mFloatingActionButton.setEnabled(true);
                 mFloatingActionButton.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab));
                 createSequenceActivity.mActionBarToolbar.setTitle(R.string.specific_location_selected);
-                break;
+                return BodyPartColors.BODY_COLOR;
             case BodyPartColors.NOT_BODY_COLOR :
             default:
                 mFloatingActionButton.setEnabled(false);
                 mFloatingActionButton.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab_semitrasparent));
                 createSequenceActivity.mActionBarToolbar.setTitle(R.string.select_specific_area);
-                break;
+                return BodyPartColors.NOT_BODY_COLOR;
         }
     }
 

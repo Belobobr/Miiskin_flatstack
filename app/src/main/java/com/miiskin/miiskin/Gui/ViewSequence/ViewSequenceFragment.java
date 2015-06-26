@@ -6,16 +6,23 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.miiskin.miiskin.Data.Paths;
 import com.miiskin.miiskin.Data.SequenceData;
+import com.miiskin.miiskin.Gui.Camera.CameraActivity;
 import com.miiskin.miiskin.R;
+
+import java.io.File;
 
 /**
  * Created by Newshka on 26.06.2015.
@@ -124,7 +131,29 @@ public class ViewSequenceFragment extends Fragment {
     }
 
     private void takePhoto() {
+        //Determine folder where photo will be saved
+        File path = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DCIM);
+        if (path.exists()) {
+            File sequencePhotoDir = new File(path, Paths.getRelativeDirForSequence(mSequenceData.mId));
+            if (sequencePhotoDir.exists()) {
+                savePhotoToDir(sequencePhotoDir);
+            } else {
+                boolean success = sequencePhotoDir.mkdirs();
+                if (success) {
+                    savePhotoToDir(sequencePhotoDir);
+                } else {
+                    Toast toast = Toast.makeText(getActivity(), R.string.cant_create_photo, Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            }
+        }
+    }
 
+    private void savePhotoToDir(File file) {
+        Intent intent = new Intent(getActivity(), CameraActivity.class);
+        intent.putExtra(CameraActivity.DIR_TO_SAVE, file);
+        startActivity(intent);
     }
 
     private void showButtons() {

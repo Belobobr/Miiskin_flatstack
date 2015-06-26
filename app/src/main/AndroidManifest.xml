@@ -2,7 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.miiskin.miiskin" >
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
+        android:name=".MiiskinApplication"
         android:allowBackup="true"
         android:icon="@drawable/launcher_icon"
         android:label="@string/app_name"
@@ -20,6 +25,11 @@
         <activity
             android:name=".Gui.ViewSequence.ViewSequenceActivity"
             android:label="@string/title_activity_view_sequence" >
+        </activity>
+        <activity android:name=".Gui.Camera.CameraActivity" />
+        <activity
+            android:name=".Gui.AcceptPhoto.AcceptPhotoActivity"
+            android:label="@string/title_activity_accept_photo" >
         </activity>
     </application>
 

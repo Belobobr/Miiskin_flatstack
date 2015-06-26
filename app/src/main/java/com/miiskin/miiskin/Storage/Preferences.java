@@ -15,6 +15,8 @@ public class Preferences {
         public static String FTE = "FTE";
 
         public static String FTE_SHOW_DISCLAIMER = "FTE_SHOW_DISCLAIMER";
+
+        public static String FTE_SHOW_CAMERA_TIPS = "FTE_SHOW_CAMERA_TIPS";
     }
 
     public static class UserInfo {

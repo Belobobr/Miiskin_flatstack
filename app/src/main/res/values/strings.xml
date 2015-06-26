@@ -22,6 +22,15 @@
     <string name="specific_location_selected">Specific location selected</string>
     <string name="front">Front</string>
     <string name="rear">Rear</string>
+    <string name="cant_create_photo">"Can't create photo"</string>
+    <string name="tips_for_a_good_photo">Tips for a good photo</string>
+    <string name="tips_for_a_good_photo_description">
+        Proper lighting\n
+        Mole should be in focus\n
+        Try to keep it steady\n
+    </string>
+    <string name="got_it">GOT IT</string>
+
 
     <string-array name="year_of_birth">
         <item>1985</item>
@@ -34,4 +43,5 @@
         <item>1992</item>
     </string-array>
     <string name="title_activity_view_sequence">ViewSequence</string>
+    <string name="title_activity_accept_photo">AcceptPhotoActivity</string>
 </resources>

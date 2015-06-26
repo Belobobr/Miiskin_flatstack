@@ -104,6 +104,9 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
         mCancelPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mDirToSave.exists()) {
+                    mDirToSave.delete();
+                }
                 getActivity().finish();
             }
         });

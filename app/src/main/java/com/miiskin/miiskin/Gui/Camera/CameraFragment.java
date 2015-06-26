@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.miiskin.miiskin.Data.SavedPhotoInfo;
+import com.miiskin.miiskin.Data.SequenceData;
 import com.miiskin.miiskin.Gui.AcceptPhoto.AcceptPhotoActivity;
 import com.miiskin.miiskin.MiiskinApplication;
 import com.miiskin.miiskin.R;
@@ -35,7 +36,6 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
     public static final String TAG = "CameraFragment";
     public FrameLayout mCameraStub;
     private CameraView mCameraView;
-    private ImageView mTakePhotoView;
     private DocCameraBorder mDocBorder;
     private ProgressBar mProgressBar;
     private boolean mIsSavePhoto = false;
@@ -47,12 +47,16 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
     private File mDirToSave;
     private View mAcceptPhoto;
     private View mCancelPhoto;
+    private View mTakePhotoView;
+    private SavedPhotoInfo mSavedPhotoInfo;
+    private SequenceData mSequenceData;
 
-    public static CameraFragment newInstance(int pMode, File dirToSavePhoto) {
+    public static CameraFragment newInstance(int pMode, File dirToSavePhoto, SequenceData sequenceData) {
         CameraFragment fragment = new CameraFragment();
         Bundle arguments = new Bundle();
         arguments.putInt(CameraActivity.CAMERA_MODE, pMode);
         arguments.putSerializable(CameraActivity.DIR_TO_SAVE, dirToSavePhoto);
+        arguments.putSerializable(CameraActivity.EXTRA_SEQUENCE_DATA, sequenceData);
         fragment.setArguments(arguments);
         return fragment;
     }
@@ -69,6 +73,7 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
         if (arguments != null) {
             mMode = arguments.getInt(CameraActivity.CAMERA_MODE, CameraActivity.MULTI_PHOTO);
             mDirToSave = (File)arguments.getSerializable(CameraActivity.DIR_TO_SAVE);
+            mSequenceData = (SequenceData)arguments.getSerializable(CameraActivity.EXTRA_SEQUENCE_DATA);
         }
     }
 
@@ -76,11 +81,10 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_camera, container, false);
         mCameraStub = (FrameLayout) view.findViewById(R.id.camera_stub);
-        mTakePhotoView = (ImageView) view.findViewById(R.id.take_photo);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progress);
         mDocBorder = (DocCameraBorder) view.findViewById(R.id.border);
         mFocusBorderView = (FocusBorderView) view.findViewById(R.id.focus_border);
-
+        mTakePhotoView =  view.findViewById(R.id.take_photo);
         mTakePhotoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,8 +100,7 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
         mAcceptPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AcceptPhotoActivity.class);
-                startActivity(intent);
+                goToPreview();
             }
         });
         mCancelPhoto = view.findViewById(R.id.cancel_photo);
@@ -161,8 +164,8 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
 
     private void updateUi() {
         //То как мне получить результат задачи
-        SavedPhotoInfo savedPhotoInfo = (SavedPhotoInfo)TaskManager.getInstance(MiiskinApplication.getAppContext()).getDataById(taskId);
-        if (savedPhotoInfo != null) {
+        mSavedPhotoInfo = (SavedPhotoInfo) TaskManager.getInstance(MiiskinApplication.getAppContext()).getDataById(taskId);
+        if (mSavedPhotoInfo != null) {
             mProgressBar.setVisibility(View.INVISIBLE);
             //photoSavedSuccessFull(mId);
             mPhotoTaken = true;
@@ -171,10 +174,7 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
 
             if (mMode == CameraActivity.SINGLE_PHOTO) {
                 //Можно завершить эту активность и перейти в предварительный просмотр
-                Intent intent = new Intent();
-                intent.putExtra(CameraActivity.ARG_TAKEN_PHOTO_IMAGE_INFO, savedPhotoInfo);
-                getActivity().setResult(Activity.RESULT_OK, intent);
-                getActivity().finish();
+                goToPreview();
             }
         }
         if (mPhotoTaken) {
@@ -184,6 +184,14 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
         }
 
     }
+
+    private void goToPreview() {
+        Intent intent = new Intent(getActivity(), AcceptPhotoActivity.class);
+        intent.putExtra(AcceptPhotoActivity.ARG_TAKEN_PHOTO_IMAGE_INFO, mSavedPhotoInfo);
+        intent.putExtra(AcceptPhotoActivity.ARG_SEQUENCE_DATA, mSequenceData);
+        startActivity(intent);
+    }
+
 
     private void photoSavedSuccessFull(String mPhotoId) {
 

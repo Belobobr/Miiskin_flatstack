@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
+import com.miiskin.miiskin.Data.SequenceData;
 import com.miiskin.miiskin.Gui.Home.DisclaimerDialogFragment;
 import com.miiskin.miiskin.Gui.Home.FTEHomeFragment;
 import com.miiskin.miiskin.Gui.Home.HomeFragment;
@@ -18,16 +19,16 @@ import java.io.File;
  * Created by Newshka on 26.06.2015.
  */
 public class CameraActivity extends AppCompatActivity implements FteCameraTipsFragment.FteCameraTipsListener{
+    public static final String EXTRA_SEQUENCE_DATA = "EXTRA_SEQUENCE_DATA";
     public static final String DIR_TO_SAVE = "DIR_TO_SAVE";
 
     public static final String CAMERA_MODE = "CAMERA_MODE";
     public static final int MULTI_PHOTO = 0;
     public static final int SINGLE_PHOTO = 1;
 
-    public static final String ARG_TAKEN_PHOTO_IMAGE_INFO = "ARG_TAKEN_PHOTO_IMAGE_INFO";
-
     private int mMode;
     private File dirToSavePhoto;
+    private SequenceData mSequenceData;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,10 +39,11 @@ public class CameraActivity extends AppCompatActivity implements FteCameraTipsFr
 
         mMode = getIntent().getIntExtra(CAMERA_MODE, MULTI_PHOTO);
         dirToSavePhoto = (File)getIntent().getSerializableExtra(DIR_TO_SAVE);
+        mSequenceData = (SequenceData)getIntent().getSerializableExtra(EXTRA_SEQUENCE_DATA);
 
         CameraFragment fragment = (CameraFragment) getFragmentManager().findFragmentByTag(CameraFragment.TAG);
         if (fragment == null) {
-            fragment = CameraFragment.newInstance(mMode, dirToSavePhoto);
+            fragment = CameraFragment.newInstance(mMode, dirToSavePhoto, mSequenceData);
             getFragmentManager().beginTransaction().replace(R.id.fragment_stub, fragment, CameraFragment.TAG).commit();
         }
 

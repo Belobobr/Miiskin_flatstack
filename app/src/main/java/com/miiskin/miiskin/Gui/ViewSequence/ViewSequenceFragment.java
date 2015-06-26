@@ -30,6 +30,7 @@ import java.io.File;
 public class ViewSequenceFragment extends Fragment {
     public static final String EXTRA_SEQUENCE_DATA = "EXTRA_SEQUENCE_DATA";
 
+
     SequenceData mSequenceData;
     FloatingActionButton mFloatingActionButton;
     FloatingActionButton mSendToDoctor;
@@ -164,6 +165,7 @@ public class ViewSequenceFragment extends Fragment {
         File fileSavedTo = new File(fileName);
         Intent intent = new Intent(getActivity(), CameraActivity.class);
         intent.putExtra(CameraActivity.DIR_TO_SAVE, fileSavedTo);
+        intent.putExtra(CameraActivity.EXTRA_SEQUENCE_DATA, mSequenceData);
         startActivity(intent);
 
     }

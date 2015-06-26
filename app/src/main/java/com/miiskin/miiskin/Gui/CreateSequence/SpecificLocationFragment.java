@@ -18,6 +18,7 @@ import android.widget.ImageView;
 
 import com.miiskin.miiskin.Data.BodyPart;
 import com.miiskin.miiskin.Gui.General.PointedImageView;
+import com.miiskin.miiskin.Helpers.BitmapDecoder;
 import com.miiskin.miiskin.R;
 
 /**
@@ -97,7 +98,7 @@ public class SpecificLocationFragment extends Fragment {
                 checkTouchZone();
                 loadBodyImageView(mBodyPart.getDrawableResourceForeground());
 
-                final Bitmap bm2 = decodeSampledBitmapFromResource(getResources(), mBodyPart.getDrawableResourceBackground(), bodyImageViewOverlay.getWidth(), bodyImageViewOverlay.getHeight());
+                final Bitmap bm2 = BitmapDecoder.decodeSampledBitmapFromResource(getResources(), mBodyPart.getDrawableResourceBackground(), bodyImageViewOverlay.getWidth(), bodyImageViewOverlay.getHeight());
                 if (bm2!=null) {
                     bodyImageViewOverlay.setScaleType(ImageView.ScaleType.FIT_CENTER);
                     bodyImageViewOverlay.setImageBitmap(bm2);
@@ -161,7 +162,7 @@ public class SpecificLocationFragment extends Fragment {
 
 
     private void loadBodyImageView(int resId) {
-        final Bitmap bm = decodeSampledBitmapFromResource(getResources(), resId, bodyImageView.getWidth(), bodyImageView.getHeight());
+        final Bitmap bm = BitmapDecoder.decodeSampledBitmapFromResource(getResources(), resId, bodyImageView.getWidth(), bodyImageView.getHeight());
         if (bm!=null) {
             bodyImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             bodyImageView.setImageBitmap(bm);
@@ -214,7 +215,6 @@ public class SpecificLocationFragment extends Fragment {
         }
     }
 
-
     private int checkTouchZone() {
         CreateSequenceActivity createSequenceActivity = (CreateSequenceActivity)getActivity();
         switch (bodyPartColorTouched) {
@@ -230,44 +230,5 @@ public class SpecificLocationFragment extends Fragment {
                 createSequenceActivity.mActionBarToolbar.setTitle(R.string.select_specific_area);
                 return BodyPartColors.NOT_BODY_COLOR;
         }
-    }
-
-    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
-                                                         int reqWidth, int reqHeight) {
-
-        // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, resId, options);
-
-        // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeResource(res, resId, options);
-    }
-
-    public static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) > reqHeight
-                    && (halfWidth / inSampleSize) > reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-
-        return inSampleSize;
     }
 }

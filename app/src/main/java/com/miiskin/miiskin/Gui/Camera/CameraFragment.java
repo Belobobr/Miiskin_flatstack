@@ -104,7 +104,7 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
         mCancelPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().finish();;
+                getActivity().finish();
             }
         });
 
@@ -145,7 +145,7 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
             display.getSize(displaySize);
             taskId = UUID.randomUUID().toString();
             TaskManager.getInstance(MiiskinApplication.getAppContext()).executeTask(new SavePhotoFileTask(getActivity(), new Object[]{data, displaySize, mCameraView.getRealViewSize(),
-                    mCameraView.getAngle(), mDocBorder.getBorderRect(), mDirToSave}), taskId);
+                    mCameraView.getAngle(), mDocBorder.getBorderRect(), mDirToSave, true}), taskId);
         }
     };
 

@@ -137,11 +137,11 @@ public class ViewSequenceFragment extends Fragment {
         if (path.exists()) {
             File sequencePhotoDir = new File(path, Paths.getRelativeDirForSequence(mSequenceData.mId));
             if (sequencePhotoDir.exists()) {
-                savePhotoToDir(sequencePhotoDir);
+                savePhotoToFile(sequencePhotoDir);
             } else {
                 boolean success = sequencePhotoDir.mkdirs();
                 if (success) {
-                    savePhotoToDir(sequencePhotoDir);
+                    savePhotoToFile(sequencePhotoDir);
                 } else {
                     Toast toast = Toast.makeText(getActivity(), R.string.cant_create_photo, Toast.LENGTH_SHORT);
                     toast.show();
@@ -154,6 +154,18 @@ public class ViewSequenceFragment extends Fragment {
         Intent intent = new Intent(getActivity(), CameraActivity.class);
         intent.putExtra(CameraActivity.DIR_TO_SAVE, file);
         startActivity(intent);
+    }
+
+    private void savePhotoToFile(File dir) {
+        File tempPhotoPath = dir;
+        //генерируем имя файла
+        int indexPhoto = tempPhotoPath.listFiles().length + 1;
+        String fileName = tempPhotoPath.getAbsolutePath() + "/" + indexPhoto + ".png";
+        File fileSavedTo = new File(fileName);
+        Intent intent = new Intent(getActivity(), CameraActivity.class);
+        intent.putExtra(CameraActivity.DIR_TO_SAVE, fileSavedTo);
+        startActivity(intent);
+
     }
 
     private void showButtons() {

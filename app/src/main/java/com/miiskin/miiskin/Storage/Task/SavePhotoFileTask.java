@@ -48,6 +48,7 @@ public class SavePhotoFileTask extends Task {
     public SavedPhotoInfo mSavedPhotoInfo;
     public File mPathToSave;
     private String mFileName;
+    private boolean mExactPath;
 
     public SavePhotoFileTask(Context context) {
         super(context);
@@ -61,6 +62,7 @@ public class SavePhotoFileTask extends Task {
         mAngle = (int)params[3];
         mBorderRect = (Rect)params[4];
         mPathToSave = (File)params[5];
+        mExactPath = (boolean)params[6];
     }
 
     @Override
@@ -70,10 +72,14 @@ public class SavePhotoFileTask extends Task {
 
     @Override
     public Object execute() {
-        File tempPhotoPath = mPathToSave;
-        //генерируем имя файла
-        int indexPhoto = tempPhotoPath.listFiles().length + 1;
-        mFileName = tempPhotoPath.getAbsolutePath() + "/" + indexPhoto + ".png";
+        if (!mExactPath) {
+            File tempPhotoPath = mPathToSave;
+            //генерируем имя файла
+            int indexPhoto = tempPhotoPath.listFiles().length + 1;
+            mFileName = tempPhotoPath.getAbsolutePath() + "/" + indexPhoto + ".png";
+        } else {
+            mFileName = mPathToSave.getAbsolutePath();
+        }
         //обрезаем по фото по рамке
         Bitmap bitmap = BitmapFactory.decodeByteArray(mBytes, 0, mBytes.length);
         mBytes = null;

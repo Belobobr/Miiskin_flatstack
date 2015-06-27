@@ -31,6 +31,10 @@
             android:name=".Gui.AcceptPhoto.AcceptPhotoActivity"
             android:label="@string/title_activity_accept_photo" >
         </activity>
+        <activity
+            android:name=".Gui.SendToDoctor.SendToDoctorActivity"
+            android:label="@string/title_activity_send_to_toctor" >
+        </activity>
     </application>
 
 </manifest>

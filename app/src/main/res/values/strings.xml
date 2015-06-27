@@ -30,6 +30,10 @@
         Try to keep it steady\n
     </string>
     <string name="got_it">GOT IT</string>
+    <string name="dermatological_assessment">Dermatological assessment</string>
+    <string name="dermatological_assessment_description">Send this sequence of picture to our professional dermatologist
+    and get on assessment 48 hours sent to your email.</string>
+    <string name="agree_terns">I agree to the terms and conditions</string>
 
 
     <string-array name="year_of_birth">
@@ -44,4 +48,5 @@
     </string-array>
     <string name="title_activity_view_sequence">ViewSequence</string>
     <string name="title_activity_accept_photo">AcceptPhotoActivity</string>
+    <string name="title_activity_send_to_toctor">SendToToctor</string>
 </resources>

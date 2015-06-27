@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.miiskin.miiskin.Data.Paths;
 import com.miiskin.miiskin.Data.SequenceData;
 import com.miiskin.miiskin.Gui.Camera.CameraActivity;
+import com.miiskin.miiskin.Gui.SendToDoctor.SendToDoctorActivity;
 import com.miiskin.miiskin.Helpers.BitmapDecoder;
 import com.miiskin.miiskin.MiiskinApplication;
 import com.miiskin.miiskin.R;
@@ -156,7 +157,8 @@ public class ViewSequenceFragment extends Fragment {
     }
 
     private void sendToDoctor() {
-
+        Intent intent = new Intent(getActivity(), SendToDoctorActivity.class);
+        startActivity(intent);
     }
 
     private void takePhoto() {

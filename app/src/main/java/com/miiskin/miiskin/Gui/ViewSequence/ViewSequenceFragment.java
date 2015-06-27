@@ -6,20 +6,31 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miiskin.miiskin.Data.Paths;
 import com.miiskin.miiskin.Data.SequenceData;
 import com.miiskin.miiskin.Gui.Camera.CameraActivity;
+import com.miiskin.miiskin.Helpers.BitmapDecoder;
+import com.miiskin.miiskin.MiiskinApplication;
 import com.miiskin.miiskin.R;
 
 import java.io.File;
@@ -30,15 +41,16 @@ import java.io.File;
 public class ViewSequenceFragment extends Fragment {
     public static final String EXTRA_SEQUENCE_DATA = "EXTRA_SEQUENCE_DATA";
 
-
     SequenceData mSequenceData;
     FloatingActionButton mFloatingActionButton;
     FloatingActionButton mSendToDoctor;
     FloatingActionButton mTakePhoto;
     CoordinatorLayout mCoordinatorLayout;
+    PagerContainer mContainer;
     private float mYDoctorInitialPosition;
     private float mYPhotoInitialPosition;
     private boolean mButtonsVisible = false;
+    LayoutInflater mLayoutInflater;
 
     public static ViewSequenceFragment newInstance(SequenceData sequenceData) {
         ViewSequenceFragment fragment = new ViewSequenceFragment();
@@ -52,6 +64,7 @@ public class ViewSequenceFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        mLayoutInflater = (LayoutInflater) MiiskinApplication.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (getArguments() != null) {
             mSequenceData = (SequenceData)getArguments().getSerializable(EXTRA_SEQUENCE_DATA);
         }
@@ -119,6 +132,21 @@ public class ViewSequenceFragment extends Fragment {
             }
         });
         mCoordinatorLayout = (CoordinatorLayout)view.findViewById(R.id.coordinatorLayout);
+
+        mContainer = (PagerContainer) view.findViewById(R.id.pager_container);
+
+        ViewPager pager = mContainer.getViewPager();
+        PagerAdapter adapter = new MyPagerAdapter();
+        pager.setAdapter(adapter);
+        //Necessary or the pager will only have one extra page to show
+        // make this at least however many pages you can see
+        pager.setOffscreenPageLimit(adapter.getCount());
+        //A little space between pages
+        pager.setPageMargin(15);
+
+        //If hardware acceleration is enabled, you should also remove
+        // clipping on the pager for its children.
+        pager.setClipChildren(false);
     }
 
     @Nullable
@@ -149,12 +177,6 @@ public class ViewSequenceFragment extends Fragment {
                 }
             }
         }
-    }
-
-    private void savePhotoToDir(File file) {
-        Intent intent = new Intent(getActivity(), CameraActivity.class);
-        intent.putExtra(CameraActivity.DIR_TO_SAVE, file);
-        startActivity(intent);
     }
 
     private void savePhotoToFile(File dir) {
@@ -221,5 +243,53 @@ public class ViewSequenceFragment extends Fragment {
         });
         animPhotoAndDoctorAppearing.setDuration(250);
         animPhotoAndDoctorAppearing.start();
+    }
+
+    //Nothing special about this adapter, just throwing up colored views for demo
+    private class MyPagerAdapter extends PagerAdapter {
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            FrameLayout frameLayout = (FrameLayout)mLayoutInflater.inflate(R.layout.layout_mole_pager, container, false);
+            frameLayout.setBackgroundColor(Color.argb(255, position * 50, position * 10, position * 50));
+            frameLayout.setClipChildren(true);
+
+            final ImageView imageView = (ImageView)frameLayout.findViewById(R.id.mole_photo);
+            final String fileName = Paths.getAbsoluteDirForSequence(mSequenceData.mId) + "/" + (position + 1) + ".png";
+            imageView.post(new Runnable() {
+                @Override
+                public void run() {
+
+                    final Bitmap bitmap = BitmapDecoder.decodeBitmapFromFile(fileName, imageView.getWidth(), imageView.getHeight());
+                    if (bitmap!=null) {
+                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        imageView.setImageBitmap(bitmap);
+                    }
+                }
+            });
+//
+            container.addView(frameLayout);
+            return frameLayout;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View)object);
+        }
+
+        @Override
+        public int getCount() {
+            String absoluteDir =  Paths.getAbsoluteDirForSequence(mSequenceData.mId);
+            File file = new File(absoluteDir);
+            if (file.listFiles() != null) {
+               return file.listFiles().length;
+            };
+            return 0;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return (view == object);
+        }
     }
 }

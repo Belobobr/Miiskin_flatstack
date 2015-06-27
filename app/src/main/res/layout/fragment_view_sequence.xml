@@ -1,16 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/main_layout"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
 
     <android.support.design.widget.CoordinatorLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
              android:id="@+id/coordinatorLayout"
              android:orientation="vertical"
              android:layout_width="match_parent"
              android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <com.miiskin.miiskin.Gui.ViewSequence.PagerContainer
+                    android:id="@+id/pager_container"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:layout_weight="10"
+                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"/>
+                    <android.support.v4.view.ViewPager
+                        android:layout_weight="80"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal" />
+                    <View
+                        android:layout_weight="10"
+                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"/>
+
+                </com.miiskin.miiskin.Gui.ViewSequence.PagerContainer>
+
+            </FrameLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
+
+                <TextView
+                    android:id="@+id/photo_date_taken"
+                    android:text="Photo date taken"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"/>
+
+                <TextView
+                    android:id="@+id/photo_number"
+                    android:text="Photo number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/photo_date_taken"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/bottomRightPanel"
@@ -54,5 +107,3 @@
         </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>
-
-</RelativeLayout>

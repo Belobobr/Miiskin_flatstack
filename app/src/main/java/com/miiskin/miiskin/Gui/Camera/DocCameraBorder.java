@@ -12,9 +12,7 @@ import com.miiskin.miiskin.R;
 
 
 /**
- * Рамка которая рисуется на вьехе камеры.
- * Рамка соответствует по пропорциям А4.
- * Created by Kalashnikov S.A. on 17.11.2014.
+ * Rect, location on surface, that will be saved
  */
 public class DocCameraBorder extends FrameLayout {
 
@@ -59,47 +57,48 @@ public class DocCameraBorder extends FrameLayout {
     }
 
     public Rect getBorderRect() {
-        return mBorderRect;
+        Rect hitRect = new Rect();
+        getHitRect(hitRect);
+        return hitRect;
     }
 
 
     @Override
     protected void onDraw(Canvas canvas) {
-        //рисуем рамку для А4
-        mPaint.setStrokeWidth(5);
-        mPaint.setStyle(Paint.Style.STROKE);
-        float left, top, right, bottom, borderWidth, borderHeight;
-        if (mViewWidth > mViewHeight) {
-            //ланшафт
-            borderHeight = mViewHeight - 20;
-            borderWidth = (float) (borderHeight / 1.41);
-            left = (mViewWidth - borderWidth) / 2;
-            top = 10;
-            right = left + borderWidth;
-            bottom = 10 + borderHeight;
-        } else {
-            //портрет
-            //определяем по какой стороне будем расчитывать рамку
-            borderWidth = mViewWidth - 20;
-            borderHeight = mViewHeight - 20;
-            float centerX = mViewWidth / 2;
-            float centerY = mViewHeight / 2;
-            if ((borderWidth * 1.41) > borderHeight) {
-                borderWidth = (float) (borderHeight / 1.41);
-            } else {
-                borderHeight = (float) (borderWidth * 1.41);
-            }
-            top = centerY - (borderHeight / 2);
-            bottom = centerY + (borderHeight / 2);
-            left = centerX - (borderWidth / 2);
-            right = centerX + (borderWidth / 2);
-        }
-        L.w("border = " + borderWidth + "*" + borderHeight);
-        L.w("rect: left =" + left + "; top = " + top + "; right = " + right + "; bottom = " + bottom);
-
-        mBorderRect = new Rect((int) left, (int) top, (int) right, (int) bottom);
-        canvas.drawRect(left, top, right, bottom, mPaint);
-
+        //Border for A4 page
+//        mPaint.setStrokeWidth(5);
+//        mPaint.setStyle(Paint.Style.STROKE);
+//        float left, top, right, bottom, borderWidth, borderHeight;
+//        if (mViewWidth > mViewHeight) {
+//            //ланшафт
+//            borderHeight = mViewHeight - 20;
+//            borderWidth = (float) (borderHeight / 1.41);
+//            left = (mViewWidth - borderWidth) / 2;
+//            top = 10;
+//            right = left + borderWidth;
+//            bottom = 10 + borderHeight;
+//        } else {
+//            //портрет
+//            //определяем по какой стороне будем расчитывать рамку
+//            borderWidth = mViewWidth - 20;
+//            borderHeight = mViewHeight - 20;
+//            float centerX = mViewWidth / 2;
+//            float centerY = mViewHeight / 2;
+//            if ((borderWidth * 1.41) > borderHeight) {
+//                borderWidth = (float) (borderHeight / 1.41);
+//            } else {
+//                borderHeight = (float) (borderWidth * 1.41);
+//            }
+//            top = centerY - (borderHeight / 2);
+//            bottom = centerY + (borderHeight / 2);
+//            left = centerX - (borderWidth / 2);
+//            right = centerX + (borderWidth / 2);
+//        }
+//        L.w("border = " + borderWidth + "*" + borderHeight);
+//        L.w("rect: left =" + left + "; top = " + top + "; right = " + right + "; bottom = " + bottom);
+//
+//        mBorderRect = new Rect((int) left, (int) top, (int) right, (int) bottom);
+//        canvas.drawRect(left, top, right, bottom, mPaint);
     }
 
 }

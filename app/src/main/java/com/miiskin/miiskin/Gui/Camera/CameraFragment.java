@@ -3,6 +3,7 @@ package com.miiskin.miiskin.Gui.Camera;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -15,9 +16,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.miiskin.miiskin.Data.BodyPart;
 import com.miiskin.miiskin.Data.SavedPhotoInfo;
 import com.miiskin.miiskin.Data.SequenceData;
 import com.miiskin.miiskin.Gui.AcceptPhoto.AcceptPhotoActivity;
+import com.miiskin.miiskin.Gui.General.PointedImageView;
+import com.miiskin.miiskin.Helpers.BitmapDecoder;
 import com.miiskin.miiskin.MiiskinApplication;
 import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.Task.SavePhotoFileTask;
@@ -38,18 +42,19 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
     private CameraView mCameraView;
     private DocCameraBorder mDocBorder;
     private ProgressBar mProgressBar;
-    private boolean mIsSavePhoto = false;
     private FocusBorderView mFocusBorderView;
-    private boolean mPhotoTaken = false;
-    private String taskId;
-
     private int mMode;
     private File mDirToSave;
     private View mAcceptPhoto;
     private View mCancelPhoto;
     private View mTakePhotoView;
+    private PointedImageView bodyPartLocationPreview;
+
     private SavedPhotoInfo mSavedPhotoInfo;
     private SequenceData mSequenceData;
+    private boolean mPhotoTaken = false;
+    private String taskId;
+    private boolean mIsSavePhoto = false;
 
     public static CameraFragment newInstance(int pMode, File dirToSavePhoto, SequenceData sequenceData) {
         CameraFragment fragment = new CameraFragment();
@@ -113,8 +118,25 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
                 getActivity().finish();
             }
         });
+        bodyPartLocationPreview = (PointedImageView)view.findViewById(R.id.bodyPartLocationPreview);
+        bodyPartLocationPreview.post(new Runnable() {
+            @Override
+            public void run() {
+                loadBodyImageView(bodyPartLocationPreview, mSequenceData.mBodyPart.getDrawableResourceForeground());
+                bodyPartLocationPreview.setPoint(mSequenceData.bodyPartRelativePointX, mSequenceData.bodyPartRelativePointY);
+                bodyPartLocationPreview.invalidate();
+            }
+        });
 
         return view;
+    }
+
+    private void loadBodyImageView(PointedImageView bodyPartImageView, int resId) {
+        final Bitmap bm = BitmapDecoder.decodeSampledBitmapFromResource(getResources(), resId, bodyPartImageView.getWidth(), bodyPartImageView.getHeight());
+        if (bm!=null) {
+            bodyPartImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            bodyPartImageView.setImageBitmap(bm);
+        }
     }
 
     @Override

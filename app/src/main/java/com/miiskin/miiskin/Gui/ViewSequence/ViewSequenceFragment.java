@@ -9,6 +9,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
@@ -30,6 +31,9 @@ import android.widget.Toast;
 import com.miiskin.miiskin.Data.Paths;
 import com.miiskin.miiskin.Data.SequenceData;
 import com.miiskin.miiskin.Gui.Camera.CameraActivity;
+import com.miiskin.miiskin.Gui.General.PhotoView.PhotoView;
+import com.miiskin.miiskin.Gui.General.PhotoView.PhotoViewAttacher;
+import com.miiskin.miiskin.Gui.General.TouchImageView;
 import com.miiskin.miiskin.Gui.SendToDoctor.SendToDoctorActivity;
 import com.miiskin.miiskin.Helpers.BitmapDecoder;
 import com.miiskin.miiskin.MiiskinApplication;
@@ -49,11 +53,12 @@ public class ViewSequenceFragment extends Fragment {
     FloatingActionButton mTakePhoto;
     RelativeLayout mMainLayout;
     PagerContainer mContainer;
-    private float mYDoctorInitialPosition;
-    private float mYPhotoInitialPosition;
+    private float mYDoctorInitialPosition = -1;
+    private float mYPhotoInitialPosition = -1;
     private boolean mButtonsVisible = false;
     LayoutInflater mLayoutInflater;
     ImageView mFullScreenImagePreview;
+    PhotoViewAttacher mAttacher;
     FrameLayout mFullScreenMode;
     LinearLayout mPreviewMode;
     LinearLayout mBottomRightPanel;
@@ -63,6 +68,7 @@ public class ViewSequenceFragment extends Fragment {
     private AnimatorSet mAnimPhotoAndDoctorAppearing;
     private AnimatorSet mSwitchToFullScreenAnimator;
     private AnimatorSet mSwitchToNotFullScreenModeAnimator;
+    private static int FULL_SCREEN_PREVIEW_SIZE = 1500;
 
 
     public static ViewSequenceFragment newInstance(SequenceData sequenceData) {
@@ -131,11 +137,29 @@ public class ViewSequenceFragment extends Fragment {
         mFullScreenImagePreview.post(new Runnable() {
             @Override
             public void run() {
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+                BitmapFactory.decodeFile(fileName, options);
 
-                final Bitmap bitmap = BitmapDecoder.decodeBitmapFromFile(fileName, mFullScreenImagePreview.getWidth(), mFullScreenImagePreview.getHeight());
+                int requiredWidth;
+                int requiredHeight;
+                if (options.outHeight > FULL_SCREEN_PREVIEW_SIZE) {
+                    requiredHeight = FULL_SCREEN_PREVIEW_SIZE;
+                } else {
+                    requiredHeight = options.outHeight;
+                }
+
+                if (options.outWidth > FULL_SCREEN_PREVIEW_SIZE) {
+                    requiredWidth = FULL_SCREEN_PREVIEW_SIZE;
+                } else {
+                    requiredWidth = options.outWidth;
+                }
+
+                final Bitmap bitmap = BitmapDecoder.decodeBitmapFromFile(fileName, requiredWidth, requiredHeight);
                 if (bitmap!=null) {
                     mFullScreenImagePreview.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     mFullScreenImagePreview.setImageBitmap(bitmap);
+                    mAttacher.update();
                 }
             }
         });
@@ -146,13 +170,15 @@ public class ViewSequenceFragment extends Fragment {
         super.onResume();
         final ViewSequenceActivity viewSequenceActivity = (ViewSequenceActivity)getActivity();
         viewSequenceActivity.mActionBarToolbar.setTitle(mSequenceData.mBodyPart.toString());
-        mFloatingActionButton.post(new Runnable() {
-            @Override
-            public void run() {
-                mYDoctorInitialPosition = mSendToDoctor.getY();
-                mYPhotoInitialPosition = mTakePhoto.getY();
-            }
-        });
+        if (mYDoctorInitialPosition == -1 && mYPhotoInitialPosition == -1) {
+            mFloatingActionButton.post(new Runnable() {
+                @Override
+                public void run() {
+                    mYDoctorInitialPosition = mSendToDoctor.getY();
+                    mYPhotoInitialPosition = mTakePhoto.getY();
+                }
+            });
+        }
         if (mButtonsVisible) {
             mSendToDoctor.setVisibility(View.VISIBLE);
             mTakePhoto.setVisibility(View.VISIBLE);
@@ -206,14 +232,22 @@ public class ViewSequenceFragment extends Fragment {
 
         mContainer = (PagerContainer) view.findViewById(R.id.pager_container);
         mFullScreenImagePreview = (ImageView)view.findViewById(R.id.full_screen_image_preview);
-        mFullScreenImagePreview.setOnClickListener(new View.OnClickListener() {
+        mAttacher = new PhotoViewAttacher(mFullScreenImagePreview);
+        mAttacher.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
             @Override
-            public void onClick(View v) {
+            public void onViewTap(View view, float x, float y) {
                 if (!fullScreenModeAnimationRunning()) {
                     switchToNotFullScreenMode();
                 }
             }
         });
+
+//        mFullScreenImagePreview.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
         mFullScreenMode = (FrameLayout)view.findViewById(R.id.full_screen_mode_layout);
         mPreviewMode = (LinearLayout)view.findViewById(R.id.preview_mode);
         mBottomRightPanel = (LinearLayout)view.findViewById(R.id.bottomRightPanel);
@@ -263,6 +297,7 @@ public class ViewSequenceFragment extends Fragment {
     }
 
     private void sendToDoctor() {
+        hideButtonsImmediate();
         Intent intent = new Intent(getActivity(), SendToDoctorActivity.class);
         startActivity(intent);
     }
@@ -288,6 +323,7 @@ public class ViewSequenceFragment extends Fragment {
     }
 
     private void savePhotoToFile(File dir) {
+        hideButtonsImmediate();
         File tempPhotoPath = dir;
         //генерируем имя файла
         int indexPhoto = tempPhotoPath.listFiles().length + 1;
@@ -337,6 +373,16 @@ public class ViewSequenceFragment extends Fragment {
     }
 
     private void hideButtons() {
+        hideButtons(null);
+    }
+
+    private void hideButtonsImmediate() {
+        mSendToDoctor.setVisibility(View.INVISIBLE);
+        mTakePhoto.setVisibility(View.INVISIBLE);
+        mButtonsVisible = false;
+    }
+
+    private void hideButtons(final Runnable doAfterHideButtons) {
         if (!buttonsAnimationRunning()) {
             float centerFabY = mFloatingActionButton.getY() + mFloatingActionButton.getHeight() / 2;
 
@@ -356,6 +402,10 @@ public class ViewSequenceFragment extends Fragment {
                     mTakePhoto.setVisibility(View.INVISIBLE);
                     mButtonsVisible = false;
                     mFloatingActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_add));
+
+                    if (doAfterHideButtons != null) {
+                        doAfterHideButtons.run();
+                    }
                 }
             });
             mAnimPhotoAndDoctorHidding.setDuration(250);
@@ -390,7 +440,16 @@ public class ViewSequenceFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (!fullScreenModeAnimationRunning()) {
-                        switchToFullScreenMode();
+                        if (mButtonsVisible) {
+                            hideButtons(new Runnable() {
+                                @Override
+                                public void run() {
+                                    switchToFullScreenMode();
+                                }
+                            });
+                        } else {
+                            switchToFullScreenMode();
+                        }
                     }
                 }
             });

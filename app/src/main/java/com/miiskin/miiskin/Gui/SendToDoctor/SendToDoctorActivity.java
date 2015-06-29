@@ -22,15 +22,16 @@ public class SendToDoctorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_send_to_toctor);
 
         mActionBarToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        setSupportActionBar(mActionBarToolbar);
         //mActionBarToolbar.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         mActionBarToolbar.setNavigationIcon(R.drawable.ic_action_clear);
         mActionBarToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
-        setSupportActionBar(mActionBarToolbar);
+
 
         Fragment fragment = getFragmentManager().findFragmentById(R.id.main_layout);
         if (fragment == null) {

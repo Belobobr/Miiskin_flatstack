@@ -13,17 +13,18 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.miiskin.miiskin.Data.Paths;
@@ -46,12 +47,23 @@ public class ViewSequenceFragment extends Fragment {
     FloatingActionButton mFloatingActionButton;
     FloatingActionButton mSendToDoctor;
     FloatingActionButton mTakePhoto;
-    CoordinatorLayout mCoordinatorLayout;
+    RelativeLayout mMainLayout;
     PagerContainer mContainer;
     private float mYDoctorInitialPosition;
     private float mYPhotoInitialPosition;
     private boolean mButtonsVisible = false;
     LayoutInflater mLayoutInflater;
+    ImageView mFullScreenImagePreview;
+    FrameLayout mFullScreenMode;
+    LinearLayout mPreviewMode;
+    LinearLayout mBottomRightPanel;
+    RelativeLayout mInfoPanel;
+    private ViewPager mPager;
+    private AnimatorSet mAnimPhotoAndDoctorHidding;
+    private AnimatorSet mAnimPhotoAndDoctorAppearing;
+    private AnimatorSet mSwitchToFullScreenAnimator;
+    private AnimatorSet mSwitchToNotFullScreenModeAnimator;
+
 
     public static ViewSequenceFragment newInstance(SequenceData sequenceData) {
         ViewSequenceFragment fragment = new ViewSequenceFragment();
@@ -69,7 +81,64 @@ public class ViewSequenceFragment extends Fragment {
         if (getArguments() != null) {
             mSequenceData = (SequenceData)getArguments().getSerializable(EXTRA_SEQUENCE_DATA);
         }
+    }
 
+    private void switchToNotFullScreenMode() {
+        mBottomRightPanel.setVisibility(View.VISIBLE);
+        mPreviewMode.setVisibility(View.VISIBLE);
+        final ViewSequenceActivity viewSequenceActivity = (ViewSequenceActivity)getActivity();
+        Toolbar toolbar = viewSequenceActivity.mActionBarToolbar;
+        toolbar.setVisibility(View.VISIBLE);
+
+        ValueAnimator showActionBarAnimator = ObjectAnimator.ofFloat(toolbar, "translationY", -toolbar.getHeight(), 0);
+        ValueAnimator appearInfoPanelAnimator = ObjectAnimator.ofFloat(mInfoPanel, "alpha", 0, 1);
+        ValueAnimator floatingActionButtonAnimator = ObjectAnimator.ofFloat(mFloatingActionButton, "translationY", mInfoPanel.getHeight(), 0);
+        floatingActionButtonAnimator.setInterpolator(new OvershootInterpolator(4));
+
+        mSwitchToNotFullScreenModeAnimator = new AnimatorSet();
+        mSwitchToNotFullScreenModeAnimator.playTogether(showActionBarAnimator, appearInfoPanelAnimator, floatingActionButtonAnimator);
+        mSwitchToNotFullScreenModeAnimator.setDuration(500);
+        mSwitchToNotFullScreenModeAnimator.start();
+
+        mFullScreenMode.setVisibility(View.GONE);
+    }
+
+    private void switchToFullScreenMode() {
+        mFullScreenMode.setVisibility(View.VISIBLE);
+
+        mPreviewMode.setVisibility(View.GONE);
+        final ViewSequenceActivity viewSequenceActivity = (ViewSequenceActivity)getActivity();
+        final Toolbar toolbar = viewSequenceActivity.mActionBarToolbar;
+
+        ValueAnimator hideActionBarAnimator = ObjectAnimator.ofFloat(toolbar, "translationY", 0, -toolbar.getHeight());
+        ValueAnimator disappearInfoPanelAnimator = ObjectAnimator.ofFloat(mInfoPanel, "alpha", 1, 0);
+        ValueAnimator floatingActionButtonAnimator = ObjectAnimator.ofFloat(mFloatingActionButton, "translationY", 0, mInfoPanel.getHeight());
+
+        mSwitchToFullScreenAnimator = new AnimatorSet();
+        mSwitchToFullScreenAnimator.setDuration(500);
+        mSwitchToFullScreenAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                toolbar.setVisibility(View.INVISIBLE);
+                mBottomRightPanel.setVisibility(View.INVISIBLE);
+            }
+
+        });
+        mSwitchToFullScreenAnimator.playTogether(hideActionBarAnimator, disappearInfoPanelAnimator, floatingActionButtonAnimator);
+        mSwitchToFullScreenAnimator.start();
+
+        final String fileName = Paths.getAbsoluteDirForSequence(mSequenceData.mId) + "/" + ( mPager.getCurrentItem() + 1) + ".png";
+        mFullScreenImagePreview.post(new Runnable() {
+            @Override
+            public void run() {
+
+                final Bitmap bitmap = BitmapDecoder.decodeBitmapFromFile(fileName, mFullScreenImagePreview.getWidth(), mFullScreenImagePreview.getHeight());
+                if (bitmap!=null) {
+                    mFullScreenImagePreview.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    mFullScreenImagePreview.setImageBitmap(bitmap);
+                }
+            }
+        });
     }
 
     @Override
@@ -93,6 +162,7 @@ public class ViewSequenceFragment extends Fragment {
             mTakePhoto.setVisibility(View.INVISIBLE);
             mFloatingActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_add));
         }
+
     }
 
     @Override
@@ -132,22 +202,58 @@ public class ViewSequenceFragment extends Fragment {
                 takePhoto();
             }
         });
-        mCoordinatorLayout = (CoordinatorLayout)view.findViewById(R.id.coordinatorLayout);
+        mMainLayout = (RelativeLayout)view.findViewById(R.id.coordinatorLayout);
 
         mContainer = (PagerContainer) view.findViewById(R.id.pager_container);
+        mFullScreenImagePreview = (ImageView)view.findViewById(R.id.full_screen_image_preview);
+        mFullScreenImagePreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!fullScreenModeAnimationRunning()) {
+                    switchToNotFullScreenMode();
+                }
+            }
+        });
+        mFullScreenMode = (FrameLayout)view.findViewById(R.id.full_screen_mode_layout);
+        mPreviewMode = (LinearLayout)view.findViewById(R.id.preview_mode);
+        mBottomRightPanel = (LinearLayout)view.findViewById(R.id.bottomRightPanel);
+        mInfoPanel = (RelativeLayout)view.findViewById(R.id.infoPanel);
 
-        ViewPager pager = mContainer.getViewPager();
+        mPager = mContainer.getViewPager();
         PagerAdapter adapter = new MyPagerAdapter();
-        pager.setAdapter(adapter);
+        mPager.setAdapter(adapter);
+        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (mButtonsVisible) {
+                    hideButtons();
+                }
+            }
+        });
         //Necessary or the pager will only have one extra page to show
         // make this at least however many pages you can see
-        pager.setOffscreenPageLimit(adapter.getCount());
+        mPager.setOffscreenPageLimit(3);
         //A little space between pages
-        pager.setPageMargin(15);
+        mPager.setPageMargin(15);
 
         //If hardware acceleration is enabled, you should also remove
         // clipping on the pager for its children.
-        pager.setClipChildren(false);
+        mPager.setClipChildren(false);
+    }
+
+    private boolean fullScreenModeAnimationRunning() {
+        return (mSwitchToNotFullScreenModeAnimator != null  && mSwitchToNotFullScreenModeAnimator.isRunning())   ||
+                (mSwitchToFullScreenAnimator != null && mSwitchToFullScreenAnimator.isRunning());
     }
 
     @Nullable
@@ -194,57 +300,67 @@ public class ViewSequenceFragment extends Fragment {
 
     }
 
+    private boolean buttonsAnimationRunning() {
+        return (mAnimPhotoAndDoctorAppearing != null && mAnimPhotoAndDoctorAppearing.isRunning()) ||
+                (mAnimPhotoAndDoctorHidding != null && mAnimPhotoAndDoctorHidding.isRunning());
+    }
+
     private void showButtons() {
-        float centerFabY = mFloatingActionButton.getY() + mFloatingActionButton.getHeight() / 2;
+        if (!buttonsAnimationRunning()) {
+            float centerFabY = mFloatingActionButton.getY() + mFloatingActionButton.getHeight() / 2;
 
-        float yDoctorFrom = centerFabY - mSendToDoctor.getHeight() / 2;
-        float yPhotoFrom = centerFabY - mTakePhoto.getHeight() / 2;
+            float yDoctorFrom = centerFabY - mSendToDoctor.getHeight() / 2;
+            float yPhotoFrom = centerFabY - mTakePhoto.getHeight() / 2;
 
-        ValueAnimator doctorTransitionAnimator = ObjectAnimator.ofFloat(mSendToDoctor, "y", yDoctorFrom, mYDoctorInitialPosition);
-        ValueAnimator photoTransitionAnimator = ObjectAnimator.ofFloat(mTakePhoto, "y", yPhotoFrom, mYPhotoInitialPosition);
+            ValueAnimator doctorTransitionAnimator = ObjectAnimator.ofFloat(mSendToDoctor, "y", yDoctorFrom, mYDoctorInitialPosition);
+            ValueAnimator photoTransitionAnimator = ObjectAnimator.ofFloat(mTakePhoto, "y", yPhotoFrom, mYPhotoInitialPosition);
 
-        AnimatorSet animPhotoAndDoctorAppearing = new AnimatorSet();
-        animPhotoAndDoctorAppearing.playTogether(doctorTransitionAnimator, photoTransitionAnimator);
-        animPhotoAndDoctorAppearing.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                mSendToDoctor.setVisibility(View.VISIBLE);
-                mTakePhoto.setVisibility(View.VISIBLE);
-            }
+            mAnimPhotoAndDoctorAppearing = new AnimatorSet();
+            mAnimPhotoAndDoctorAppearing.playTogether(doctorTransitionAnimator, photoTransitionAnimator);
+            mAnimPhotoAndDoctorAppearing.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    mSendToDoctor.setVisibility(View.VISIBLE);
+                    mTakePhoto.setVisibility(View.VISIBLE);
+                }
 
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mButtonsVisible = true;
-                mFloatingActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_clear));
-            }
-        });
-        animPhotoAndDoctorAppearing.setDuration(250);
-        animPhotoAndDoctorAppearing.start();
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mButtonsVisible = true;
+                    mFloatingActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_clear));
+                }
+            });
+            mAnimPhotoAndDoctorAppearing.setDuration(250);
+            mAnimPhotoAndDoctorAppearing.setInterpolator(new OvershootInterpolator());
+            mAnimPhotoAndDoctorAppearing.start();
+        }
     }
 
     private void hideButtons() {
-        float centerFabY = mFloatingActionButton.getY() + mFloatingActionButton.getHeight() / 2;
+        if (!buttonsAnimationRunning()) {
+            float centerFabY = mFloatingActionButton.getY() + mFloatingActionButton.getHeight() / 2;
 
-        float yDoctorTo = centerFabY - mSendToDoctor.getHeight() / 2;
-        float yPhotoTo = centerFabY - mTakePhoto.getHeight() / 2;
+            float yDoctorTo = centerFabY - mSendToDoctor.getHeight() / 2;
+            float yPhotoTo = centerFabY - mTakePhoto.getHeight() / 2;
 
-        ValueAnimator doctorTransitionAnimator = ObjectAnimator.ofFloat(mSendToDoctor, "y", mYDoctorInitialPosition, yDoctorTo);
-        ValueAnimator photoTransitionAnimator = ObjectAnimator.ofFloat(mTakePhoto, "y", mYPhotoInitialPosition, yPhotoTo);
+            ValueAnimator doctorTransitionAnimator = ObjectAnimator.ofFloat(mSendToDoctor, "y", mYDoctorInitialPosition, yDoctorTo);
+            ValueAnimator photoTransitionAnimator = ObjectAnimator.ofFloat(mTakePhoto, "y", mYPhotoInitialPosition, yPhotoTo);
 
-        AnimatorSet animPhotoAndDoctorAppearing = new AnimatorSet();
-        animPhotoAndDoctorAppearing.playTogether(doctorTransitionAnimator, photoTransitionAnimator);
-        animPhotoAndDoctorAppearing.addListener(new AnimatorListenerAdapter() {
+            mAnimPhotoAndDoctorHidding = new AnimatorSet();
+            mAnimPhotoAndDoctorHidding.playTogether(doctorTransitionAnimator, photoTransitionAnimator);
+            mAnimPhotoAndDoctorHidding.addListener(new AnimatorListenerAdapter() {
 
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mSendToDoctor.setVisibility(View.INVISIBLE);
-                mTakePhoto.setVisibility(View.INVISIBLE);
-                mButtonsVisible = false;
-                mFloatingActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_add));
-            }
-        });
-        animPhotoAndDoctorAppearing.setDuration(250);
-        animPhotoAndDoctorAppearing.start();
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mSendToDoctor.setVisibility(View.INVISIBLE);
+                    mTakePhoto.setVisibility(View.INVISIBLE);
+                    mButtonsVisible = false;
+                    mFloatingActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_add));
+                }
+            });
+            mAnimPhotoAndDoctorHidding.setDuration(250);
+            mAnimPhotoAndDoctorHidding.start();
+        }
     }
 
     //Nothing special about this adapter, just throwing up colored views for demo
@@ -270,6 +386,14 @@ public class ViewSequenceFragment extends Fragment {
                 }
             });
 //
+            frameLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!fullScreenModeAnimationRunning()) {
+                        switchToFullScreenMode();
+                    }
+                }
+            });
             container.addView(frameLayout);
             return frameLayout;
         }

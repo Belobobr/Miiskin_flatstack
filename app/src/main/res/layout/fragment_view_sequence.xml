@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-    <android.support.design.widget.CoordinatorLayout
+    <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
              android:id="@+id/coordinatorLayout"
@@ -8,13 +7,28 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent">
 
+        <FrameLayout
+            android:id="@+id/full_screen_mode_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="48dp">
+
+            <ImageView android:id="@+id/full_screen_image_preview"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"/>
+
+        </FrameLayout>
+
         <LinearLayout
+            android:id="@+id/preview_mode"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <FrameLayout
                 android:layout_width="match_parent"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_height="0dp"
                 android:layout_weight="1">
 
@@ -43,6 +57,7 @@
             </FrameLayout>
 
             <RelativeLayout
+                android:id="@+id/infoPanel"
                 android:layout_width="match_parent"
                 android:layout_height="80dp">
 
@@ -70,10 +85,9 @@
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp"
-            app:layout_anchor="@id/coordinatorLayout"
-            app:layout_anchorGravity="bottom|right|end">
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true">
 
             <android.support.design.widget.FloatingActionButton
                 android:visibility="invisible"
@@ -81,6 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="48dp"
                 android:layout_marginBottom="16dp"
                 android:src="@drawable/ic_action_add"
                 app:fabSize="mini"
@@ -101,9 +116,10 @@
                 android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:src="@drawable/ic_action_clear"
                 app:fabSize="normal"
                 app:rippleColor="#F06292"/>
         </LinearLayout>
 
-    </android.support.design.widget.CoordinatorLayout>
+    </RelativeLayout>

@@ -58,20 +58,23 @@
 
             <RelativeLayout
                 android:id="@+id/infoPanel"
+                android:padding="16dp"
                 android:layout_width="match_parent"
-                android:layout_height="80dp">
+                android:layout_height="100dp">
 
                 <TextView
                     android:id="@+id/photo_date_taken"
-                    android:text="Photo date taken"
+                    android:textColor="@android:color/black"
+                    android:text="23.05.2015"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"/>
 
                 <TextView
+                    android:layout_marginTop="4dp"
                     android:id="@+id/photo_number"
-                    android:text="Photo number"
+                    android:text="Photo 28/29"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/photo_date_taken"/>

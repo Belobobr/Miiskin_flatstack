@@ -203,6 +203,7 @@ public class ViewSequenceFragment extends Fragment {
             }
         });
         mFloatingActionButton = (FloatingActionButton)view.findViewById(R.id.fab);
+        mFloatingActionButton.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab));
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,6 +216,7 @@ public class ViewSequenceFragment extends Fragment {
             }
         });
         mSendToDoctor = (FloatingActionButton)view.findViewById(R.id.sendDoctor);
+        mSendToDoctor.setBackgroundTintList(getResources().getColorStateList(R.color.send_doctor_fab));
         mSendToDoctor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -222,6 +224,7 @@ public class ViewSequenceFragment extends Fragment {
             }
         });
         mTakePhoto = (FloatingActionButton)view.findViewById(R.id.takePhoto);
+        mTakePhoto.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab));
         mTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -30,10 +31,14 @@ public class GeneralAreaFragment extends Fragment {
     public final static String TAG = "GENERAL_AREA_FRAGMENT";
 
     private static final String BODY_PART_COLOR_TOUCHED = "BODY_PART_COLOR_TOUCHED";
+    private static final String FRONT_MODE = "FRONT_MODE";
 
     private ImageView bodyImageView;
     private ImageView bodyImageViewOverlay;
     private FloatingActionButton mFloatingActionButton;
+    private Button buttonFront;
+    private Button buttonRear;
+    private boolean frontMode = true;
 
     public static GeneralAreaFragment newInstance() {
         GeneralAreaFragment fragment = new GeneralAreaFragment();
@@ -63,6 +68,7 @@ public class GeneralAreaFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             bodyPartColorTouched = savedInstanceState.getInt(BODY_PART_COLOR_TOUCHED);
+            frontMode = savedInstanceState.getBoolean(FRONT_MODE);
         }
     }
 
@@ -108,17 +114,49 @@ public class GeneralAreaFragment extends Fragment {
                 mListener.onGeneralAreaSelected(mBodyPart);
             }
         });
+        buttonFront = (Button)view.findViewById(R.id.buttonFront);
+        buttonFront.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchToFrontMode();
+            }
+        });
+        buttonRear = (Button)view.findViewById(R.id.buttonRear);
+        buttonRear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               switchToRearMode();
+            }
+        });
+    }
+
+    private void switchToFrontMode() {
+        buttonRear.setSelected(false);
+        buttonFront.setSelected(true);
+        frontMode = true;
+    }
+
+    private void switchToRearMode() {
+        buttonFront.setSelected(false);
+        buttonRear.setSelected(true);
+        frontMode = false;
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(BODY_PART_COLOR_TOUCHED, bodyPartColorTouched);
+        outState.putBoolean(FRONT_MODE, frontMode);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        if (frontMode) {
+            switchToFrontMode();
+        } else {
+            switchToRearMode();
+        }
         bodyImageView.post(new Runnable() {
             @Override
             public void run() {

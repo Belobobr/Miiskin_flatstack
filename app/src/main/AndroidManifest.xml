@@ -13,8 +13,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".Gui.Home.HomeActivity"
-            android:label="@string/app_name" >
+            android:name=".Gui.Home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,17 +22,14 @@
         </activity>
         <activity android:name=".Gui.CreateSequence.CreateSequenceActivity" />
         <activity
-            android:name=".Gui.ViewSequence.ViewSequenceActivity"
-            android:label="@string/title_activity_view_sequence" >
+            android:name=".Gui.ViewSequence.ViewSequenceActivity">
         </activity>
         <activity android:name=".Gui.Camera.CameraActivity" />
         <activity
-            android:name=".Gui.AcceptPhoto.AcceptPhotoActivity"
-            android:label="@string/title_activity_accept_photo" >
+            android:name=".Gui.AcceptPhoto.AcceptPhotoActivity">
         </activity>
         <activity
-            android:name=".Gui.SendToDoctor.SendToDoctorActivity"
-            android:label="@string/title_activity_send_to_toctor" >
+            android:name=".Gui.SendToDoctor.SendToDoctorActivity">
         </activity>
     </application>
 

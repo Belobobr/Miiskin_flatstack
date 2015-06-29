@@ -15,6 +15,8 @@ import com.miiskin.miiskin.Storage.Preferences;
 
 public class HomeActivity extends AppCompatActivity implements FTEHomeFragment.FteCompleteListener, DisclaimerDialogFragment.DisclaimerDialogListener{
 
+    private Toolbar mMActionBarToolbar;
+
     @Override
     public void onFteCompleteDonePressed() {
         setFte(false);
@@ -37,9 +39,9 @@ public class HomeActivity extends AppCompatActivity implements FTEHomeFragment.F
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Toolbar mActionBarToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
-        setSupportActionBar(mActionBarToolbar);
-        mActionBarToolbar.setNavigationIcon(R.drawable.launcher_icon);
+        mMActionBarToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        setSupportActionBar(mMActionBarToolbar);
+        mMActionBarToolbar.setNavigationIcon(R.drawable.logo_02);
 
         SharedPreferences settings = getSharedPreferences(Preferences.MAIN_PREFERENCES, 0);
         boolean fte = settings.getBoolean(Preferences.FirstTimeUse.FTE, true);
@@ -63,6 +65,11 @@ public class HomeActivity extends AppCompatActivity implements FTEHomeFragment.F
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mMActionBarToolbar.setTitle("");
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

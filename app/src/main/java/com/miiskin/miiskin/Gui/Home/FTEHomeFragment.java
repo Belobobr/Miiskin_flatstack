@@ -12,9 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
+import com.miiskin.miiskin.Data.Utils;
 import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.Preferences;
 
@@ -22,6 +24,11 @@ import com.miiskin.miiskin.Storage.Preferences;
  * Created by Newshka on 23.06.2015.
  */
 public class FTEHomeFragment extends Fragment {
+
+    private RadioButton mFemaleRadioButton;
+    private RadioButton mMaleRadioButton;
+    private ImageView mMaleImageView;
+    private ImageView mFemaleImageView;
 
     public interface FteCompleteListener {
         public void onFteCompleteDonePressed() ;
@@ -36,6 +43,17 @@ public class FTEHomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mFemaleRadioButton.isChecked()) {
+            mFemaleImageView.setSelected(true);
+        }
+        if (mMaleRadioButton.isChecked()) {
+            mMaleImageView.setSelected(true);
+        }
     }
 
     @Nullable
@@ -75,10 +93,13 @@ public class FTEHomeFragment extends Fragment {
             }
         });
 
-        View maleRadioButton = view.findViewById(R.id.male_button);
-        View femaleRadioButton = view.findViewById(R.id.female_button);
-        maleRadioButton.setOnClickListener(genderClickListener);
-        femaleRadioButton.setOnClickListener(genderClickListener);
+        mMaleRadioButton = (RadioButton)view.findViewById(R.id.male_button);
+        mFemaleRadioButton = (RadioButton)view.findViewById(R.id.female_button);
+        mFemaleImageView = (ImageView)view.findViewById(R.id.femaleImageView);
+        mMaleImageView = (ImageView)view.findViewById(R.id.maleImageView);
+
+        mMaleRadioButton.setOnClickListener(genderClickListener);
+        mFemaleRadioButton.setOnClickListener(genderClickListener);
 
     }
 
@@ -89,12 +110,20 @@ public class FTEHomeFragment extends Fragment {
 
             switch(v.getId()) {
                 case R.id.male_button:
-                    if (checked)
+                    if (checked) {
                         setGender(Preferences.UserInfo.MALE);
+                        mMaleImageView.setSelected(true);
+                        mFemaleImageView.setSelected(false);
+                        mFemaleRadioButton.setChecked(false);
+                    }
                     break;
                 case R.id.female_button:
-                    if (checked)
+                    if (checked) {
                         setGender(Preferences.UserInfo.FEMALE);
+                        mMaleImageView.setSelected(false);
+                        mFemaleImageView.setSelected(true);
+                        mMaleRadioButton.setChecked(false);
+                    }
                     break;
             }
         }

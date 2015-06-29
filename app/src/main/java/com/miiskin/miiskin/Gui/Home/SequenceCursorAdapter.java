@@ -49,7 +49,7 @@ public class SequenceCursorAdapter extends CursorAdapter {
         View view = mLayoutInflater.inflate(R.layout.layout_sequence_adapter, parent, false);
         Holder holder = new Holder();
         holder.mPointedImageView = (PointedImageView)view.findViewById(R.id.bodyPartImageView);
-        holder.mPointedImageView.setPointerSize(4);
+        holder.mPointedImageView.setPointMode(PointedImageView.PointMode.NORMAL);
         holder.mBodyPartTextView = (TextView)view.findViewById(R.id.bodyPart);
         holder.mNextPhotoTextView = (TextView)view.findViewById(R.id.nextPhoto);
         holder.mMonitoringStartedTextView = (TextView)view.findViewById(R.id.monitoringStarted);
@@ -64,7 +64,7 @@ public class SequenceCursorAdapter extends CursorAdapter {
         final String molePositionX = cursor.getString(cursor.getColumnIndex(MolePhotoSequence.COLUMN_NAME_X_POSITION_OF_MOLE));
         final String molePositionY = cursor.getString(cursor.getColumnIndex(MolePhotoSequence.COLUMN_NAME_Y_POSITION_OF_MOLE));
         final Holder holder = (Holder)view.getTag();
-        holder.mBodyPartTextView.setText(anatomicalSection);
+        holder.mBodyPartTextView.setText(BodyPart.valueOf(anatomicalSection).getResourceIdDescription());
         holder.mMonitoringStartedTextView.setText(dateOfCreationSection);
         holder.mPointedImageView.post(new Runnable() {
             @Override

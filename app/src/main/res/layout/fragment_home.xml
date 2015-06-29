@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp"
-            android:src="@drawable/ic_action_done"
+            android:src="@drawable/ic_action_add"
             app:fabSize="normal"
             app:layout_anchor="@id/manySequence"
             app:layout_anchorGravity="bottom|right|end"

@@ -22,17 +22,24 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true">
 
-
         <Button
+            android:id="@+id/buttonFront"
+            android:background="@drawable/rear_front_view_drawable"
+            android:textColor="@color/rear_front_view_selector"
             android:text="@string/front"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:layout_alignParentLeft="true"/>
 
         <Button
+            android:id="@+id/buttonRear"
+            android:background="@drawable/rear_front_view_drawable"
+            android:textColor="@color/rear_front_view_selector"
             android:text="@string/rear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:layout_alignParentRight="true"/>
 
     </RelativeLayout>

@@ -12,6 +12,8 @@ import android.util.TypedValue;
 import android.widget.ImageView;
 import android.graphics.Paint;
 
+import com.miiskin.miiskin.R;
+
 /**
  * Created by Newshka on 25.06.2015.
  */
@@ -20,8 +22,14 @@ public class PointedImageView extends ImageView {
     private float xRelativeCord = -1;
     private float yRelativeCord = -1;
     private Paint mTextPaint;
-    private float mPointerSize;
     private float DEFAULT_POINT_SIZE = 8;
+
+    public static enum PointMode {
+        BIG,
+        NORMAL
+    }
+
+    private PointMode mPointMode = PointMode.BIG;
 
     public PointedImageView(Context context) {
         super(context);
@@ -41,9 +49,6 @@ public class PointedImageView extends ImageView {
     private void init() {
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setColor(0xFF0000FF);
-        Resources r = getResources();
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_POINT_SIZE, r.getDisplayMetrics());
-        mPointerSize = px;
     }
 
     public void removePoint() {
@@ -66,7 +71,19 @@ public class PointedImageView extends ImageView {
             convertMatrix.mapPoints(touchPoint);
 
             // Draw the pointer
-            canvas.drawCircle(touchPoint[0], touchPoint[1], mPointerSize, mTextPaint);
+            BitmapDrawable bitmapDrawable = null;
+            switch (mPointMode) {
+                case BIG :
+                    bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.mole_big);
+                    break;
+                case NORMAL:
+                    bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.mole);
+                    break;
+                default:
+                    bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.mole);
+            }
+            canvas.drawBitmap(bitmapDrawable.getBitmap(),touchPoint[0], touchPoint[1], mTextPaint);
+
         }
     }
 
@@ -75,10 +92,8 @@ public class PointedImageView extends ImageView {
         this.yRelativeCord = yRelativeCord;
     }
 
-    public void setPointerSize(float pointerSize) {
-        Resources r = getResources();
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, pointerSize, r.getDisplayMetrics());
-        mPointerSize = px;
+    public void setPointMode(PointMode pointMode) {
+        mPointMode = pointMode;
     }
 
     @Override
@@ -88,7 +103,7 @@ public class PointedImageView extends ImageView {
         bundle.putParcelable("instanceState", super.onSaveInstanceState());
         bundle.putFloat("xRelativeCord", this.xRelativeCord);
         bundle.putFloat("yRelativeCord", this.yRelativeCord);
-        bundle.putFloat("pointerSize", this.mPointerSize);
+        bundle.putSerializable("pointMode", this.mPointMode);
         return bundle;
     }
 
@@ -99,7 +114,7 @@ public class PointedImageView extends ImageView {
             Bundle bundle = (Bundle) state;
             this.xRelativeCord = bundle.getFloat("xRelativeCord");
             this.yRelativeCord = bundle.getFloat("yRelativeCord");
-            this.mPointerSize = bundle.getFloat("pointerSize");
+            mPointMode = (PointMode)bundle.getSerializable("pointMode");
             state = bundle.getParcelable("instanceState");
         }
         super.onRestoreInstanceState(state);

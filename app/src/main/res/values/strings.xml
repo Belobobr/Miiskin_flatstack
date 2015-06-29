@@ -7,7 +7,7 @@
 
     <!-- !-->
     <string name="all_done">All done!</string>
-    <string name="please_enter_your_gender">Please enter your gender and year of birth</string>
+    <string name="please_enter_your_gender">Please enter your gender and\n year of birth</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="disclaimer">Disclaimer</string>
@@ -24,17 +24,16 @@
     <string name="rear">Rear</string>
     <string name="cant_create_photo">"Can't create photo"</string>
     <string name="tips_for_a_good_photo">Tips for a good photo</string>
-    <string name="tips_for_a_good_photo_description">
-        Proper lighting\n
-        Mole should be in focus\n
-        Try to keep it steady\n
-    </string>
+    <string name="tips_for_a_good_photo_description">Proper lighting\nMole should be in focus\nTry to keep it steady\n</string>
     <string name="got_it">GOT IT</string>
     <string name="dermatological_assessment">Dermatological assessment</string>
     <string name="dermatological_assessment_description">Send this sequence of picture to our professional dermatologist
     and get on assessment 48 hours sent to your email.</string>
     <string name="agree_terns">I agree to the terms and conditions</string>
 
+    <!-- !Body Parts!-->
+    <string name="right_upper_arm">Right upper arm</string>
+    <string name="left_upper_arm">Left upper arm</string>
 
     <string-array name="year_of_birth">
         <item>1985</item>
@@ -49,4 +48,5 @@
     <string name="title_activity_view_sequence">ViewSequence</string>
     <string name="title_activity_accept_photo">AcceptPhotoActivity</string>
     <string name="title_activity_send_to_toctor">SendToToctor</string>
+    <string name="year_of_birth">Year of birth</string>
 </resources>

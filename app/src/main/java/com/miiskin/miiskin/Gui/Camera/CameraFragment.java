@@ -119,6 +119,7 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
             }
         });
         bodyPartLocationPreview = (PointedImageView)view.findViewById(R.id.bodyPartLocationPreview);
+        bodyPartLocationPreview.setPointMode(PointedImageView.PointMode.NORMAL);
         bodyPartLocationPreview.post(new Runnable() {
             @Override
             public void run() {

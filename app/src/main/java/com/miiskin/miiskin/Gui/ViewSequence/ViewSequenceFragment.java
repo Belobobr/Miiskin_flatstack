@@ -33,11 +33,13 @@ import com.miiskin.miiskin.Data.SequenceData;
 import com.miiskin.miiskin.Gui.Camera.CameraActivity;
 import com.miiskin.miiskin.Gui.General.PhotoView.PhotoView;
 import com.miiskin.miiskin.Gui.General.PhotoView.PhotoViewAttacher;
+import com.miiskin.miiskin.Gui.General.ThumbnailView;
 import com.miiskin.miiskin.Gui.General.TouchImageView;
 import com.miiskin.miiskin.Gui.SendToDoctor.SendToDoctorActivity;
 import com.miiskin.miiskin.Helpers.BitmapDecoder;
 import com.miiskin.miiskin.MiiskinApplication;
 import com.miiskin.miiskin.R;
+import com.miiskin.miiskin.Storage.ThumbnailManager.ThumbnailManager;
 
 import java.io.File;
 
@@ -279,7 +281,7 @@ public class ViewSequenceFragment extends Fragment {
         });
         //Necessary or the pager will only have one extra page to show
         // make this at least however many pages you can see
-        mPager.setOffscreenPageLimit(3);
+        mPager.setOffscreenPageLimit(2);
         //A little space between pages
         mPager.setPageMargin(15);
 
@@ -425,20 +427,17 @@ public class ViewSequenceFragment extends Fragment {
             frameLayout.setBackgroundColor(Color.argb(255, position * 50, position * 10, position * 50));
             frameLayout.setClipChildren(true);
 
-            final ImageView imageView = (ImageView)frameLayout.findViewById(R.id.mole_photo);
-            final String fileName = Paths.getAbsoluteDirForSequence(mSequenceData.mId) + "/" + (position + 1) + ".png";
+            final ThumbnailView imageView = (ThumbnailView)frameLayout.findViewById(R.id.mole_photo);
+            final String fileName = Paths.getAbsolutePathForFileInSequence(mSequenceData.mId, position + 1);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setThumbnailKey(ThumbnailManager.getInstance().getThumbnailKey(ThumbnailManager.ThumbnailMode.NORMAL, fileName));
             imageView.post(new Runnable() {
                 @Override
                 public void run() {
-
-                    final Bitmap bitmap = BitmapDecoder.decodeBitmapFromFile(fileName, imageView.getWidth(), imageView.getHeight());
-                    if (bitmap!=null) {
-                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                        imageView.setImageBitmap(bitmap);
-                    }
+                    ThumbnailManager.getInstance().requestThumbnail(ThumbnailManager.ThumbnailMode.NORMAL, fileName, imageView.getWidth(), imageView.getHeight());
                 }
             });
-//
+
             frameLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

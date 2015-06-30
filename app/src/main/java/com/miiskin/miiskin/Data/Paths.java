@@ -23,4 +23,8 @@ public class Paths {
 
         return sequencePhotoDir.toString();
     }
+
+    public static String getAbsolutePathForFileInSequence(String sequenceId, int imageId) {
+        return Paths.getAbsoluteDirForSequence(sequenceId) + "/" + imageId + ".png";
+    }
 }

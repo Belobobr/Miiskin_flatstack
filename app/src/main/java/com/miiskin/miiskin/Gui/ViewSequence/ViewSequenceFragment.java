@@ -210,7 +210,9 @@ public class ViewSequenceFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!mButtonsVisible) {
-                    showButtons();
+                    if (!fullScreenModeAnimationRunning()) {
+                        showButtons();
+                    }
                 } else {
                     hideButtons();
                 }

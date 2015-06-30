@@ -2,9 +2,7 @@ package com.miiskin.miiskin.Gui.CreateSequence;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -142,12 +140,12 @@ public class SpecificLocationFragment extends Fragment {
         bodyImageView = (PointedImageView)view.findViewById(R.id.bodyImageView);
         bodyImageViewOverlay = (ImageView)view.findViewById(R.id.bodyImageViewOverlay);
 
-        final CreateSequenceActivity createSequenceActivity = (CreateSequenceActivity)getActivity();
-        createSequenceActivity.mActionBarToolbar.setNavigationIcon(R.drawable.ic_action_arrow_back);
-        createSequenceActivity.mActionBarToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        final CreateMoleActivity createMoleActivity = (CreateMoleActivity)getActivity();
+        createMoleActivity.mActionBarToolbar.setNavigationIcon(R.drawable.ic_action_arrow_back);
+        createMoleActivity.mActionBarToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createSequenceActivity.getFragmentManager().popBackStack();
+                createMoleActivity.getFragmentManager().popBackStack();
             }
         });
 
@@ -216,18 +214,18 @@ public class SpecificLocationFragment extends Fragment {
     }
 
     private int checkTouchZone() {
-        CreateSequenceActivity createSequenceActivity = (CreateSequenceActivity)getActivity();
+        CreateMoleActivity createMoleActivity = (CreateMoleActivity)getActivity();
         switch (bodyPartColorTouched) {
             case BodyPartColors.BODY_COLOR :
                 mFloatingActionButton.setEnabled(true);
                 mFloatingActionButton.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab));
-                createSequenceActivity.mActionBarToolbar.setTitle(R.string.specific_location_selected);
+                createMoleActivity.mActionBarToolbar.setTitle(R.string.specific_location_selected);
                 return BodyPartColors.BODY_COLOR;
             case BodyPartColors.NOT_BODY_COLOR :
             default:
                 mFloatingActionButton.setEnabled(false);
                 mFloatingActionButton.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab_semitrasparent));
-                createSequenceActivity.mActionBarToolbar.setTitle(R.string.select_specific_area);
+                createMoleActivity.mActionBarToolbar.setTitle(R.string.select_specific_area);
                 return BodyPartColors.NOT_BODY_COLOR;
         }
     }

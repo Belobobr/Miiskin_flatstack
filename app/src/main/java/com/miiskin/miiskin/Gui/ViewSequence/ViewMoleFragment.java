@@ -48,6 +48,7 @@ import com.miiskin.miiskin.Storage.ThumbnailManager.ThumbnailManager;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by Newshka on 26.06.2015.
@@ -81,6 +82,7 @@ public class ViewMoleFragment extends Fragment implements TaskManager.DataChange
     private static int FULL_SCREEN_PREVIEW_SIZE = 1500;
 
     LoadMoleInfoTask.Result mMoleInfo;
+    String taskId;
 
 
     public static ViewMoleFragment newInstance(Long moleId) {
@@ -100,7 +102,8 @@ public class ViewMoleFragment extends Fragment implements TaskManager.DataChange
             mMoleId = getArguments().getLong(EXTRA_MOLE_ID);
         }
         if (mMoleInfo == null) {
-            TaskManager.getInstance(getActivity().getApplicationContext()).executeTask(new LoadMoleInfoTask(getActivity().getApplicationContext(), new Object[] {mMoleId}), LoadMoleInfoTask.TASK_ID);
+            taskId = UUID.randomUUID().toString();
+            TaskManager.getInstance(getActivity().getApplicationContext()).executeTask(new LoadMoleInfoTask(getActivity().getApplicationContext(), new Object[] {mMoleId}), taskId);
         }
     }
 
@@ -208,13 +211,13 @@ public class ViewMoleFragment extends Fragment implements TaskManager.DataChange
 
     @Override
     public void onDataChanged(String dataId) {
-        if (dataId.equals(LoadMoleInfoTask.TASK_ID)) {
+        if (dataId.equals(taskId)) {
             updateGui();
         }
     }
 
     private void updateGui() {
-        mMoleInfo = (LoadMoleInfoTask.Result)TaskManager.getInstance(getActivity().getApplicationContext()).getDataById(LoadMoleInfoTask.TASK_ID);
+        mMoleInfo = (LoadMoleInfoTask.Result)TaskManager.getInstance(getActivity().getApplicationContext()).getDataById(taskId);
         final ViewMoleActivity viewMoleActivity = (ViewMoleActivity)getActivity();
         if (mMoleInfo == null) {
             viewMoleActivity.mActionBarToolbar.setTitle(getString(R.string.view_mole));
@@ -224,6 +227,19 @@ public class ViewMoleFragment extends Fragment implements TaskManager.DataChange
             BodyPart bodyPart = BodyPart.valueOf(mMoleInfo.mGeneralInfoCursor.getString(mMoleInfo.mGeneralInfoCursor.getColumnIndex(MoleLocation.COLUMN_NAME_BODY_PART)));
             viewMoleActivity.mActionBarToolbar.setTitle(bodyPart.getResourceIdDescription());
             mPager.getAdapter().notifyDataSetChanged();
+            mPager.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (mMoleInfo.mPicturesCursor.getCount() > 0) {
+                        mMoleInfo.mPicturesCursor.moveToPosition(0);
+                        Long photoTakenTime = mMoleInfo.mPicturesCursor.getLong(mMoleInfo.mPicturesCursor.getColumnIndex(MolePicture.COLUMN_NAME_TIME));
+                        Date date = new Date(photoTakenTime);
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+                        mPhotoDateTake.setText(simpleDateFormat.format(date));
+                        mPhotoNumber.setText(getString(R.string.photo_number, 0 + 1, mMoleInfo.mPicturesCursor.getCount()));
+                    }
+                }
+            }, 100);
         }
     }
 
@@ -319,7 +335,7 @@ public class ViewMoleFragment extends Fragment implements TaskManager.DataChange
                 Date date = new Date(photoTakenTime);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
                 mPhotoDateTake.setText(simpleDateFormat.format(date));
-                mPhotoNumber.setText(getString(R.string.photo_number, position, mMoleInfo.mPicturesCursor.getCount()));
+                mPhotoNumber.setText(getString(R.string.photo_number, position + 1, mMoleInfo.mPicturesCursor.getCount()));
             }
 
             @Override

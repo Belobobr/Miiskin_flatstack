@@ -22,7 +22,7 @@ import java.util.UUID;
 /**
  * Created by Newshka on 24.06.2015.
  */
-public class CreateSequenceActivity extends AppCompatActivity implements GeneralAreaFragment.GeneralAreaSelectedListener, SpecificLocationFragment.SpecificLocationSelectedListener,
+public class CreateMoleActivity extends AppCompatActivity implements GeneralAreaFragment.GeneralAreaSelectedListener, SpecificLocationFragment.SpecificLocationSelectedListener,
     TaskManager.DataChangeListener {
 
     Toolbar mActionBarToolbar;
@@ -82,11 +82,11 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
     }
 
     private void updateUi() {
-        Long sequenceId = (Long)TaskManager.getInstance(getApplicationContext()).getDataById(taskId);
-        mMoleData.mId = String.valueOf(sequenceId);
-        if (sequenceId != null) {
-            if (sequenceId != -1)
-                showCreatedSequenceScreen(sequenceId);
+        Long moleId = (Long)TaskManager.getInstance(getApplicationContext()).getDataById(taskId);
+        mMoleData.mId = String.valueOf(moleId);
+        if (moleId != null) {
+            if (moleId != -1)
+                showCreatedMoleScreen(moleId);
             else {
                 finish();
                 Toast toast = Toast.makeText(this, getString(R.string.error_creating_mole), Toast.LENGTH_SHORT);
@@ -100,13 +100,13 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
         getFragmentManager().beginTransaction().replace(R.id.main_layout, fragment, SpecificLocationFragment.TAG).addToBackStack(null).commit();
     }
 
-    public void showCreatedSequenceScreen(long sequenceId) {
+    public void showCreatedMoleScreen(long moleId) {
         Intent intent = new Intent(this, ViewMoleActivity.class);
-        intent.putExtra(ViewMoleActivity.EXTRA_MOLE_ID, mMoleData);
+        intent.putExtra(ViewMoleActivity.EXTRA_MOLE_ID, moleId);
         startActivity(intent);
     }
 
-    public void saveCreatedSequenceToDatabase() {
+    public void saveCreatedMoleToDatabase() {
         taskId = UUID.randomUUID().toString();
         TaskManager.getInstance(getApplicationContext()).executeTask(new SaveMoleToDatabaseTask(getApplicationContext(), new Object[] {mMoleData}), taskId);
     }
@@ -123,7 +123,7 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
         mMoleData.bodyPartRelativePointX = bodyPartRelativePointX;
         mMoleData.bodyPartRelativePointY = bodyPartRelativePointY;
         mMoleData.mDateOfCreation = new Date();
-        saveCreatedSequenceToDatabase();
+        saveCreatedMoleToDatabase();
     }
 
 

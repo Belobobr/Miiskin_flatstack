@@ -2,10 +2,7 @@ package com.miiskin.miiskin.Gui.CreateSequence;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -17,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.miiskin.miiskin.Data.BodyHalf;
 import com.miiskin.miiskin.Data.BodyPart;
@@ -99,9 +95,9 @@ public class GeneralAreaFragment extends Fragment {
         bodyImageViewOverlay = (ImageView)view.findViewById(R.id.bodyImageViewOverlay);
 
 
-        CreateSequenceActivity createSequenceActivity = (CreateSequenceActivity)getActivity();
-        createSequenceActivity.mActionBarToolbar.setNavigationIcon(R.drawable.ic_action_clear);
-        createSequenceActivity.mActionBarToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        CreateMoleActivity createMoleActivity = (CreateMoleActivity)getActivity();
+        createMoleActivity.mActionBarToolbar.setNavigationIcon(R.drawable.ic_action_clear);
+        createMoleActivity.mActionBarToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
@@ -214,28 +210,28 @@ public class GeneralAreaFragment extends Fragment {
     }
 
     private void checkTouchZone() {
-        CreateSequenceActivity createSequenceActivity = (CreateSequenceActivity)getActivity();
+        CreateMoleActivity createMoleActivity = (CreateMoleActivity)getActivity();
         switch (bodyPartColorTouched) {
             case BodyPartColors.LEFT_ARM_COLOR :
                 mBodyPart = BodyPart.LeftUpperArm;
                 loadBodyImageView(R.drawable.left_arm_selected);
                 mFloatingActionButton.setEnabled(true);
                 mFloatingActionButton.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab));
-                createSequenceActivity.mActionBarToolbar.setTitle(R.string.left_upper_arm_selected);
+                createMoleActivity.mActionBarToolbar.setTitle(R.string.left_upper_arm_selected);
                 break;
             case BodyPartColors.RIGHT_ARM_COLOR :
                 mBodyPart = BodyPart.RightUpperArm;
                 loadBodyImageView(R.drawable.right_arm_selected);
                 mFloatingActionButton.setEnabled(true);
                 mFloatingActionButton.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab));
-                createSequenceActivity.mActionBarToolbar.setTitle(R.string.right_upper_arm_selected);
+                createMoleActivity.mActionBarToolbar.setTitle(R.string.right_upper_arm_selected);
                 break;
             case BodyPartColors.NOT_BODY_COLOR :
             default:
                 loadBodyImageView(R.drawable.no_body_part_selected);
                 mFloatingActionButton.setEnabled(false);
                 mFloatingActionButton.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab_semitrasparent));
-                createSequenceActivity.mActionBarToolbar.setTitle(R.string.please_select_the_general_area);
+                createMoleActivity.mActionBarToolbar.setTitle(R.string.please_select_the_general_area);
                 break;
         }
     }

@@ -14,8 +14,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
-import com.miiskin.miiskin.Data.MoleData;
-import com.miiskin.miiskin.Gui.CreateSequence.CreateSequenceActivity;
+import com.miiskin.miiskin.Gui.CreateSequence.CreateMoleActivity;
 import com.miiskin.miiskin.Gui.ViewSequence.ViewMoleActivity;
 import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.MiiskinDatabaseContract;
@@ -81,7 +80,7 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
         mNoSequenceFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CreateSequenceActivity.class);
+                Intent intent = new Intent(getActivity(), CreateMoleActivity.class);
                 startActivity(intent);
             }
         });
@@ -90,7 +89,7 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
         mManySequenceFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CreateSequenceActivity.class);
+                Intent intent = new Intent(getActivity(), CreateMoleActivity.class);
                 startActivity(intent);
             }
         });

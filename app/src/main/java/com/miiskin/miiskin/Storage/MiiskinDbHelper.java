@@ -32,7 +32,7 @@ public class MiiskinDbHelper extends SQLiteOpenHelper {
                     Mole._ID + " INTEGER PRIMARY KEY" + COMMA_SEP +
                     Mole.COLUMN_NAME_MOLE_LOCATION_ID + " INTEGER" + COMMA_SEP +
                     Mole.COLUMN_NAME_USER_ID + " INTEGER" + COMMA_SEP +
-                    Mole.COLUMN_NAME_START_OBSERVING_DATE + TEXT_TYPE + COMMA_SEP +
+                    Mole.COLUMN_NAME_START_OBSERVING_DATE + INTEGER_TYPE + COMMA_SEP +
                     "FOREIGN KEY" + "(" + Mole.COLUMN_NAME_MOLE_LOCATION_ID + ")" + " REFERENCES " + MoleLocation.TABLE_NAME + "(" + MoleLocation._ID + ")" + "ON DELETE CASCADE"  + COMMA_SEP +
                     "FOREIGN KEY" + "(" + Mole.COLUMN_NAME_USER_ID + ")" + " REFERENCES " + User.TABLE_NAME + "(" + User._ID + ")" + "ON DELETE CASCADE" +
                     " )";

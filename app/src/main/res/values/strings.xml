@@ -51,6 +51,12 @@
     <string name="year_of_birth">Year of birth</string>
     <string name="view_mole">View mole</string>
     <string name="photo_number">Photo %1$d / %2$d</string>
+    <string name="monitoring_started_today">Monitoring started today</string>
+    <string name="monitoring_started_yesterday">Monitoring started yesterday</string>
+    <string name="monitoring_started_days_ago">Monitoring started %1$d days ago</string>
+    <string name="monitoring_started_n_months_ago">Monitoring started %1$d months ago</string>
+    <string name="monitoring_started_months_ago">Monitoring started a month ago</string>
+
 
 
     <!-- Errors !-->

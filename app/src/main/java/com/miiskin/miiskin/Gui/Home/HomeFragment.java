@@ -18,7 +18,7 @@ import com.miiskin.miiskin.Gui.CreateSequence.CreateMoleActivity;
 import com.miiskin.miiskin.Gui.ViewSequence.ViewMoleActivity;
 import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.MiiskinDatabaseContract;
-import com.miiskin.miiskin.Storage.Task.LoadSequenceListTask;
+import com.miiskin.miiskin.Storage.Task.LoadMolesListTask;
 import com.miiskin.miiskin.Storage.Task.TaskManager;
 
 /**
@@ -45,7 +45,7 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         if (moleSequenceListCursor == null) {
-            TaskManager.getInstance(getActivity().getApplicationContext()).executeTask(new LoadSequenceListTask(getActivity().getApplicationContext()), LoadSequenceListTask.TASK_ID);
+            TaskManager.getInstance(getActivity().getApplicationContext()).executeTask(new LoadMolesListTask(getActivity().getApplicationContext()), LoadMolesListTask.TASK_ID);
         }
     }
 
@@ -97,13 +97,13 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
 
     @Override
     public void onDataChanged(String dataId) {
-        if (dataId.equals(LoadSequenceListTask.TASK_ID)) {
+        if (dataId.equals(LoadMolesListTask.TASK_ID)) {
             updateGui();
         }
     }
 
     private void updateGui() {
-        moleSequenceListCursor  = (Cursor)TaskManager.getInstance(getActivity().getApplicationContext()).getDataById(LoadSequenceListTask.TASK_ID);
+        moleSequenceListCursor  = (Cursor)TaskManager.getInstance(getActivity().getApplicationContext()).getDataById(LoadMolesListTask.TASK_ID);
         if (moleSequenceListCursor == null) {
             mProgressView.setVisibility(View.VISIBLE);
             mEmptyView.setVisibility(View.GONE);

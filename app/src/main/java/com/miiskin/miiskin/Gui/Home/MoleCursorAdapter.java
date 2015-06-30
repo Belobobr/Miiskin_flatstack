@@ -20,6 +20,9 @@ import com.miiskin.miiskin.Storage.MiiskinDatabaseContract.User;
 import com.miiskin.miiskin.Storage.MiiskinDatabaseContract.Mole;
 import com.miiskin.miiskin.Storage.MiiskinDatabaseContract.MoleLocation;
 
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by Newshka on 25.06.2015.
  */
@@ -62,12 +65,12 @@ public class MoleCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         final String anatomicalSection = cursor.getString(cursor.getColumnIndex(MoleLocation.COLUMN_NAME_BODY_PART));
-        String dateOfCreationSection = cursor.getString(cursor.getColumnIndex(Mole.COLUMN_NAME_START_OBSERVING_DATE));
+        long dateOfCreationSection = cursor.getLong(cursor.getColumnIndex(Mole.COLUMN_NAME_START_OBSERVING_DATE));
         final String molePositionX = cursor.getString(cursor.getColumnIndex(MoleLocation.COLUMN_NAME_X_POSITION_OF_MOLE));
         final String molePositionY = cursor.getString(cursor.getColumnIndex(MoleLocation.COLUMN_NAME_Y_POSITION_OF_MOLE));
         final Holder holder = (Holder)view.getTag();
         holder.mBodyPartTextView.setText(BodyPart.valueOf(anatomicalSection).getResourceIdDescription());
-        holder.mMonitoringStartedTextView.setText(dateOfCreationSection);
+        holder.mMonitoringStartedTextView.setText(monitoringStarted(dateOfCreationSection));
         holder.mPointedImageView.post(new Runnable() {
             @Override
             public void run() {
@@ -76,6 +79,27 @@ public class MoleCursorAdapter extends CursorAdapter {
             }
         });
 
+    }
+
+    private String monitoringStarted(long dateOfCreationSection) {
+        Date currentDate = new Date();
+        long diff = currentDate.getTime() - dateOfCreationSection;
+        long daysBetween = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+
+        if (daysBetween == 0) {
+            return mContext.getResources().getString(R.string.monitoring_started_today);
+        } else if (daysBetween == 1) {
+            return mContext.getResources().getString(R.string.monitoring_started_yesterday);
+        } else if (daysBetween < 30) {
+            return mContext.getResources().getString(R.string.monitoring_started_days_ago, daysBetween);
+        } else {
+            long monthBetween = daysBetween / 30;
+            if (monthBetween == 1) {
+                return mContext.getResources().getString(R.string.monitoring_started_months_ago);
+            } else {
+                return mContext.getResources().getString(R.string.monitoring_started_n_months_ago, monthBetween);
+            }
+        }
     }
 
     private static class Holder {

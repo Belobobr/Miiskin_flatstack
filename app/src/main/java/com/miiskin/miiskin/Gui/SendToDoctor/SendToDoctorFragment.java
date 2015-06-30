@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.miiskin.miiskin.Data.SequenceData;
 import com.miiskin.miiskin.R;
 
 /**

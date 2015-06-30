@@ -4,8 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.miiskin.miiskin.Storage.MiiskinDatabaseContract.MolePhotoSequence;
-import com.miiskin.miiskin.Storage.MiiskinDbHelper;
+import com.miiskin.miiskin.Data.UserManager;
+import com.miiskin.miiskin.Storage.MiiskinDatabaseContract.Mole;
+import com.miiskin.miiskin.Storage.MiiskinDatabaseContract.MoleLocation;
 
 /**
  * Created by Newshka on 24.06.2015.
@@ -27,34 +28,16 @@ public class LoadSequenceList extends Task{
         return TASK_ID;
     }
 
+    private static final String MOLE_FOR_USER_SELECT_QUERY = "SELECT * FROM " + Mole.TABLE_NAME +
+            " INNER JOIN " + MoleLocation.TABLE_NAME + " ON " + Mole.TABLE_NAME + "." + Mole.COLUMN_NAME_MOLE_LOCATION_ID
+            + " = " + MoleLocation.TABLE_NAME + "." + MoleLocation._ID + " WHERE " + Mole.COLUMN_NAME_USER_ID + " = ?";
+
     @Override
     public Object execute() {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
-        String[] projection = {
-                MolePhotoSequence._ID,
-                MolePhotoSequence.COLUMN_NAME_DATE_OF_CREATION_SEQUENCE,
-                MolePhotoSequence.COLUMN_NAME_LAST_PHOTO_TIME,
-                MolePhotoSequence.COLUMN_NAME_ANATOMICAL_SECTION,
-                MolePhotoSequence.COLUMN_NAME_X_POSITION_OF_MOLE,
-                MolePhotoSequence.COLUMN_NAME_Y_POSITION_OF_MOLE,
-                MolePhotoSequence.COLUMN_NAME_USER_GENDER,
-                MolePhotoSequence.COLUMN_NAME_USER_BIRTH_DATE
-        };
-
-        String sortOrder =
-                MolePhotoSequence.COLUMN_NAME_DATE_OF_CREATION_SEQUENCE + " DESC";
-
-        Cursor c = db.query(
-                MolePhotoSequence.TABLE_NAME,
-                projection,
-                null,
-                null,
-                null,
-                null,
-                sortOrder
+        Cursor c = db.rawQuery(MOLE_FOR_USER_SELECT_QUERY, new String[]{String.valueOf(UserManager.getInstance().getUserId())}
         );
-
         return c;
     }
 }

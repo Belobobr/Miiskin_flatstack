@@ -6,15 +6,12 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.miiskin.miiskin.Data.SavedPhotoInfo;
-import com.miiskin.miiskin.Data.SequenceData;
-import com.miiskin.miiskin.Gui.Camera.CameraActivity;
+import com.miiskin.miiskin.Data.MoleData;
 import com.miiskin.miiskin.Gui.ViewSequence.ViewSequenceActivity;
 import com.miiskin.miiskin.Helpers.BitmapDecoder;
 import com.miiskin.miiskin.R;
@@ -27,17 +24,17 @@ import java.io.File;
 public class AcceptPhotoFragment extends Fragment {
 
     SavedPhotoInfo mSavedPhotoInfo;
-    SequenceData mSequenceData;
+    MoleData mMoleData;
     View mRetakePhotoButton;
     View mAcceptPhotoButton;
     View mCancelPhotoButton;
     ImageView mImageView;
 
-    public static AcceptPhotoFragment newInstance(SavedPhotoInfo savedPhotoInfo, SequenceData sequenceData) {
+    public static AcceptPhotoFragment newInstance(SavedPhotoInfo savedPhotoInfo, MoleData moleData) {
         AcceptPhotoFragment fragment = new AcceptPhotoFragment();
         Bundle arguments = new Bundle();
         arguments.putSerializable(AcceptPhotoActivity.ARG_TAKEN_PHOTO_IMAGE_INFO, savedPhotoInfo);
-        arguments.putSerializable(AcceptPhotoActivity.ARG_SEQUENCE_DATA, sequenceData);
+        arguments.putSerializable(AcceptPhotoActivity.ARG_SEQUENCE_DATA, moleData);
         fragment.setArguments(arguments);
         return fragment;
     }
@@ -50,7 +47,7 @@ public class AcceptPhotoFragment extends Fragment {
         Bundle arguments = getArguments();
         if (arguments != null) {
             mSavedPhotoInfo = (SavedPhotoInfo)arguments.getSerializable(AcceptPhotoActivity.ARG_TAKEN_PHOTO_IMAGE_INFO);
-            mSequenceData = (SequenceData)arguments.getSerializable(AcceptPhotoActivity.ARG_SEQUENCE_DATA);
+            mMoleData = (MoleData)arguments.getSerializable(AcceptPhotoActivity.ARG_SEQUENCE_DATA);
         }
     }
 
@@ -91,7 +88,7 @@ public class AcceptPhotoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent  = new Intent(getActivity(), ViewSequenceActivity.class);
-                intent.putExtra(ViewSequenceActivity.EXTRA_SEQUENCE_DATA, mSequenceData);
+                intent.putExtra(ViewSequenceActivity.EXTRA_SEQUENCE_DATA, mMoleData);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -102,7 +99,7 @@ public class AcceptPhotoFragment extends Fragment {
             public void onClick(View v) {
                 removePhoto();
                 Intent intent  = new Intent(getActivity(), ViewSequenceActivity.class);
-                intent.putExtra(ViewSequenceActivity.EXTRA_SEQUENCE_DATA, mSequenceData);
+                intent.putExtra(ViewSequenceActivity.EXTRA_SEQUENCE_DATA, mMoleData);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }

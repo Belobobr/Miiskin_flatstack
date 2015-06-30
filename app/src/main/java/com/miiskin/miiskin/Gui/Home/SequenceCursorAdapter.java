@@ -16,7 +16,9 @@ import com.miiskin.miiskin.Data.BodyPart;
 import com.miiskin.miiskin.Gui.General.PointedImageView;
 import com.miiskin.miiskin.Helpers.BitmapDecoder;
 import com.miiskin.miiskin.R;
-import com.miiskin.miiskin.Storage.MiiskinDatabaseContract.MolePhotoSequence;
+import com.miiskin.miiskin.Storage.MiiskinDatabaseContract.User;
+import com.miiskin.miiskin.Storage.MiiskinDatabaseContract.Mole;
+import com.miiskin.miiskin.Storage.MiiskinDatabaseContract.MoleLocation;
 
 /**
  * Created by Newshka on 25.06.2015.
@@ -59,10 +61,10 @@ public class SequenceCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        final String anatomicalSection = cursor.getString(cursor.getColumnIndex(MolePhotoSequence.COLUMN_NAME_ANATOMICAL_SECTION));
-        String dateOfCreationSection = cursor.getString(cursor.getColumnIndex(MolePhotoSequence.COLUMN_NAME_DATE_OF_CREATION_SEQUENCE));
-        final String molePositionX = cursor.getString(cursor.getColumnIndex(MolePhotoSequence.COLUMN_NAME_X_POSITION_OF_MOLE));
-        final String molePositionY = cursor.getString(cursor.getColumnIndex(MolePhotoSequence.COLUMN_NAME_Y_POSITION_OF_MOLE));
+        final String anatomicalSection = cursor.getString(cursor.getColumnIndex(MoleLocation.COLUMN_NAME_BODY_PART));
+        String dateOfCreationSection = cursor.getString(cursor.getColumnIndex(Mole.COLUMN_NAME_START_OBSERVING_DATE));
+        final String molePositionX = cursor.getString(cursor.getColumnIndex(MoleLocation.COLUMN_NAME_X_POSITION_OF_MOLE));
+        final String molePositionY = cursor.getString(cursor.getColumnIndex(MoleLocation.COLUMN_NAME_Y_POSITION_OF_MOLE));
         final Holder holder = (Holder)view.getTag();
         holder.mBodyPartTextView.setText(BodyPart.valueOf(anatomicalSection).getResourceIdDescription());
         holder.mMonitoringStartedTextView.setText(dateOfCreationSection);

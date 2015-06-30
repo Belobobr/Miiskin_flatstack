@@ -16,19 +16,28 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
-import com.miiskin.miiskin.Data.Utils;
+import com.miiskin.miiskin.Data.UserInfo;
+import com.miiskin.miiskin.Data.UserManager;
 import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.Preferences;
+import com.miiskin.miiskin.Storage.Task.SaveUserInfo;
+import com.miiskin.miiskin.Storage.Task.TaskManager;
+
+import java.util.UUID;
 
 /**
  * Created by Newshka on 23.06.2015.
  */
-public class FTEHomeFragment extends Fragment {
+public class FTEHomeFragment extends Fragment implements TaskManager.DataChangeListener {
 
     private RadioButton mFemaleRadioButton;
     private RadioButton mMaleRadioButton;
     private ImageView mMaleImageView;
     private ImageView mFemaleImageView;
+    private static final String USER_INFO_DATA_TAG = "USER_INFO_DATA_TAG ";
+    private static final String TASK_ID = "TASK_ID";
+    private String mTaskId;
+    private UserInfo mUserInfo;
 
     public interface FteCompleteListener {
         public void onFteCompleteDonePressed() ;
@@ -43,6 +52,19 @@ public class FTEHomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        if (savedInstanceState != null)  {
+            mUserInfo = (UserInfo)savedInstanceState.getSerializable(USER_INFO_DATA_TAG);
+            mTaskId = savedInstanceState.getString(TASK_ID);
+        } else {
+            mUserInfo = new UserInfo();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(USER_INFO_DATA_TAG, mUserInfo);
+        outState.putSerializable(TASK_ID, mTaskId);
     }
 
     @Override
@@ -53,6 +75,30 @@ public class FTEHomeFragment extends Fragment {
         }
         if (mMaleRadioButton.isChecked()) {
             mMaleImageView.setSelected(true);
+        }
+        TaskManager.getInstance(getActivity()).addDataChangeListener(this);
+        updateUi();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        TaskManager.getInstance(getActivity()).removeDataChangeListener(this);
+    }
+
+    @Override
+    public void onDataChanged(String dataId) {
+        if (dataId.equals(mTaskId)) {
+            updateUi();
+        }
+    }
+
+    private void updateUi() {
+        mUserInfo.userId = (Long)TaskManager.getInstance(getActivity().getApplicationContext()).getDataById(mTaskId);
+        if (mUserInfo.userId != null) {
+            UserManager.getInstance().setUserID(mUserInfo.userId);
+            FteCompleteListener fteCompleteListener = (FteCompleteListener)getActivity();
+            fteCompleteListener.onFteCompleteDonePressed();
         }
     }
 
@@ -111,7 +157,7 @@ public class FTEHomeFragment extends Fragment {
             switch(v.getId()) {
                 case R.id.male_button:
                     if (checked) {
-                        setGender(Preferences.UserInfo.MALE);
+                        setGender(UserInfo.MALE);
                         mMaleImageView.setSelected(true);
                         mFemaleImageView.setSelected(false);
                         mFemaleRadioButton.setChecked(false);
@@ -119,7 +165,7 @@ public class FTEHomeFragment extends Fragment {
                     break;
                 case R.id.female_button:
                     if (checked) {
-                        setGender(Preferences.UserInfo.FEMALE);
+                        setGender(UserInfo.FEMALE);
                         mMaleImageView.setSelected(false);
                         mFemaleImageView.setSelected(true);
                         mMaleRadioButton.setChecked(false);
@@ -139,7 +185,7 @@ public class FTEHomeFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_done:
-                openListSequence();
+                saveUserInfo();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -147,21 +193,15 @@ public class FTEHomeFragment extends Fragment {
     }
 
     private void setGender(String gender) {
-        SharedPreferences settings = getActivity().getSharedPreferences(Preferences.USER_INFO, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(Preferences.UserInfo.GENDER, gender);
-        editor.commit();
+        mUserInfo.gender = gender;
     }
 
     private void setDateOfBirth(String dateOfBirth) {
-        SharedPreferences settings = getActivity().getSharedPreferences(Preferences.USER_INFO, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(Preferences.UserInfo.DATE_OF_BIRTH, dateOfBirth);
-        editor.commit();
+        mUserInfo.birth_date = dateOfBirth;
     }
 
-    private void openListSequence() {
-        FteCompleteListener fteCompleteListener = (FteCompleteListener)getActivity();
-        fteCompleteListener.onFteCompleteDonePressed();
+    private void saveUserInfo() {
+        mTaskId = UUID.randomUUID().toString();
+        TaskManager.getInstance(getActivity().getApplicationContext()).executeTask(new SaveUserInfo(getActivity().getApplicationContext(), new Object[] {mUserInfo}), mTaskId);
     }
 }

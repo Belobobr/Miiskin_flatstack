@@ -6,10 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
-import com.miiskin.miiskin.Data.SequenceData;
-import com.miiskin.miiskin.Gui.Home.DisclaimerDialogFragment;
-import com.miiskin.miiskin.Gui.Home.FTEHomeFragment;
-import com.miiskin.miiskin.Gui.Home.HomeFragment;
+import com.miiskin.miiskin.Data.MoleData;
 import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.Preferences;
 
@@ -28,7 +25,7 @@ public class CameraActivity extends AppCompatActivity implements FteCameraTipsFr
 
     private int mMode;
     private File dirToSavePhoto;
-    private SequenceData mSequenceData;
+    private MoleData mMoleData;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,11 +36,11 @@ public class CameraActivity extends AppCompatActivity implements FteCameraTipsFr
 
         mMode = getIntent().getIntExtra(CAMERA_MODE, MULTI_PHOTO);
         dirToSavePhoto = (File)getIntent().getSerializableExtra(DIR_TO_SAVE);
-        mSequenceData = (SequenceData)getIntent().getSerializableExtra(EXTRA_SEQUENCE_DATA);
+        mMoleData = (MoleData)getIntent().getSerializableExtra(EXTRA_SEQUENCE_DATA);
 
         CameraFragment fragment = (CameraFragment) getFragmentManager().findFragmentByTag(CameraFragment.TAG);
         if (fragment == null) {
-            fragment = CameraFragment.newInstance(mMode, dirToSavePhoto, mSequenceData);
+            fragment = CameraFragment.newInstance(mMode, dirToSavePhoto, mMoleData);
             getFragmentManager().beginTransaction().replace(R.id.fragment_stub, fragment, CameraFragment.TAG).commit();
         }
 

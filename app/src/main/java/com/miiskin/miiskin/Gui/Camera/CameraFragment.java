@@ -1,6 +1,5 @@
 package com.miiskin.miiskin.Gui.Camera;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,9 +15,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.miiskin.miiskin.Data.BodyPart;
 import com.miiskin.miiskin.Data.SavedPhotoInfo;
-import com.miiskin.miiskin.Data.SequenceData;
+import com.miiskin.miiskin.Data.MoleData;
 import com.miiskin.miiskin.Gui.AcceptPhoto.AcceptPhotoActivity;
 import com.miiskin.miiskin.Gui.General.PointedImageView;
 import com.miiskin.miiskin.Helpers.BitmapDecoder;
@@ -51,17 +49,17 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
     private PointedImageView bodyPartLocationPreview;
 
     private SavedPhotoInfo mSavedPhotoInfo;
-    private SequenceData mSequenceData;
+    private MoleData mMoleData;
     private boolean mPhotoTaken = false;
     private String taskId;
     private boolean mIsSavePhoto = false;
 
-    public static CameraFragment newInstance(int pMode, File dirToSavePhoto, SequenceData sequenceData) {
+    public static CameraFragment newInstance(int pMode, File dirToSavePhoto, MoleData moleData) {
         CameraFragment fragment = new CameraFragment();
         Bundle arguments = new Bundle();
         arguments.putInt(CameraActivity.CAMERA_MODE, pMode);
         arguments.putSerializable(CameraActivity.DIR_TO_SAVE, dirToSavePhoto);
-        arguments.putSerializable(CameraActivity.EXTRA_SEQUENCE_DATA, sequenceData);
+        arguments.putSerializable(CameraActivity.EXTRA_SEQUENCE_DATA, moleData);
         fragment.setArguments(arguments);
         return fragment;
     }
@@ -78,7 +76,7 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
         if (arguments != null) {
             mMode = arguments.getInt(CameraActivity.CAMERA_MODE, CameraActivity.MULTI_PHOTO);
             mDirToSave = (File)arguments.getSerializable(CameraActivity.DIR_TO_SAVE);
-            mSequenceData = (SequenceData)arguments.getSerializable(CameraActivity.EXTRA_SEQUENCE_DATA);
+            mMoleData = (MoleData)arguments.getSerializable(CameraActivity.EXTRA_SEQUENCE_DATA);
         }
     }
 
@@ -123,8 +121,8 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
         bodyPartLocationPreview.post(new Runnable() {
             @Override
             public void run() {
-                loadBodyImageView(bodyPartLocationPreview, mSequenceData.mBodyPart.getDrawableResourceForeground());
-                bodyPartLocationPreview.setPoint(mSequenceData.bodyPartRelativePointX, mSequenceData.bodyPartRelativePointY);
+                loadBodyImageView(bodyPartLocationPreview, mMoleData.mBodyPart.getDrawableResourceForeground());
+                bodyPartLocationPreview.setPoint(mMoleData.bodyPartRelativePointX, mMoleData.bodyPartRelativePointY);
                 bodyPartLocationPreview.invalidate();
             }
         });
@@ -211,7 +209,7 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
     private void goToPreview() {
         Intent intent = new Intent(getActivity(), AcceptPhotoActivity.class);
         intent.putExtra(AcceptPhotoActivity.ARG_TAKEN_PHOTO_IMAGE_INFO, mSavedPhotoInfo);
-        intent.putExtra(AcceptPhotoActivity.ARG_SEQUENCE_DATA, mSequenceData);
+        intent.putExtra(AcceptPhotoActivity.ARG_SEQUENCE_DATA, mMoleData);
         startActivity(intent);
     }
 

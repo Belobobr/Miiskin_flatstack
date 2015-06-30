@@ -6,15 +6,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
+import com.miiskin.miiskin.Data.BodyHalf;
 import com.miiskin.miiskin.Data.BodyPart;
-import com.miiskin.miiskin.Data.SequenceData;
+import com.miiskin.miiskin.Data.MoleData;
 import com.miiskin.miiskin.Gui.ViewSequence.ViewSequenceActivity;
 import com.miiskin.miiskin.R;
-import com.miiskin.miiskin.Storage.Task.SaveCreatedSequenceToDatabase;
+import com.miiskin.miiskin.Storage.Task.SaveMoleToDatabase;
 import com.miiskin.miiskin.Storage.Task.TaskManager;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
@@ -28,17 +29,17 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
 
     private static final String SEQUENCE_DATA_TAG = "SEQUENCE_DATA_TAG ";
     private static final String TASK_ID = "TASK_ID";
-    private SequenceData mSequenceData;
+    private MoleData mMoleData;
     private String taskId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null)  {
-            mSequenceData = (SequenceData)savedInstanceState.getSerializable(SEQUENCE_DATA_TAG);
+            mMoleData = (MoleData)savedInstanceState.getSerializable(SEQUENCE_DATA_TAG);
             taskId = savedInstanceState.getString(TASK_ID);
         } else {
-            mSequenceData = new SequenceData();
+            mMoleData = new MoleData();
         }
 
         setContentView(R.layout.activity_create_secuence);
@@ -56,7 +57,7 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(SEQUENCE_DATA_TAG, mSequenceData);
+        outState.putSerializable(SEQUENCE_DATA_TAG, mMoleData);
         outState.putSerializable(TASK_ID, taskId);
     }
 
@@ -82,40 +83,46 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
 
     private void updateUi() {
         Long sequenceId = (Long)TaskManager.getInstance(getApplicationContext()).getDataById(taskId);
-        mSequenceData.mId = String.valueOf(sequenceId);
+        mMoleData.mId = String.valueOf(sequenceId);
         if (sequenceId != null) {
-            showCreatedSequenceScreen(sequenceId);
+            if (sequenceId != -1)
+                showCreatedSequenceScreen(sequenceId);
+            else {
+                finish();
+                Toast toast = Toast.makeText(this, getString(R.string.error_creating_mole), Toast.LENGTH_SHORT);
+                toast.show();
+            }
         }
-
     }
 
     public void goToSelectSpecificLocationFragment() {
-        Fragment fragment = SpecificLocationFragment.newInstance(mSequenceData.mBodyPart);
+        Fragment fragment = SpecificLocationFragment.newInstance(mMoleData.mBodyPart);
         getFragmentManager().beginTransaction().replace(R.id.main_layout, fragment, SpecificLocationFragment.TAG).addToBackStack(null).commit();
     }
 
     public void showCreatedSequenceScreen(long sequenceId) {
         Intent intent = new Intent(this, ViewSequenceActivity.class);
-        intent.putExtra(ViewSequenceActivity.EXTRA_SEQUENCE_DATA, mSequenceData);
+        intent.putExtra(ViewSequenceActivity.EXTRA_SEQUENCE_DATA, mMoleData);
         startActivity(intent);
     }
 
     public void saveCreatedSequenceToDatabase() {
         taskId = UUID.randomUUID().toString();
-        TaskManager.getInstance(getApplicationContext()).executeTask(new SaveCreatedSequenceToDatabase(getApplicationContext(), new Object[] {mSequenceData}), taskId);
+        TaskManager.getInstance(getApplicationContext()).executeTask(new SaveMoleToDatabase(getApplicationContext(), new Object[] {mMoleData}), taskId);
     }
 
     @Override
-    public void onGeneralAreaSelected(BodyPart bodyPart) {
-        mSequenceData.mBodyPart = bodyPart;
+    public void onGeneralAreaSelected(BodyPart bodyPart, BodyHalf bodyHalf) {
+        mMoleData.mBodyPart = bodyPart;
+        mMoleData.mBodyHalf = bodyHalf;
         goToSelectSpecificLocationFragment();
     }
 
     @Override
     public void onSpecificLocationSelected(float bodyPartRelativePointX, float bodyPartRelativePointY) {
-        mSequenceData.bodyPartRelativePointX = bodyPartRelativePointX;
-        mSequenceData.bodyPartRelativePointY = bodyPartRelativePointY;
-        mSequenceData.mDateOfCreation = new Date();
+        mMoleData.bodyPartRelativePointX = bodyPartRelativePointX;
+        mMoleData.bodyPartRelativePointY = bodyPartRelativePointY;
+        mMoleData.mDateOfCreation = new Date();
         saveCreatedSequenceToDatabase();
     }
 

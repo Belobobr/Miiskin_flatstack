@@ -29,12 +29,10 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.miiskin.miiskin.Data.Paths;
-import com.miiskin.miiskin.Data.SequenceData;
+import com.miiskin.miiskin.Data.MoleData;
 import com.miiskin.miiskin.Gui.Camera.CameraActivity;
-import com.miiskin.miiskin.Gui.General.PhotoView.PhotoView;
 import com.miiskin.miiskin.Gui.General.PhotoView.PhotoViewAttacher;
 import com.miiskin.miiskin.Gui.General.ThumbnailView;
-import com.miiskin.miiskin.Gui.General.TouchImageView;
 import com.miiskin.miiskin.Gui.SendToDoctor.SendToDoctorActivity;
 import com.miiskin.miiskin.Helpers.BitmapDecoder;
 import com.miiskin.miiskin.MiiskinApplication;
@@ -49,7 +47,7 @@ import java.io.File;
 public class ViewSequenceFragment extends Fragment {
     public static final String EXTRA_SEQUENCE_DATA = "EXTRA_SEQUENCE_DATA";
 
-    SequenceData mSequenceData;
+    MoleData mMoleData;
     FloatingActionButton mFloatingActionButton;
     FloatingActionButton mSendToDoctor;
     FloatingActionButton mTakePhoto;
@@ -73,10 +71,10 @@ public class ViewSequenceFragment extends Fragment {
     private static int FULL_SCREEN_PREVIEW_SIZE = 1500;
 
 
-    public static ViewSequenceFragment newInstance(SequenceData sequenceData) {
+    public static ViewSequenceFragment newInstance(MoleData moleData) {
         ViewSequenceFragment fragment = new ViewSequenceFragment();
         Bundle arguments = new Bundle();
-        arguments.putSerializable(EXTRA_SEQUENCE_DATA, sequenceData);
+        arguments.putSerializable(EXTRA_SEQUENCE_DATA, moleData);
         fragment.setArguments(arguments);
         return fragment;
     }
@@ -87,7 +85,7 @@ public class ViewSequenceFragment extends Fragment {
         setRetainInstance(true);
         mLayoutInflater = (LayoutInflater) MiiskinApplication.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (getArguments() != null) {
-            mSequenceData = (SequenceData)getArguments().getSerializable(EXTRA_SEQUENCE_DATA);
+            mMoleData = (MoleData)getArguments().getSerializable(EXTRA_SEQUENCE_DATA);
         }
     }
 
@@ -135,7 +133,7 @@ public class ViewSequenceFragment extends Fragment {
         mSwitchToFullScreenAnimator.playTogether(hideActionBarAnimator, disappearInfoPanelAnimator, floatingActionButtonAnimator);
         mSwitchToFullScreenAnimator.start();
 
-        final String fileName = Paths.getAbsoluteDirForSequence(mSequenceData.mId) + "/" + ( mPager.getCurrentItem() + 1) + ".png";
+        final String fileName = Paths.getAbsoluteDirForSequence(mMoleData.mId) + "/" + ( mPager.getCurrentItem() + 1) + ".png";
         mFullScreenImagePreview.post(new Runnable() {
             @Override
             public void run() {
@@ -171,7 +169,7 @@ public class ViewSequenceFragment extends Fragment {
     public void onResume() {
         super.onResume();
         final ViewSequenceActivity viewSequenceActivity = (ViewSequenceActivity)getActivity();
-        viewSequenceActivity.mActionBarToolbar.setTitle(mSequenceData.mBodyPart.toString());
+        viewSequenceActivity.mActionBarToolbar.setTitle(mMoleData.mBodyPart.toString());
         if (mYDoctorInitialPosition == -1 && mYPhotoInitialPosition == -1) {
             mFloatingActionButton.post(new Runnable() {
                 @Override
@@ -314,7 +312,7 @@ public class ViewSequenceFragment extends Fragment {
         File path = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_DCIM);
         if (path.exists()) {
-            File sequencePhotoDir = new File(path, Paths.getRelativeDirForSequence(mSequenceData.mId));
+            File sequencePhotoDir = new File(path, Paths.getRelativeDirForSequence(mMoleData.mId));
             if (sequencePhotoDir.exists()) {
                 savePhotoToFile(sequencePhotoDir);
             } else {
@@ -338,7 +336,7 @@ public class ViewSequenceFragment extends Fragment {
         File fileSavedTo = new File(fileName);
         Intent intent = new Intent(getActivity(), CameraActivity.class);
         intent.putExtra(CameraActivity.DIR_TO_SAVE, fileSavedTo);
-        intent.putExtra(CameraActivity.EXTRA_SEQUENCE_DATA, mSequenceData);
+        intent.putExtra(CameraActivity.EXTRA_SEQUENCE_DATA, mMoleData);
         startActivity(intent);
 
     }
@@ -430,7 +428,7 @@ public class ViewSequenceFragment extends Fragment {
             frameLayout.setClipChildren(true);
 
             final ThumbnailView imageView = (ThumbnailView)frameLayout.findViewById(R.id.mole_photo);
-            final String fileName = Paths.getAbsolutePathForFileInSequence(mSequenceData.mId, position + 1);
+            final String fileName = Paths.getAbsolutePathForFileInSequence(mMoleData.mId, position + 1);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setThumbnailKey(ThumbnailManager.getInstance().getThumbnailKey(ThumbnailManager.ThumbnailMode.NORMAL, fileName));
             imageView.post(new Runnable() {
@@ -468,7 +466,7 @@ public class ViewSequenceFragment extends Fragment {
 
         @Override
         public int getCount() {
-            String absoluteDir =  Paths.getAbsoluteDirForSequence(mSequenceData.mId);
+            String absoluteDir =  Paths.getAbsoluteDirForSequence(mMoleData.mId);
             File file = new File(absoluteDir);
             if (file.listFiles() != null) {
                return file.listFiles().length;

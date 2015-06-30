@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.miiskin.miiskin.Data.BodyHalf;
 import com.miiskin.miiskin.Data.BodyPart;
 import com.miiskin.miiskin.Helpers.BitmapDecoder;
 import com.miiskin.miiskin.R;
@@ -46,7 +47,7 @@ public class GeneralAreaFragment extends Fragment {
     }
 
     public interface GeneralAreaSelectedListener {
-        public void onGeneralAreaSelected(BodyPart bodyPart);
+        public void onGeneralAreaSelected(BodyPart bodyPart, BodyHalf bodyHalf);
     }
 
     private GeneralAreaSelectedListener mListener;
@@ -111,7 +112,7 @@ public class GeneralAreaFragment extends Fragment {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onGeneralAreaSelected(mBodyPart);
+                mListener.onGeneralAreaSelected(mBodyPart, frontMode ? BodyHalf.Front : BodyHalf.Rear);
             }
         });
         buttonFront = (Button)view.findViewById(R.id.buttonFront);

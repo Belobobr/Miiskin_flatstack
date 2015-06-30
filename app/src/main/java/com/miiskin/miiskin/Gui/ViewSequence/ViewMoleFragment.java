@@ -491,7 +491,6 @@ public class ViewMoleFragment extends Fragment implements TaskManager.DataChange
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             FrameLayout frameLayout = (FrameLayout)mLayoutInflater.inflate(R.layout.layout_mole_pager, container, false);
-            frameLayout.setBackgroundColor(Color.argb(255, position * 50, position * 10, position * 50));
             frameLayout.setClipChildren(true);
 
             mMoleInfo.mPicturesCursor.moveToPosition(position);

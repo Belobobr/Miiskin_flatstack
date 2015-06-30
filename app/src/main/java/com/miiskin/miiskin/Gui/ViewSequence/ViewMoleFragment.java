@@ -44,7 +44,7 @@ import java.io.File;
 /**
  * Created by Newshka on 26.06.2015.
  */
-public class ViewSequenceFragment extends Fragment {
+public class ViewMoleFragment extends Fragment {
     public static final String EXTRA_SEQUENCE_DATA = "EXTRA_SEQUENCE_DATA";
 
     MoleData mMoleData;
@@ -71,8 +71,8 @@ public class ViewSequenceFragment extends Fragment {
     private static int FULL_SCREEN_PREVIEW_SIZE = 1500;
 
 
-    public static ViewSequenceFragment newInstance(MoleData moleData) {
-        ViewSequenceFragment fragment = new ViewSequenceFragment();
+    public static ViewMoleFragment newInstance(MoleData moleData) {
+        ViewMoleFragment fragment = new ViewMoleFragment();
         Bundle arguments = new Bundle();
         arguments.putSerializable(EXTRA_SEQUENCE_DATA, moleData);
         fragment.setArguments(arguments);
@@ -92,8 +92,8 @@ public class ViewSequenceFragment extends Fragment {
     private void switchToNotFullScreenMode() {
         mBottomRightPanel.setVisibility(View.VISIBLE);
         mPreviewMode.setVisibility(View.VISIBLE);
-        final ViewSequenceActivity viewSequenceActivity = (ViewSequenceActivity)getActivity();
-        Toolbar toolbar = viewSequenceActivity.mActionBarToolbar;
+        final ViewMoleActivity viewMoleActivity = (ViewMoleActivity)getActivity();
+        Toolbar toolbar = viewMoleActivity.mActionBarToolbar;
         toolbar.setVisibility(View.VISIBLE);
 
         ValueAnimator showActionBarAnimator = ObjectAnimator.ofFloat(toolbar, "translationY", -toolbar.getHeight(), 0);
@@ -113,8 +113,8 @@ public class ViewSequenceFragment extends Fragment {
         mFullScreenMode.setVisibility(View.VISIBLE);
 
         mPreviewMode.setVisibility(View.GONE);
-        final ViewSequenceActivity viewSequenceActivity = (ViewSequenceActivity)getActivity();
-        final Toolbar toolbar = viewSequenceActivity.mActionBarToolbar;
+        final ViewMoleActivity viewMoleActivity = (ViewMoleActivity)getActivity();
+        final Toolbar toolbar = viewMoleActivity.mActionBarToolbar;
 
         ValueAnimator hideActionBarAnimator = ObjectAnimator.ofFloat(toolbar, "translationY", 0, -toolbar.getHeight());
         ValueAnimator disappearInfoPanelAnimator = ObjectAnimator.ofFloat(mInfoPanel, "alpha", 1, 0);
@@ -168,8 +168,8 @@ public class ViewSequenceFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        final ViewSequenceActivity viewSequenceActivity = (ViewSequenceActivity)getActivity();
-        viewSequenceActivity.mActionBarToolbar.setTitle(mMoleData.mBodyPart.toString());
+        final ViewMoleActivity viewMoleActivity = (ViewMoleActivity)getActivity();
+        viewMoleActivity.mActionBarToolbar.setTitle(mMoleData.mBodyPart.toString());
         if (mYDoctorInitialPosition == -1 && mYPhotoInitialPosition == -1) {
             mFloatingActionButton.post(new Runnable() {
                 @Override
@@ -194,9 +194,9 @@ public class ViewSequenceFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final ViewSequenceActivity viewSequenceActivity = (ViewSequenceActivity)getActivity();
-        viewSequenceActivity.mActionBarToolbar.setNavigationIcon(R.drawable.ic_action_arrow_back);
-        viewSequenceActivity.mActionBarToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        final ViewMoleActivity viewMoleActivity = (ViewMoleActivity)getActivity();
+        viewMoleActivity.mActionBarToolbar.setNavigationIcon(R.drawable.ic_action_arrow_back);
+        viewMoleActivity.mActionBarToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().onBackPressed();

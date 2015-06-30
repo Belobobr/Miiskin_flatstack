@@ -23,7 +23,7 @@
         </activity>
         <activity android:name=".Gui.CreateSequence.CreateSequenceActivity" />
         <activity
-            android:name=".Gui.ViewSequence.ViewSequenceActivity">
+            android:name=".Gui.ViewSequence.ViewMoleActivity">
         </activity>
         <activity android:name=".Gui.Camera.CameraActivity" />
         <activity

@@ -16,7 +16,7 @@ import android.widget.ListView;
 
 import com.miiskin.miiskin.Data.MoleData;
 import com.miiskin.miiskin.Gui.CreateSequence.CreateSequenceActivity;
-import com.miiskin.miiskin.Gui.ViewSequence.ViewSequenceActivity;
+import com.miiskin.miiskin.Gui.ViewSequence.ViewMoleActivity;
 import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.Task.LoadSequenceList;
 import com.miiskin.miiskin.Storage.Task.TaskManager;
@@ -125,8 +125,8 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         moleSequenceListCursor.moveToPosition(position);
                         MoleData moleData = MoleData.createFromCursor(moleSequenceListCursor);
-                        Intent intent = new Intent(HomeFragment.this.getActivity(), ViewSequenceActivity.class);
-                        intent.putExtra(ViewSequenceActivity.EXTRA_SEQUENCE_DATA, moleData);
+                        Intent intent = new Intent(HomeFragment.this.getActivity(), ViewMoleActivity.class);
+                        intent.putExtra(ViewMoleActivity.EXTRA_SEQUENCE_DATA, moleData);
                         startActivity(intent);
                     }
                 });

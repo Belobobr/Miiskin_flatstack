@@ -12,7 +12,7 @@ import com.miiskin.miiskin.Data.MoleData;
 import com.miiskin.miiskin.Gui.Home.HomeActivity;
 import com.miiskin.miiskin.R;
 
-public class ViewSequenceActivity extends AppCompatActivity {
+public class ViewMoleActivity extends AppCompatActivity {
 
     public static final String EXTRA_SEQUENCE_DATA = "EXTRA_SEQUENCE_DATA";
 
@@ -30,7 +30,7 @@ public class ViewSequenceActivity extends AppCompatActivity {
 
         Fragment fragment = getFragmentManager().findFragmentById(R.id.main_layout);
         if (fragment == null) {
-            fragment = ViewSequenceFragment.newInstance(mMoleData);
+            fragment = ViewMoleFragment.newInstance(mMoleData);
             getFragmentManager().beginTransaction().add(R.id.main_layout, fragment).commit();
         }
     }

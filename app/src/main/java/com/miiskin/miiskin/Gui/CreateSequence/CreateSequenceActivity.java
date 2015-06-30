@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.miiskin.miiskin.Data.BodyHalf;
 import com.miiskin.miiskin.Data.BodyPart;
 import com.miiskin.miiskin.Data.MoleData;
-import com.miiskin.miiskin.Gui.ViewSequence.ViewSequenceActivity;
+import com.miiskin.miiskin.Gui.ViewSequence.ViewMoleActivity;
 import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.Task.SaveMoleToDatabase;
 import com.miiskin.miiskin.Storage.Task.TaskManager;
@@ -101,8 +101,8 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
     }
 
     public void showCreatedSequenceScreen(long sequenceId) {
-        Intent intent = new Intent(this, ViewSequenceActivity.class);
-        intent.putExtra(ViewSequenceActivity.EXTRA_SEQUENCE_DATA, mMoleData);
+        Intent intent = new Intent(this, ViewMoleActivity.class);
+        intent.putExtra(ViewMoleActivity.EXTRA_SEQUENCE_DATA, mMoleData);
         startActivity(intent);
     }
 

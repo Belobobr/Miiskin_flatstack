@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 import com.miiskin.miiskin.Data.SavedPhotoInfo;
 import com.miiskin.miiskin.Data.MoleData;
-import com.miiskin.miiskin.Gui.ViewSequence.ViewSequenceActivity;
+import com.miiskin.miiskin.Gui.ViewSequence.ViewMoleActivity;
 import com.miiskin.miiskin.Helpers.BitmapDecoder;
 import com.miiskin.miiskin.R;
 
@@ -87,8 +87,8 @@ public class AcceptPhotoFragment extends Fragment {
         mAcceptPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent  = new Intent(getActivity(), ViewSequenceActivity.class);
-                intent.putExtra(ViewSequenceActivity.EXTRA_SEQUENCE_DATA, mMoleData);
+                Intent intent  = new Intent(getActivity(), ViewMoleActivity.class);
+                intent.putExtra(ViewMoleActivity.EXTRA_SEQUENCE_DATA, mMoleData);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -98,8 +98,8 @@ public class AcceptPhotoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 removePhoto();
-                Intent intent  = new Intent(getActivity(), ViewSequenceActivity.class);
-                intent.putExtra(ViewSequenceActivity.EXTRA_SEQUENCE_DATA, mMoleData);
+                Intent intent  = new Intent(getActivity(), ViewMoleActivity.class);
+                intent.putExtra(ViewMoleActivity.EXTRA_SEQUENCE_DATA, mMoleData);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }

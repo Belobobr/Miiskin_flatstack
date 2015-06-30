@@ -49,6 +49,9 @@
     <string name="title_activity_accept_photo">AcceptPhotoActivity</string>
     <string name="title_activity_send_to_toctor">SendToToctor</string>
     <string name="year_of_birth">Year of birth</string>
+    <string name="view_mole">View mole</string>
+    <string name="photo_number">Photo %1$d / %2$d</string>
+
 
     <!-- Errors !-->
     <string name="error_creating_mole">"Can't create mole"</string>

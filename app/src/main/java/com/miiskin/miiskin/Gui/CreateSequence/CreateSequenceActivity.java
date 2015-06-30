@@ -13,7 +13,7 @@ import com.miiskin.miiskin.Data.BodyPart;
 import com.miiskin.miiskin.Data.MoleData;
 import com.miiskin.miiskin.Gui.ViewSequence.ViewMoleActivity;
 import com.miiskin.miiskin.R;
-import com.miiskin.miiskin.Storage.Task.SaveMoleToDatabase;
+import com.miiskin.miiskin.Storage.Task.SaveMoleToDatabaseTask;
 import com.miiskin.miiskin.Storage.Task.TaskManager;
 
 import java.util.Date;
@@ -102,13 +102,13 @@ public class CreateSequenceActivity extends AppCompatActivity implements General
 
     public void showCreatedSequenceScreen(long sequenceId) {
         Intent intent = new Intent(this, ViewMoleActivity.class);
-        intent.putExtra(ViewMoleActivity.EXTRA_SEQUENCE_DATA, mMoleData);
+        intent.putExtra(ViewMoleActivity.EXTRA_MOLE_ID, mMoleData);
         startActivity(intent);
     }
 
     public void saveCreatedSequenceToDatabase() {
         taskId = UUID.randomUUID().toString();
-        TaskManager.getInstance(getApplicationContext()).executeTask(new SaveMoleToDatabase(getApplicationContext(), new Object[] {mMoleData}), taskId);
+        TaskManager.getInstance(getApplicationContext()).executeTask(new SaveMoleToDatabaseTask(getApplicationContext(), new Object[] {mMoleData}), taskId);
     }
 
     @Override

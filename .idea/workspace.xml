@@ -15,22 +15,26 @@
   </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.miiskin.miiskin" />
   </component>
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/General/ThumbnailView.java" line="39" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9981aa61-a763-45e8-a317-6016ea0039e6" name="Default" comment="">
-      <change type="MOVED" beforePath="C:\Work\miiskin\miiskin_android\app\src\main\java\com\miiskin\miiskin\Gui\ViewSequence\ViewSequenceActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleActivity.java" />
-      <change type="MOVED" beforePath="C:\Work\miiskin\miiskin_android\app\src\main\java\com\miiskin\miiskin\Gui\ViewSequence\ViewSequenceFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleFragment.java" />
+    <list default="true" id="9981aa61-a763-45e8-a317-6016ea0039e6" name="Default" comment="Refactor rename ViewSequence -&gt; ViewMole&#10;&#10;&#10;&#10;">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/LoadMoleInfoTask.java" />
+      <change type="MOVED" beforePath="C:\Work\miiskin\miiskin_android\app\src\main\java\com\miiskin\miiskin\Gui\Home\SequenceCursorAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Home/MoleCursorAdapter.java" />
+      <change type="MOVED" beforePath="C:\Work\miiskin\miiskin_android\app\src\main\java\com\miiskin\miiskin\Storage\Task\LoadSequenceList.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/LoadSequenceListTask.java" />
+      <change type="MOVED" beforePath="C:\Work\miiskin\miiskin_android\app\src\main\java\com\miiskin\miiskin\Storage\Task\SaveMoleToDatabase.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/SaveMoleToDatabaseTask.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/AcceptPhoto/AcceptPhotoFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/AcceptPhoto/AcceptPhotoFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Camera/CameraActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Camera/CameraActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Camera/CameraFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Camera/CameraFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/CreateSequenceActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/CreateSequenceActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Home/HomeFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Home/HomeFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/SendToDoctor/SendToDoctorActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/SendToDoctor/SendToDoctorActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_view_sequence.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_view_sequence.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/menu/menu_view_sequence.xml" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_view_sequence.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/MiiskinDbHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/MiiskinDbHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/SavePhotoFileTask.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/SavePhotoFileTask.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Miiskin.iws" />
@@ -97,8 +101,74 @@
       <file leaf-file-name="ViewMoleFragment.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.51261467" vertical-offset="6642" max-vertical-offset="7514">
-              <caret line="461" column="17" selection-start-line="461" selection-start-column="17" selection-end-line="461" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.6437718" vertical-offset="7726" max-vertical-offset="8585">
+              <caret line="525" column="0" selection-start-line="525" selection-start-column="0" selection-end-line="525" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#9523#9552#0" expanded="true" />
+                <element signature="e#14258#14338#0" expanded="true" />
+                <element signature="e#16331#16357#0" expanded="true" />
+                <element signature="e#21805#22078#0" expanded="true" />
+                <element signature="e#22063#22064#0" expanded="true" />
+                <element signature="e#22125#22779#0" expanded="true" />
+                <element signature="e#22764#22765#0" expanded="true" />
+                <element signature="e#23590#23591#0" expanded="true" />
+                <element signature="e#23637#23638#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MoleData.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Data/MoleData.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
+              <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CameraActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Camera/CameraActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="267" max-vertical-offset="1139">
+              <caret line="38" column="78" selection-start-line="38" selection-start-column="63" selection-end-line="38" selection-end-column="78" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CameraFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Camera/CameraFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.107143" vertical-offset="2147" max-vertical-offset="3281">
+              <caret line="174" column="119" selection-start-line="174" selection-start-column="119" selection-end-line="174" selection-end-column="119" />
+              <folding>
+                <element signature="e#3428#3834#0" expanded="true" />
+                <element signature="e#3823#3824#0" expanded="true" />
+                <element signature="e#4669#5048#0" expanded="true" />
+                <element signature="e#5037#5038#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CameraView.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Camera/CameraView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="6850" max-vertical-offset="8670">
+              <caret line="452" column="16" selection-start-line="452" selection-start-column="16" selection-end-line="452" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SavePhotoFileTask.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/SavePhotoFileTask.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.428572" vertical-offset="1663" max-vertical-offset="3536">
+              <caret line="119" column="72" selection-start-line="119" selection-start-column="72" selection-end-line="119" selection-end-column="72" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -109,78 +179,8 @@
       <file leaf-file-name="ViewMoleActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="816">
-              <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LoadSequenceList.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/LoadSequenceList.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="731">
-              <caret line="35" column="29" selection-start-line="35" selection-start-column="29" selection-end-line="35" selection-end-column="29" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MiiskinDatabaseContract.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/MiiskinDatabaseContract.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="833">
-              <caret line="26" column="70" selection-start-line="26" selection-start-column="70" selection-end-line="26" selection-end-column="70" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SaveMoleToDatabase.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/SaveMoleToDatabase.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="335" max-vertical-offset="1207">
-              <caret line="47" column="49" selection-start-line="47" selection-start-column="49" selection-end-line="47" selection-end-column="49" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#586#587#0" expanded="true" />
-                <element signature="e#624#625#0" expanded="true" />
-                <element signature="e#2353#2354#0" expanded="true" />
-                <element signature="e#2383#2384#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SaveUserInfo.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/SaveUserInfo.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="816">
-              <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SavePhotoFileTask.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/SavePhotoFileTask.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2018" max-vertical-offset="2890">
-              <caret line="58" column="35" selection-start-line="58" selection-start-column="35" selection-end-line="58" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Task.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/Task.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
-              <caret line="10" column="22" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="816">
+              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -189,8 +189,8 @@
       <file leaf-file-name="TaskManager.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/TaskManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1394">
-              <caret line="65" column="65" selection-start-line="65" selection-start-column="65" selection-end-line="65" selection-end-column="65" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="522" max-vertical-offset="1394">
+              <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
               <folding>
                 <element signature="e#2063#2064#0" expanded="true" />
               </folding>
@@ -198,14 +198,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ThumbnailManager.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/ThumbnailManager/ThumbnailManager.java">
+      <file leaf-file-name="HomeFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Home/HomeFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="1632">
-              <caret line="51" column="5" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1930" max-vertical-offset="2363">
+              <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1126#1145#0" expanded="true" />
+                <element signature="e#5066#5703#0" expanded="true" />
+                <element signature="e#5684#5685#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LoadMoleInfoTask.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/LoadMoleInfoTask.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="693" max-vertical-offset="1139">
+              <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1021#1022#0" expanded="true" />
+                <element signature="e#1059#1060#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1490,14 +1505,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/build.gradle" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/General/PhotoView/uk/co/senab/photoview/log/Logger.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/General/PhotoView/gestures/GestureDetector.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/General/PhotoView/PhotoView.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/General/PhotoView/PhotoViewAttacher.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/General/PhotoView/gestures/CupcakeGestureDetector.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/General/PhotoView/gestures/EclairGestureDetector.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Home/HomeActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/color/home_fab_semitrasparent.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
@@ -1511,7 +1518,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/General/PointedImageView.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Data/BodyPart.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Camera/CameraFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/layout_sequence_adapter.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/color/send_doctor_fab.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
@@ -1534,13 +1540,22 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/GeneralAreaFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/MiiskinDatabaseContract.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/LoadSequenceList.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/CreateSequenceActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/MiiskinDbHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/SaveMoleToDatabase.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewSequenceFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/LoadSequenceListTask.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/SaveMoleToDatabaseTask.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Home/MoleCursorAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/CreateSequenceActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/MiiskinDbHelper.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Home/HomeFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Camera/CameraActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/LoadMoleInfoTask.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/AcceptPhoto/AcceptPhotoFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/SavePhotoFileTask.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Camera/CameraFragment.java" />
       </list>
     </option>
   </component>
@@ -1824,6 +1839,58 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Miiskin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="&lt; Android API 21 Platform &gt;" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="content" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Miiskin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="&lt; Android API 21 Platform &gt;" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -3113,7 +3180,11 @@
       <created>1435672642864</created>
       <updated>1435672642864</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Refactor rename ViewSequence -&gt; ViewMole&#10;&#10;&#10;&#10;">
+      <created>1435673369802</created>
+      <updated>1435673369802</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -3153,14 +3224,14 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.375" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17666666" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7322222" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5733333" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959402" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30170575" sideWeight="0.8800905" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24520256" sideWeight="0.8800905" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -3233,7 +3304,8 @@
     <MESSAGE value="background downloading images&#10;&#10;" />
     <MESSAGE value="bug with animation&#10;&#10;&#10;" />
     <MESSAGE value="Change data model (database)&#10;&#10;&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change data model (database)&#10;&#10;&#10;" />
+    <MESSAGE value="Refactor rename ViewSequence -&gt; ViewMole&#10;&#10;&#10;&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor rename ViewSequence -&gt; ViewMole&#10;&#10;&#10;&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -3268,78 +3340,83 @@
           <properties />
           <option name="timeStamp" value="160" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/LoadMoleInfoTask.java</url>
+          <line>55</line>
+          <properties />
+          <option name="timeStamp" value="170" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleFragment.java</url>
+          <line>102</line>
+          <properties />
+          <option name="timeStamp" value="171" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleActivity.java</url>
+          <line>24</line>
+          <properties />
+          <option name="timeStamp" value="172" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Home/HomeFragment.java</url>
+          <line>126</line>
+          <properties />
+          <option name="timeStamp" value="173" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleFragment.java</url>
+          <line>95</line>
+          <properties />
+          <option name="timeStamp" value="175" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleFragment.java</url>
+          <line>216</line>
+          <properties />
+          <option name="timeStamp" value="176" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleFragment.java</url>
+          <line>525</line>
+          <properties />
+          <option name="timeStamp" value="177" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleFragment.java</url>
+          <line>476</line>
+          <properties />
+          <option name="timeStamp" value="178" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/SavePhotoFileTask.java</url>
+          <line>103</line>
+          <properties />
+          <option name="timeStamp" value="179" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleFragment.java</url>
+          <line>389</line>
+          <properties />
+          <option name="timeStamp" value="180" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/SavePhotoFileTask.java</url>
+          <line>62</line>
+          <properties />
+          <option name="timeStamp" value="181" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleFragment.java</url>
+          <line>225</line>
+          <properties />
+          <option name="timeStamp" value="182" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="170" />
+      <option name="time" value="183" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-21/java/util/concurrent/Executors.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="543" max-vertical-offset="10863">
-          <caret line="59" column="34" selection-start-line="59" selection-start-column="34" selection-end-line="59" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-21/android/widget/ImageView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="7751" max-vertical-offset="22865">
-          <caret line="538" column="16" selection-start-line="538" selection-start-column="16" selection-end-line="538" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_mole_pager.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.7777777" vertical-offset="0" max-vertical-offset="306">
-          <caret line="6" column="50" selection-start-line="6" selection-start-column="50" selection-end-line="6" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/General/ThumbnailView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="738" max-vertical-offset="1326">
-          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#849#850#0" expanded="true" />
-            <element signature="e#915#916#0" expanded="true" />
-            <element signature="e#1731#1732#0" expanded="true" />
-            <element signature="e#1767#1768#0" expanded="true" />
-            <element signature="e#1823#1824#0" expanded="true" />
-            <element signature="e#1872#1873#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/AppData/Local/Android/Sdk/extras/android/m2repository/com/android/support/support-v4/22.2.0/support-v4-22.2.0-sources.jar!/android/support/v4/view/ViewPager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="10879" max-vertical-offset="49198">
-          <caret line="724" column="35" selection-start-line="724" selection-start-column="35" selection-end-line="724" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="731">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/MiiskinApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/SendToDoctor/SendToDoctorActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
@@ -3372,14 +3449,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Data/Paths.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
-          <caret line="17" column="25" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Data/Utils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
@@ -3392,30 +3461,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
           <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/AcceptPhoto/AcceptPhotoFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1581">
-          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Camera/CameraActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1139">
-          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Camera/CameraView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8670">
-          <caret line="34" column="13" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -3440,14 +3485,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="182" max-vertical-offset="1054">
           <caret line="62" column="52" selection-start-line="62" selection-start-column="52" selection-end-line="62" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Home/HomeFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="986" max-vertical-offset="1989">
-          <caret line="118" column="24" selection-start-line="118" selection-start-column="24" selection-end-line="118" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -3482,36 +3519,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Home/SequenceCursorAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="811" max-vertical-offset="1683">
-          <caret line="72" column="31" selection-start-line="72" selection-start-column="31" selection-end-line="72" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Camera/CameraFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1527" max-vertical-offset="3179">
-          <caret line="144" column="0" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Preferences.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
           <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Home/HomeActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1717">
-          <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
           <folding />
         </state>
       </provider>
@@ -3528,29 +3539,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
           <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Home/FTEHomeFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="816" max-vertical-offset="3230">
-          <caret line="99" column="51" selection-start-line="99" selection-start-column="32" selection-end-line="99" selection-end-column="51" />
-          <folding>
-            <element signature="e#5344#6262#0" expanded="true" />
-            <element signature="e#6255#6256#0" expanded="true" />
-            <element signature="e#6814#6815#0" expanded="true" />
-            <element signature="e#6855#6856#0" expanded="true" />
-            <element signature="e#6910#6911#0" expanded="true" />
-            <element signature="e#6960#6961#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Data/BodyPart.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="765">
-          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
           <folding />
         </state>
       </provider>
@@ -3585,87 +3573,7 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="867">
           <caret line="35" column="16" selection-start-line="35" selection-start-column="16" selection-end-line="35" selection-end-column="16" />
           <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-21/android/os/AsyncTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4087" max-vertical-offset="10710">
-          <caret line="298" column="0" selection-start-line="298" selection-start-column="0" selection-end-line="298" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Data/MoleData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
-          <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="7.6" vertical-offset="190" max-vertical-offset="1037">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-21/android/database/sqlite/SQLiteDatabase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="21663" max-vertical-offset="36380">
-          <caret line="1338" column="16" selection-start-line="1338" selection-start-column="16" selection-end-line="1338" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/MiiskinDbHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="1683">
-          <caret line="47" column="45" selection-start-line="47" selection-start-column="45" selection-end-line="47" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/CreateSequenceActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1063" max-vertical-offset="2159">
-          <caret line="110" column="83" selection-start-line="110" selection-start-column="83" selection-end-line="110" selection-end-column="83" />
-          <folding>
-            <element signature="e#3150#3189#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/LoadSequenceList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="731">
-          <caret line="35" column="29" selection-start-line="35" selection-start-column="29" selection-end-line="35" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/SavePhotoFileTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2018" max-vertical-offset="2890">
-          <caret line="58" column="35" selection-start-line="58" selection-start-column="35" selection-end-line="58" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/SaveUserInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="294" max-vertical-offset="816">
-          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3675,16 +3583,6 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
           <caret line="10" column="22" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/TaskManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1394">
-          <caret line="65" column="65" selection-start-line="65" selection-start-column="65" selection-end-line="65" selection-end-column="65" />
-          <folding>
-            <element signature="e#2063#2064#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3699,24 +3597,269 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/MiiskinDatabaseContract.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Home/FTEHomeFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="833">
-          <caret line="26" column="70" selection-start-line="26" selection-start-column="70" selection-end-line="26" selection-end-column="70" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="816" max-vertical-offset="3111">
+          <caret line="100" column="55" selection-start-line="100" selection-start-column="55" selection-end-line="100" selection-end-column="55" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/SaveMoleToDatabase.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Home/HomeActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="335" max-vertical-offset="1207">
-          <caret line="47" column="49" selection-start-line="47" selection-start-column="49" selection-end-line="47" selection-end-column="49" />
+        <state vertical-scroll-proportion="1.0" vertical-offset="487" max-vertical-offset="1717">
+          <caret line="41" column="76" selection-start-line="41" selection-start-column="76" selection-end-line="41" selection-end-column="76" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Home/MoleCursorAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="709" max-vertical-offset="1734">
+          <caret line="74" column="69" selection-start-line="74" selection-start-column="69" selection-end-line="74" selection-end-column="69" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#586#587#0" expanded="true" />
-            <element signature="e#624#625#0" expanded="true" />
-            <element signature="e#2353#2354#0" expanded="true" />
-            <element signature="e#2383#2384#0" expanded="true" />
+            <element signature="e#3218#3560#0" expanded="true" />
+            <element signature="e#3549#3550#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/CreateSequence/CreateSequenceActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1288" max-vertical-offset="2159">
+          <caret line="104" column="41" selection-start-line="104" selection-start-column="41" selection-end-line="104" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-21/android/content/Intent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="78981" max-vertical-offset="127449">
+          <caret line="4761" column="16" selection-start-line="4761" selection-start-column="16" selection-end-line="4761" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Data/Paths.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
+          <caret line="26" column="25" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Data/BodyPart.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="765">
+          <caret line="39" column="15" selection-start-line="39" selection-start-column="15" selection-end-line="39" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_view_sequence.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="29.592592" vertical-offset="969" max-vertical-offset="2278">
+          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-21/android/app/Fragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="11984" max-vertical-offset="36227">
+          <caret line="808" column="24" selection-start-line="808" selection-start-column="24" selection-end-line="808" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-21/java/util/Date.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1614" max-vertical-offset="12835">
+          <caret line="56" column="11" selection-start-line="56" selection-start-column="11" selection-end-line="56" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/MiiskinDbHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="1700">
+          <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-21/java/text/SimpleDateFormat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3093" max-vertical-offset="22763">
+          <caret line="227" column="11" selection-start-line="227" selection-start-column="11" selection-end-line="227" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-21/java/text/DateFormat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5388" max-vertical-offset="13651">
+          <caret line="305" column="24" selection-start-line="305" selection-start-column="24" selection-end-line="305" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-23.0" vertical-offset="241" max-vertical-offset="1088">
+          <caret line="48" column="65" selection-start-line="48" selection-start-column="65" selection-end-line="48" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/SaveUserInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="816">
+          <caret line="30" column="51" selection-start-line="30" selection-start-column="51" selection-end-line="30" selection-end-column="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/LoadSequenceListTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="731">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/AcceptPhoto/AcceptPhotoFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="706" max-vertical-offset="1632">
+          <caret line="99" column="30" selection-start-line="99" selection-start-column="30" selection-end-line="99" selection-end-column="30" />
+          <folding>
+            <element signature="e#3579#4010#0" expanded="true" />
+            <element signature="e#3999#4000#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-21/android/database/sqlite/SQLiteDatabase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="21663" max-vertical-offset="36380">
+          <caret line="1338" column="16" selection-start-line="1338" selection-start-column="16" selection-end-line="1338" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/MiiskinDatabaseContract.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="833">
+          <caret line="29" column="35" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/SaveMoleToDatabaseTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="233" max-vertical-offset="1139">
+          <caret line="38" column="38" selection-start-line="38" selection-start-column="38" selection-end-line="38" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-21/android/os/AsyncTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4204" max-vertical-offset="10710">
+          <caret line="287" column="0" selection-start-line="287" selection-start-column="0" selection-end-line="287" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Camera/CameraActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="267" max-vertical-offset="1139">
+          <caret line="38" column="78" selection-start-line="38" selection-start-column="63" selection-end-line="38" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Camera/CameraView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="6850" max-vertical-offset="8670">
+          <caret line="452" column="16" selection-start-line="452" selection-start-column="16" selection-end-line="452" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Data/MoleData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
+          <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Camera/CameraFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.107143" vertical-offset="2147" max-vertical-offset="3281">
+          <caret line="174" column="119" selection-start-line="174" selection-start-column="119" selection-end-line="174" selection-end-column="119" />
+          <folding>
+            <element signature="e#3428#3834#0" expanded="true" />
+            <element signature="e#3823#3824#0" expanded="true" />
+            <element signature="e#4669#5048#0" expanded="true" />
+            <element signature="e#5037#5038#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/TaskManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="522" max-vertical-offset="1394">
+          <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+          <folding>
+            <element signature="e#2063#2064#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/SavePhotoFileTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.428572" vertical-offset="1663" max-vertical-offset="3536">
+          <caret line="119" column="72" selection-start-line="119" selection-start-column="72" selection-end-line="119" selection-end-column="72" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Storage/Task/LoadMoleInfoTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="693" max-vertical-offset="1139">
+          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1021#1022#0" expanded="true" />
+            <element signature="e#1059#1060#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/Home/HomeFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1930" max-vertical-offset="2363">
+          <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5066#5703#0" expanded="true" />
+            <element signature="e#5684#5685#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3724,17 +3867,26 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="816">
-          <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/miiskin/miiskin/Gui/ViewSequence/ViewMoleFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.51261467" vertical-offset="6642" max-vertical-offset="7514">
-          <caret line="461" column="17" selection-start-line="461" selection-start-column="17" selection-end-line="461" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.6437718" vertical-offset="7726" max-vertical-offset="8585">
+          <caret line="525" column="0" selection-start-line="525" selection-start-column="0" selection-end-line="525" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#9523#9552#0" expanded="true" />
+            <element signature="e#14258#14338#0" expanded="true" />
+            <element signature="e#16331#16357#0" expanded="true" />
+            <element signature="e#21805#22078#0" expanded="true" />
+            <element signature="e#22063#22064#0" expanded="true" />
+            <element signature="e#22125#22779#0" expanded="true" />
+            <element signature="e#22764#22765#0" expanded="true" />
+            <element signature="e#23590#23591#0" expanded="true" />
+            <element signature="e#23637#23638#0" expanded="true" />
           </folding>
         </state>
       </provider>

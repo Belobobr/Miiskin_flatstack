@@ -26,10 +26,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.miiskin.miiskin.Data.Paths;
+import com.miiskin.miiskin.Data.BodyPart;
 import com.miiskin.miiskin.Data.MoleData;
+import com.miiskin.miiskin.Data.Paths;
 import com.miiskin.miiskin.Gui.Camera.CameraActivity;
 import com.miiskin.miiskin.Gui.General.PhotoView.PhotoViewAttacher;
 import com.miiskin.miiskin.Gui.General.ThumbnailView;
@@ -37,17 +39,23 @@ import com.miiskin.miiskin.Gui.SendToDoctor.SendToDoctorActivity;
 import com.miiskin.miiskin.Helpers.BitmapDecoder;
 import com.miiskin.miiskin.MiiskinApplication;
 import com.miiskin.miiskin.R;
+import com.miiskin.miiskin.Storage.MiiskinDatabaseContract.MoleLocation;
+import com.miiskin.miiskin.Storage.MiiskinDatabaseContract.MolePicture;
+import com.miiskin.miiskin.Storage.Task.LoadMoleInfoTask;
+import com.miiskin.miiskin.Storage.Task.TaskManager;
 import com.miiskin.miiskin.Storage.ThumbnailManager.ThumbnailManager;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Newshka on 26.06.2015.
  */
-public class ViewMoleFragment extends Fragment {
-    public static final String EXTRA_SEQUENCE_DATA = "EXTRA_SEQUENCE_DATA";
+public class ViewMoleFragment extends Fragment implements TaskManager.DataChangeListener{
+    public static final String EXTRA_MOLE_ID = "EXTRA_MOLE_ID";
 
-    MoleData mMoleData;
+    Long mMoleId;
     FloatingActionButton mFloatingActionButton;
     FloatingActionButton mSendToDoctor;
     FloatingActionButton mTakePhoto;
@@ -63,6 +71,8 @@ public class ViewMoleFragment extends Fragment {
     LinearLayout mPreviewMode;
     LinearLayout mBottomRightPanel;
     RelativeLayout mInfoPanel;
+    TextView mPhotoDateTake;
+    TextView mPhotoNumber;
     private ViewPager mPager;
     private AnimatorSet mAnimPhotoAndDoctorHidding;
     private AnimatorSet mAnimPhotoAndDoctorAppearing;
@@ -70,11 +80,13 @@ public class ViewMoleFragment extends Fragment {
     private AnimatorSet mSwitchToNotFullScreenModeAnimator;
     private static int FULL_SCREEN_PREVIEW_SIZE = 1500;
 
+    LoadMoleInfoTask.Result mMoleInfo;
 
-    public static ViewMoleFragment newInstance(MoleData moleData) {
+
+    public static ViewMoleFragment newInstance(Long moleId) {
         ViewMoleFragment fragment = new ViewMoleFragment();
         Bundle arguments = new Bundle();
-        arguments.putSerializable(EXTRA_SEQUENCE_DATA, moleData);
+        arguments.putSerializable(EXTRA_MOLE_ID, moleId);
         fragment.setArguments(arguments);
         return fragment;
     }
@@ -85,7 +97,10 @@ public class ViewMoleFragment extends Fragment {
         setRetainInstance(true);
         mLayoutInflater = (LayoutInflater) MiiskinApplication.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (getArguments() != null) {
-            mMoleData = (MoleData)getArguments().getSerializable(EXTRA_SEQUENCE_DATA);
+            mMoleId = getArguments().getLong(EXTRA_MOLE_ID);
+        }
+        if (mMoleInfo == null) {
+            TaskManager.getInstance(getActivity().getApplicationContext()).executeTask(new LoadMoleInfoTask(getActivity().getApplicationContext(), new Object[] {mMoleId}), LoadMoleInfoTask.TASK_ID);
         }
     }
 
@@ -133,7 +148,7 @@ public class ViewMoleFragment extends Fragment {
         mSwitchToFullScreenAnimator.playTogether(hideActionBarAnimator, disappearInfoPanelAnimator, floatingActionButtonAnimator);
         mSwitchToFullScreenAnimator.start();
 
-        final String fileName = Paths.getAbsoluteDirForSequence(mMoleData.mId) + "/" + ( mPager.getCurrentItem() + 1) + ".png";
+        final String fileName = Paths.getAbsoluteDirForSequence("" + mMoleId) + "/" + ( mPager.getCurrentItem() + 1) + ".png";
         mFullScreenImagePreview.post(new Runnable() {
             @Override
             public void run() {
@@ -169,7 +184,6 @@ public class ViewMoleFragment extends Fragment {
     public void onResume() {
         super.onResume();
         final ViewMoleActivity viewMoleActivity = (ViewMoleActivity)getActivity();
-        viewMoleActivity.mActionBarToolbar.setTitle(mMoleData.mBodyPart.toString());
         if (mYDoctorInitialPosition == -1 && mYPhotoInitialPosition == -1) {
             mFloatingActionButton.post(new Runnable() {
                 @Override
@@ -188,7 +202,35 @@ public class ViewMoleFragment extends Fragment {
             mTakePhoto.setVisibility(View.INVISIBLE);
             mFloatingActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_add));
         }
+        TaskManager.getInstance(getActivity().getApplicationContext()).addDataChangeListener(this);
+        updateGui();
+    }
 
+    @Override
+    public void onDataChanged(String dataId) {
+        if (dataId.equals(LoadMoleInfoTask.TASK_ID)) {
+            updateGui();
+        }
+    }
+
+    private void updateGui() {
+        mMoleInfo = (LoadMoleInfoTask.Result)TaskManager.getInstance(getActivity().getApplicationContext()).getDataById(LoadMoleInfoTask.TASK_ID);
+        final ViewMoleActivity viewMoleActivity = (ViewMoleActivity)getActivity();
+        if (mMoleInfo == null) {
+            viewMoleActivity.mActionBarToolbar.setTitle(getString(R.string.view_mole));
+            //wait for a moment =) D
+        } else {
+            mMoleInfo.mGeneralInfoCursor.moveToFirst();
+            BodyPart bodyPart = BodyPart.valueOf(mMoleInfo.mGeneralInfoCursor.getString(mMoleInfo.mGeneralInfoCursor.getColumnIndex(MoleLocation.COLUMN_NAME_BODY_PART)));
+            viewMoleActivity.mActionBarToolbar.setTitle(bodyPart.getResourceIdDescription());
+            mPager.getAdapter().notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        TaskManager.getInstance(getActivity().getApplicationContext()).removeDataChangeListener(this);
     }
 
     @Override
@@ -235,6 +277,9 @@ public class ViewMoleFragment extends Fragment {
         });
         mMainLayout = (RelativeLayout)view.findViewById(R.id.coordinatorLayout);
 
+        mPhotoDateTake = (TextView)view.findViewById(R.id.photo_date_taken);
+        mPhotoNumber = (TextView)view.findViewById(R.id.photo_number);
+
         mContainer = (PagerContainer) view.findViewById(R.id.pager_container);
         mFullScreenImagePreview = (ImageView)view.findViewById(R.id.full_screen_image_preview);
         mAttacher = new PhotoViewAttacher(mFullScreenImagePreview);
@@ -269,7 +314,12 @@ public class ViewMoleFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-
+                mMoleInfo.mPicturesCursor.moveToPosition(position);
+                Long photoTakenTime = mMoleInfo.mPicturesCursor.getLong(mMoleInfo.mPicturesCursor.getColumnIndex(MolePicture.COLUMN_NAME_TIME));
+                Date date = new Date(photoTakenTime);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+                mPhotoDateTake.setText(simpleDateFormat.format(date));
+                mPhotoNumber.setText(getString(R.string.photo_number, position, mMoleInfo.mPicturesCursor.getCount()));
             }
 
             @Override
@@ -312,7 +362,7 @@ public class ViewMoleFragment extends Fragment {
         File path = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_DCIM);
         if (path.exists()) {
-            File sequencePhotoDir = new File(path, Paths.getRelativeDirForSequence(mMoleData.mId));
+            File sequencePhotoDir = new File(path, Paths.getRelativeDirForSequence("" + mMoleId));
             if (sequencePhotoDir.exists()) {
                 savePhotoToFile(sequencePhotoDir);
             } else {
@@ -336,7 +386,8 @@ public class ViewMoleFragment extends Fragment {
         File fileSavedTo = new File(fileName);
         Intent intent = new Intent(getActivity(), CameraActivity.class);
         intent.putExtra(CameraActivity.DIR_TO_SAVE, fileSavedTo);
-        intent.putExtra(CameraActivity.EXTRA_SEQUENCE_DATA, mMoleData);
+        mMoleInfo.mPicturesCursor.moveToFirst();
+        intent.putExtra(CameraActivity.EXTRA_MOLE_DATE, MoleData.createFromCursor(mMoleInfo.mGeneralInfoCursor));
         startActivity(intent);
 
     }
@@ -427,8 +478,9 @@ public class ViewMoleFragment extends Fragment {
             frameLayout.setBackgroundColor(Color.argb(255, position * 50, position * 10, position * 50));
             frameLayout.setClipChildren(true);
 
+            mMoleInfo.mPicturesCursor.moveToPosition(position);
+            final String fileName = mMoleInfo.mPicturesCursor.getString(mMoleInfo.mPicturesCursor.getColumnIndex(MolePicture.COLUMN_NAME_IMAGE_PATH));
             final ThumbnailView imageView = (ThumbnailView)frameLayout.findViewById(R.id.mole_photo);
-            final String fileName = Paths.getAbsolutePathForFileInSequence(mMoleData.mId, position + 1);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setThumbnailKey(ThumbnailManager.getInstance().getThumbnailKey(ThumbnailManager.ThumbnailMode.NORMAL, fileName));
             imageView.post(new Runnable() {
@@ -466,11 +518,14 @@ public class ViewMoleFragment extends Fragment {
 
         @Override
         public int getCount() {
-            String absoluteDir =  Paths.getAbsoluteDirForSequence(mMoleData.mId);
-            File file = new File(absoluteDir);
-            if (file.listFiles() != null) {
-               return file.listFiles().length;
-            };
+//            String absoluteDir =  Paths.getAbsoluteDirForSequence("" + mMoleId);
+//            File file = new File(absoluteDir);
+//            if (file.listFiles() != null) {
+//               return file.listFiles().length;
+//            };
+            if (mMoleInfo != null && mMoleInfo.mPicturesCursor != null) {
+                return mMoleInfo.mPicturesCursor.getCount();
+            }
             return 0;
         }
 

@@ -16,6 +16,7 @@ public class MiiskinDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Miiskin.db";
 
     private static final String TEXT_TYPE = " TEXT";
+    private static final String INTEGER_TYPE = " INTEGER";
     private static final String COMMA_SEP = ",";
 
     private static final String SQL_CREATE_USER_TABLE =
@@ -40,7 +41,7 @@ public class MiiskinDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + MolePicture.TABLE_NAME + " (" +
                     MolePicture._ID + " INTEGER PRIMARY KEY " + COMMA_SEP +
                     MolePicture.COLUMN_NAME_IMAGE_PATH + TEXT_TYPE + COMMA_SEP +
-                    MolePicture.COLUMN_NAME_TIME + TEXT_TYPE + COMMA_SEP +
+                    MolePicture.COLUMN_NAME_TIME + INTEGER_TYPE + COMMA_SEP +
                     MolePicture.COLUMN_NAME_MOLE_ID + TEXT_TYPE + COMMA_SEP +
                     "FOREIGN KEY" + "(" + MolePicture.COLUMN_NAME_MOLE_ID + ")" + " REFERENCES " + Mole.TABLE_NAME + "(" + Mole._ID + ")" + "ON DELETE CASCADE" +
                     " )";
@@ -49,7 +50,7 @@ public class MiiskinDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + MoleLocation.TABLE_NAME + " (" +
                     MoleLocation._ID + " INTEGER PRIMARY KEY " + COMMA_SEP +
                     MoleLocation.COLUMN_NAME_BODY_PART + TEXT_TYPE + COMMA_SEP +
-                    MoleLocation.COLUMN_NAME_BODY_HALF+ TEXT_TYPE + COMMA_SEP +
+                    MoleLocation.COLUMN_NAME_BODY_HALF + TEXT_TYPE + COMMA_SEP +
                     MoleLocation.COLUMN_NAME_X_POSITION_OF_MOLE + TEXT_TYPE + COMMA_SEP +
                     MoleLocation.COLUMN_NAME_Y_POSITION_OF_MOLE+ TEXT_TYPE +
                     " )";

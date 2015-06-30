@@ -14,15 +14,15 @@ import com.miiskin.miiskin.R;
 
 public class ViewMoleActivity extends AppCompatActivity {
 
-    public static final String EXTRA_SEQUENCE_DATA = "EXTRA_SEQUENCE_DATA";
+    public static final String EXTRA_MOLE_ID = "EXTRA_MOLE_ID";
 
-    MoleData mMoleData;
+    Long mMoleId;
     Toolbar mActionBarToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mMoleData = (MoleData)getIntent().getSerializableExtra(EXTRA_SEQUENCE_DATA);
+        mMoleId = (Long)getIntent().getLongExtra(EXTRA_MOLE_ID, -1);
 
         setContentView(R.layout.activity_view_sequence);
         mActionBarToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
@@ -30,7 +30,7 @@ public class ViewMoleActivity extends AppCompatActivity {
 
         Fragment fragment = getFragmentManager().findFragmentById(R.id.main_layout);
         if (fragment == null) {
-            fragment = ViewMoleFragment.newInstance(mMoleData);
+            fragment = ViewMoleFragment.newInstance(mMoleId);
             getFragmentManager().beginTransaction().add(R.id.main_layout, fragment).commit();
         }
     }

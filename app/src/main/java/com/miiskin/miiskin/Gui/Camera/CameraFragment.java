@@ -59,7 +59,7 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
         Bundle arguments = new Bundle();
         arguments.putInt(CameraActivity.CAMERA_MODE, pMode);
         arguments.putSerializable(CameraActivity.DIR_TO_SAVE, dirToSavePhoto);
-        arguments.putSerializable(CameraActivity.EXTRA_SEQUENCE_DATA, moleData);
+        arguments.putSerializable(CameraActivity.EXTRA_MOLE_DATE, moleData);
         fragment.setArguments(arguments);
         return fragment;
     }
@@ -76,7 +76,7 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
         if (arguments != null) {
             mMode = arguments.getInt(CameraActivity.CAMERA_MODE, CameraActivity.MULTI_PHOTO);
             mDirToSave = (File)arguments.getSerializable(CameraActivity.DIR_TO_SAVE);
-            mMoleData = (MoleData)arguments.getSerializable(CameraActivity.EXTRA_SEQUENCE_DATA);
+            mMoleData = (MoleData)arguments.getSerializable(CameraActivity.EXTRA_MOLE_DATE);
         }
     }
 
@@ -172,7 +172,7 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
             display.getSize(displaySize);
             taskId = UUID.randomUUID().toString();
             TaskManager.getInstance(MiiskinApplication.getAppContext()).executeTask(new SavePhotoFileTask(getActivity(), new Object[]{data, displaySize, mCameraView.getRealViewSize(),
-                    mCameraView.getAngle(), mDocBorder.getBorderRect(), mDirToSave, true}), taskId);
+                    mCameraView.getAngle(), mDocBorder.getBorderRect(), mDirToSave, true, Long.parseLong(mMoleData.mId)}), taskId);
         }
     };
 

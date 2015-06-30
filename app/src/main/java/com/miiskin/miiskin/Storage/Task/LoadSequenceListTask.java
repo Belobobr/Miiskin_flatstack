@@ -11,15 +11,15 @@ import com.miiskin.miiskin.Storage.MiiskinDatabaseContract.MoleLocation;
 /**
  * Created by Newshka on 24.06.2015.
  */
-public class LoadSequenceList extends Task{
+public class LoadSequenceListTask extends Task{
 
     public static String TASK_ID = "LoadSequenceList";
 
-    public LoadSequenceList(Context context) {
+    public LoadSequenceListTask(Context context) {
         this(context, null);
     }
 
-    public LoadSequenceList(Context context, Object params[]) {
+    public LoadSequenceListTask(Context context, Object params[]) {
         super(context, params);
     }
 

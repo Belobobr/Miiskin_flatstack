@@ -18,7 +18,8 @@ import com.miiskin.miiskin.Data.MoleData;
 import com.miiskin.miiskin.Gui.CreateSequence.CreateSequenceActivity;
 import com.miiskin.miiskin.Gui.ViewSequence.ViewMoleActivity;
 import com.miiskin.miiskin.R;
-import com.miiskin.miiskin.Storage.Task.LoadSequenceList;
+import com.miiskin.miiskin.Storage.MiiskinDatabaseContract;
+import com.miiskin.miiskin.Storage.Task.LoadSequenceListTask;
 import com.miiskin.miiskin.Storage.Task.TaskManager;
 
 /**
@@ -33,7 +34,7 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
     FrameLayout mProgressView;
     FloatingActionButton mNoSequenceFab;
     FloatingActionButton mManySequenceFab;
-    SequenceCursorAdapter mSequenceCursorAdapter;
+    MoleCursorAdapter mMoleCursorAdapter;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -45,7 +46,7 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         if (moleSequenceListCursor == null) {
-            TaskManager.getInstance(getActivity().getApplicationContext()).executeTask(new LoadSequenceList(getActivity().getApplicationContext()), LoadSequenceList.TASK_ID);
+            TaskManager.getInstance(getActivity().getApplicationContext()).executeTask(new LoadSequenceListTask(getActivity().getApplicationContext()), LoadSequenceListTask.TASK_ID);
         }
     }
 
@@ -97,13 +98,13 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
 
     @Override
     public void onDataChanged(String dataId) {
-        if (dataId.equals(LoadSequenceList.TASK_ID)) {
+        if (dataId.equals(LoadSequenceListTask.TASK_ID)) {
             updateGui();
         }
     }
 
     private void updateGui() {
-        moleSequenceListCursor  = (Cursor)TaskManager.getInstance(getActivity().getApplicationContext()).getDataById(LoadSequenceList.TASK_ID);
+        moleSequenceListCursor  = (Cursor)TaskManager.getInstance(getActivity().getApplicationContext()).getDataById(LoadSequenceListTask.TASK_ID);
         if (moleSequenceListCursor == null) {
             mProgressView.setVisibility(View.VISIBLE);
             mEmptyView.setVisibility(View.GONE);
@@ -114,19 +115,18 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
                 mManySequence.setVisibility(View.GONE);
                 mProgressView.setVisibility(View.GONE);
             } else {
-                if (mSequenceCursorAdapter == null) {
-                    mSequenceCursorAdapter = new SequenceCursorAdapter(getActivity(), moleSequenceListCursor);
+                if (mMoleCursorAdapter == null) {
+                    mMoleCursorAdapter = new MoleCursorAdapter(getActivity(), moleSequenceListCursor);
                 } else {
-                    mSequenceCursorAdapter.changeCursor(moleSequenceListCursor);
+                    mMoleCursorAdapter.changeCursor(moleSequenceListCursor);
                 }
-                mManySequenceListView.setAdapter(mSequenceCursorAdapter);
+                mManySequenceListView.setAdapter(mMoleCursorAdapter);
                 mManySequenceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         moleSequenceListCursor.moveToPosition(position);
-                        MoleData moleData = MoleData.createFromCursor(moleSequenceListCursor);
                         Intent intent = new Intent(HomeFragment.this.getActivity(), ViewMoleActivity.class);
-                        intent.putExtra(ViewMoleActivity.EXTRA_SEQUENCE_DATA, moleData);
+                        intent.putExtra(ViewMoleActivity.EXTRA_MOLE_ID, Long.parseLong(moleSequenceListCursor.getString(moleSequenceListCursor.getColumnIndex(MiiskinDatabaseContract.Mole._ID))));
                         startActivity(intent);
                     }
                 });

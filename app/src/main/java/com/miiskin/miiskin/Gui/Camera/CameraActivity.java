@@ -16,7 +16,7 @@ import java.io.File;
  * Created by Newshka on 26.06.2015.
  */
 public class CameraActivity extends AppCompatActivity implements FteCameraTipsFragment.FteCameraTipsListener{
-    public static final String EXTRA_SEQUENCE_DATA = "EXTRA_SEQUENCE_DATA";
+    public static final String EXTRA_MOLE_DATE = "EXTRA_MOLE_DATE";
     public static final String DIR_TO_SAVE = "DIR_TO_SAVE";
 
     public static final String CAMERA_MODE = "CAMERA_MODE";
@@ -36,7 +36,7 @@ public class CameraActivity extends AppCompatActivity implements FteCameraTipsFr
 
         mMode = getIntent().getIntExtra(CAMERA_MODE, MULTI_PHOTO);
         dirToSavePhoto = (File)getIntent().getSerializableExtra(DIR_TO_SAVE);
-        mMoleData = (MoleData)getIntent().getSerializableExtra(EXTRA_SEQUENCE_DATA);
+        mMoleData = (MoleData)getIntent().getSerializableExtra(EXTRA_MOLE_DATE);
 
         CameraFragment fragment = (CameraFragment) getFragmentManager().findFragmentByTag(CameraFragment.TAG);
         if (fragment == null) {

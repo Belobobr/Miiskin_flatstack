@@ -23,24 +23,24 @@ import com.miiskin.miiskin.Storage.MiiskinDatabaseContract.MoleLocation;
 /**
  * Created by Newshka on 25.06.2015.
  */
-public class SequenceCursorAdapter extends CursorAdapter {
+public class MoleCursorAdapter extends CursorAdapter {
 
     Context mContext;
     LayoutInflater mLayoutInflater;
 
-    public SequenceCursorAdapter(Context context, Cursor c) {
+    public MoleCursorAdapter(Context context, Cursor c) {
         super(context, c);
         mLayoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mContext = context;
     }
 
-    public SequenceCursorAdapter(Context context, Cursor c, boolean autoRequery) {
+    public MoleCursorAdapter(Context context, Cursor c, boolean autoRequery) {
         super(context, c, autoRequery);
         mLayoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mContext = context;
     }
 
-    public SequenceCursorAdapter(Context context, Cursor c, int flags) {
+    public MoleCursorAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
         mLayoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mContext = context;

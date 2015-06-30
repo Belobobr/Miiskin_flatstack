@@ -88,7 +88,7 @@ public class AcceptPhotoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent  = new Intent(getActivity(), ViewMoleActivity.class);
-                intent.putExtra(ViewMoleActivity.EXTRA_SEQUENCE_DATA, mMoleData);
+                intent.putExtra(ViewMoleActivity.EXTRA_MOLE_ID, Long.parseLong(mMoleData.mId));
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -99,7 +99,7 @@ public class AcceptPhotoFragment extends Fragment {
             public void onClick(View v) {
                 removePhoto();
                 Intent intent  = new Intent(getActivity(), ViewMoleActivity.class);
-                intent.putExtra(ViewMoleActivity.EXTRA_SEQUENCE_DATA, mMoleData);
+                intent.putExtra(ViewMoleActivity.EXTRA_MOLE_ID, Long.parseLong(mMoleData.mId));
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }

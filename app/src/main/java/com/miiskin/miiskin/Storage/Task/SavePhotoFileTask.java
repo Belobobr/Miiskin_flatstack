@@ -5,6 +5,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -17,12 +18,14 @@ import android.provider.MediaStore;
 import com.miiskin.miiskin.Data.L;
 import com.miiskin.miiskin.Data.SavedPhotoInfo;
 import com.miiskin.miiskin.MiiskinApplication;
+import com.miiskin.miiskin.Storage.MiiskinDatabaseContract.MolePicture;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Date;
 
 /**
  * Created by Newshka on 26.06.2015.
@@ -49,6 +52,7 @@ public class SavePhotoFileTask extends Task {
     public File mPathToSave;
     private String mFileName;
     private boolean mExactPath;
+    private Long mMoleId;
 
     public SavePhotoFileTask(Context context) {
         super(context);
@@ -63,6 +67,7 @@ public class SavePhotoFileTask extends Task {
         mBorderRect = (Rect)params[4];
         mPathToSave = (File)params[5];
         mExactPath = (boolean)params[6];
+        mMoleId  = (long)params[7];
     }
 
     @Override
@@ -95,6 +100,17 @@ public class SavePhotoFileTask extends Task {
         bitmap = crop(bitmap);
         bitmap = scaleImage(bitmap, mFileName + ".png");
         saveBitmapToDirectory(bitmap);
+
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MolePicture.COLUMN_NAME_IMAGE_PATH, mSavedPhotoInfo.mPath);
+        contentValues.put(MolePicture.COLUMN_NAME_TIME, new Date().getTime());
+        contentValues.put(MolePicture.COLUMN_NAME_MOLE_ID, mMoleId);
+
+        long imageId = db.insert(MolePicture.TABLE_NAME, null, contentValues);
+        if (imageId == -1) {
+            L.e("Can't save photo to database");
+        }
         return mSavedPhotoInfo;
     }
 

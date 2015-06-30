@@ -12,13 +12,13 @@ import com.miiskin.miiskin.Storage.MiiskinDatabaseContract;
 /**
  * Created by Newshka on 25.06.2015.
  */
-public class SaveMoleToDatabase extends Task {
+public class SaveMoleToDatabaseTask extends Task {
 
-    public SaveMoleToDatabase(Context context) {
+    public SaveMoleToDatabaseTask(Context context) {
         this(context, null);
     }
 
-    public SaveMoleToDatabase(Context context, Object params[]) {
+    public SaveMoleToDatabaseTask(Context context, Object params[]) {
         super(context, params);
     }
 

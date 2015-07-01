@@ -62,6 +62,16 @@
     <string name="about_our_doctor">ABOUT OUR DOCTOR</string>
     <string name="next_photo_in">Next photo in %1$d days</string>
     <string name="no_photo_associated_with_mole">No photo associated with mole</string>
+    <string name="about_doctor_description">Our doctors are certified dermatologists from leading universities and
+    hospitals in Europe.\n\nWe guarantee that they all have extensive experience with different types of melanoma and
+    skin cancer.\n\nVisit our web site to see the background of our doctors.</string>
+    <string name="hide_info_about_our_doctor">HIDE INFO ABOUT OUR DOCTORS</string>
+    <string name="under_development">Under Development...</string>
+    <string name="under_development_description">Unfortunately, we have not implemented this feature yet.\n\n
+    No money has been withdrawn from your account.\n\nIf you have any feedback regarding this feature please let us know by
+    clicking "Send Feedback" below.</string>
+    <string name="send_feedback">SEND FEEDBACK</string>
+    <string name="OK">OK</string>
 
 
     <!-- Errors !-->

@@ -52,7 +52,6 @@ public class SavePhotoFileTask extends Task {
     public File mPathToSave;
     private String mFileName;
     private boolean mExactPath;
-    private Long mMoleId;
 
     public SavePhotoFileTask(Context context) {
         super(context);
@@ -67,7 +66,6 @@ public class SavePhotoFileTask extends Task {
         mBorderRect = (Rect)params[4];
         mPathToSave = (File)params[5];
         mExactPath = (boolean)params[6];
-        mMoleId  = (long)params[7];
     }
 
     @Override
@@ -101,16 +99,6 @@ public class SavePhotoFileTask extends Task {
         bitmap = scaleImage(bitmap, mFileName + ".png");
         saveBitmapToDirectory(bitmap);
 
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(MolePicture.COLUMN_NAME_IMAGE_PATH, mSavedPhotoInfo.mPath);
-        contentValues.put(MolePicture.COLUMN_NAME_TIME, new Date().getTime());
-        contentValues.put(MolePicture.COLUMN_NAME_MOLE_ID, mMoleId);
-
-        long imageId = db.insert(MolePicture.TABLE_NAME, null, contentValues);
-        if (imageId == -1) {
-            L.e("Can't save photo to database");
-        }
         return mSavedPhotoInfo;
     }
 

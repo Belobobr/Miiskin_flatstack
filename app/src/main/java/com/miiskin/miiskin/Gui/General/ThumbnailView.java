@@ -1,5 +1,8 @@
 package com.miiskin.miiskin.Gui.General;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
@@ -50,6 +53,9 @@ public class ThumbnailView extends ImageView implements ThumbnailManager.Thumbna
     public void onThumbnailLoaded(String thumbnailKey) {
         boolean matched = this.mThumbnailKey != null && this.mThumbnailKey.equals(thumbnailKey);
         if (matched) {
+            ValueAnimator appearingAnimator = ObjectAnimator.ofFloat(this, "alpha", 0, 1);
+            appearingAnimator.setDuration(500);
+            appearingAnimator.start();
             setImageBitmap(obtainThumbnail());
         }
     }

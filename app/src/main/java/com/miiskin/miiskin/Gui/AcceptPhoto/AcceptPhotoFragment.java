@@ -14,14 +14,18 @@ import com.miiskin.miiskin.Data.SavedPhotoInfo;
 import com.miiskin.miiskin.Data.MoleData;
 import com.miiskin.miiskin.Gui.ViewSequence.ViewMoleActivity;
 import com.miiskin.miiskin.Helpers.BitmapDecoder;
+import com.miiskin.miiskin.MiiskinApplication;
 import com.miiskin.miiskin.R;
+import com.miiskin.miiskin.Storage.Task.SavePhotoMetaDataToDatabase;
+import com.miiskin.miiskin.Storage.Task.TaskManager;
 
 import java.io.File;
+import java.util.UUID;
 
 /**
  * Created by Newshka on 26.06.2015.
  */
-public class AcceptPhotoFragment extends Fragment {
+public class AcceptPhotoFragment extends Fragment implements TaskManager.DataChangeListener{
 
     SavedPhotoInfo mSavedPhotoInfo;
     MoleData mMoleData;
@@ -29,6 +33,9 @@ public class AcceptPhotoFragment extends Fragment {
     View mAcceptPhotoButton;
     View mCancelPhotoButton;
     ImageView mImageView;
+
+    private String taskId;
+    private Long imageId;
 
     public static AcceptPhotoFragment newInstance(SavedPhotoInfo savedPhotoInfo, MoleData moleData) {
         AcceptPhotoFragment fragment = new AcceptPhotoFragment();
@@ -54,6 +61,7 @@ public class AcceptPhotoFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        TaskManager.getInstance(MiiskinApplication.getAppContext()).addDataChangeListener(this);
         mImageView.post(new Runnable() {
             @Override
             public void run() {
@@ -65,6 +73,29 @@ public class AcceptPhotoFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        TaskManager.getInstance(MiiskinApplication.getAppContext()).removeDataChangeListener(this);
+    }
+
+    @Override
+    public void onDataChanged(String dataId) {
+        if (dataId.equals(taskId)) {
+            updateUi();
+        }
+    }
+
+    private void updateUi() {
+        imageId = (Long) TaskManager.getInstance(MiiskinApplication.getAppContext()).getDataById(taskId);
+        if (imageId != null) {
+            Intent intent  = new Intent(getActivity(), ViewMoleActivity.class);
+            intent.putExtra(ViewMoleActivity.EXTRA_MOLE_ID, Long.parseLong(mMoleData.mId));
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
     }
 
     @Nullable
@@ -87,10 +118,9 @@ public class AcceptPhotoFragment extends Fragment {
         mAcceptPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent  = new Intent(getActivity(), ViewMoleActivity.class);
-                intent.putExtra(ViewMoleActivity.EXTRA_MOLE_ID, Long.parseLong(mMoleData.mId));
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                taskId = UUID.randomUUID().toString();
+                TaskManager.getInstance(getActivity().getApplicationContext()).executeTask(
+                        new SavePhotoMetaDataToDatabase(getActivity().getApplicationContext(), new Object[] {mSavedPhotoInfo, mMoleData}), taskId);
             }
         });
         mCancelPhotoButton = view.findViewById(R.id.cancel_photo);

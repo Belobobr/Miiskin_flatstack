@@ -151,7 +151,10 @@ public class ViewMoleFragment extends Fragment implements TaskManager.DataChange
         mSwitchToFullScreenAnimator.playTogether(hideActionBarAnimator, disappearInfoPanelAnimator, floatingActionButtonAnimator);
         mSwitchToFullScreenAnimator.start();
 
-        final String fileName = Paths.getAbsoluteDirForSequence("" + mMoleId) + "/" + ( mPager.getCurrentItem() + 1) + ".png";
+
+        mMoleInfo.mPicturesCursor.moveToPosition(mPager.getCurrentItem());
+        final String fileName = mMoleInfo.mPicturesCursor.getString(mMoleInfo.mPicturesCursor.getColumnIndex(MolePicture.COLUMN_NAME_IMAGE_PATH));
+
         mFullScreenImagePreview.post(new Runnable() {
             @Override
             public void run() {
@@ -197,12 +200,12 @@ public class ViewMoleFragment extends Fragment implements TaskManager.DataChange
             });
         }
         if (mButtonsVisible) {
-            mSendToDoctor.setVisibility(View.VISIBLE);
-            mTakePhoto.setVisibility(View.VISIBLE);
+//            mSendToDoctor.setVisibility(View.VISIBLE);
+//            mTakePhoto.setVisibility(View.VISIBLE);
             mFloatingActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_clear));
         } else {
-            mSendToDoctor.setVisibility(View.INVISIBLE);
-            mTakePhoto.setVisibility(View.INVISIBLE);
+//            mSendToDoctor.setVisibility(View.INVISIBLE);
+//            mTakePhoto.setVisibility(View.INVISIBLE);
             mFloatingActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_add));
         }
         TaskManager.getInstance(getActivity().getApplicationContext()).addDataChangeListener(this);

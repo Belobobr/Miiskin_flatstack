@@ -19,6 +19,7 @@ import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.MiiskinDatabaseContract.User;
 import com.miiskin.miiskin.Storage.MiiskinDatabaseContract.Mole;
 import com.miiskin.miiskin.Storage.MiiskinDatabaseContract.MoleLocation;
+import com.miiskin.miiskin.Storage.Task.LoadMolesListTask;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -68,7 +69,9 @@ public class MoleCursorAdapter extends CursorAdapter {
         long dateOfCreationSection = cursor.getLong(cursor.getColumnIndex(Mole.COLUMN_NAME_START_OBSERVING_DATE));
         final String molePositionX = cursor.getString(cursor.getColumnIndex(MoleLocation.COLUMN_NAME_X_POSITION_OF_MOLE));
         final String molePositionY = cursor.getString(cursor.getColumnIndex(MoleLocation.COLUMN_NAME_Y_POSITION_OF_MOLE));
+        long lastPictureTime = cursor.getLong(cursor.getColumnIndex(LoadMolesListTask.LAST_PICTURE_TIME));
         final Holder holder = (Holder)view.getTag();
+        checkNextPhotoDate(holder, lastPictureTime);
         holder.mBodyPartTextView.setText(BodyPart.valueOf(anatomicalSection).getResourceIdDescription());
         holder.mMonitoringStartedTextView.setText(monitoringStarted(dateOfCreationSection));
         holder.mPointedImageView.post(new Runnable() {
@@ -79,6 +82,24 @@ public class MoleCursorAdapter extends CursorAdapter {
             }
         });
 
+    }
+
+    private void checkNextPhotoDate(Holder holder, long lastPictureTime) {
+        //indicates that there is no photo associated with mole
+        if (lastPictureTime == -1) {
+            holder.mNextPhotoTextView.setText(mContext.getString(R.string.no_photo_associated_with_mole));
+            holder.mNextPhotoTextView.setTextColor(mContext.getResources().getColor(android.R.color.black));
+            return;
+        }
+        long nextPhotoDate  = new Date().getTime() + TimeUnit.MILLISECONDS.convert(30, TimeUnit.DAYS);
+        long diff = nextPhotoDate - lastPictureTime;
+        long diffInDays = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+        holder.mNextPhotoTextView.setText(mContext.getString(R.string.next_photo_in, diffInDays));
+        if (diffInDays < 5) {
+            holder.mNextPhotoTextView.setTextColor(mContext.getResources().getColor(R.color.red));
+        } else {
+            holder.mNextPhotoTextView.setTextColor(mContext.getResources().getColor(R.color.green));
+        }
     }
 
     private String monitoringStarted(long dateOfCreationSection) {

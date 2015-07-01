@@ -60,7 +60,8 @@
     <string name="currency">USD</string>
     <string name="pay_and_send_photos">PAY AND SEND PHOTOS</string>
     <string name="about_our_doctor">ABOUT OUR DOCTOR</string>
-
+    <string name="next_photo_in">Next photo in %1$d days</string>
+    <string name="no_photo_associated_with_mole">No photo associated with mole</string>
 
 
     <!-- Errors !-->

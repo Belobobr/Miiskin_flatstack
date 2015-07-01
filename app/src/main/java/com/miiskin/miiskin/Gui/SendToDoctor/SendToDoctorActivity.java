@@ -19,7 +19,7 @@ public class SendToDoctorActivity extends AppCompatActivity {
 
         mActionBarToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(mActionBarToolbar);
-        //mActionBarToolbar.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        mActionBarToolbar.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         mActionBarToolbar.setNavigationIcon(R.drawable.ic_action_clear);
         mActionBarToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,4 +36,9 @@ public class SendToDoctorActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mActionBarToolbar.setTitle("");
+    }
 }

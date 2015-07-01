@@ -56,6 +56,10 @@
     <string name="monitoring_started_days_ago">Monitoring started %1$d days ago</string>
     <string name="monitoring_started_n_months_ago">Monitoring started %1$d months ago</string>
     <string name="monitoring_started_months_ago">Monitoring started a month ago</string>
+    <string name="price">40</string>
+    <string name="currency">USD</string>
+    <string name="pay_and_send_photos">PAY AND SEND PHOTOS</string>
+    <string name="about_our_doctor">ABOUT OUR DOCTOR</string>
 
 
 

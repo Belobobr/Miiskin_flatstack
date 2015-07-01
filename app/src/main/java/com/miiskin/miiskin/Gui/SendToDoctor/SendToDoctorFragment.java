@@ -16,7 +16,7 @@ import com.miiskin.miiskin.R;
 /**
  * Created by Newshka on 27.06.2015.
  */
-public class SendToDoctorFragment extends Fragment implements UnderDevelopmentDialog.UnderDevelopmentDialogListener{
+public class SendToDoctorFragment extends Fragment{
 
     public static SendToDoctorFragment newInstance() {
         SendToDoctorFragment fragment = new SendToDoctorFragment();
@@ -69,13 +69,4 @@ public class SendToDoctorFragment extends Fragment implements UnderDevelopmentDi
         return  mLicenseAgreementCheckBox.isChecked();
     }
 
-    @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
-
-    }
-
-    @Override
-    public void onDialogBackButtonPressed() {
-
-    }
 }

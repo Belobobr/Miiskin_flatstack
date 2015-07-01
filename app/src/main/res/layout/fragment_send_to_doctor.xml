@@ -22,7 +22,7 @@
 
         <TextView
             android:id="@+id/about_our_doctor_description"
-            android:visibility="visible"
+            android:visibility="gone"
             android:padding="16dp"
             android:text="@string/about_doctor_description"
             android:textColor="@android:color/white"

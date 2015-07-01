@@ -1,5 +1,6 @@
 package com.miiskin.miiskin.Gui.SendToDoctor;
 
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +9,7 @@ import android.view.View;
 
 import com.miiskin.miiskin.R;
 
-public class SendToDoctorActivity extends AppCompatActivity {
+public class SendToDoctorActivity extends AppCompatActivity implements UnderDevelopmentDialog.UnderDevelopmentDialogListener {
 
     Toolbar mActionBarToolbar;
 
@@ -40,5 +41,15 @@ public class SendToDoctorActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mActionBarToolbar.setTitle("");
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+
+    }
+
+    @Override
+    public void onDialogBackButtonPressed() {
+
     }
 }

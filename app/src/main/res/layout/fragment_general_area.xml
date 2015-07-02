@@ -14,7 +14,8 @@
     <ImageView
         android:id="@+id/bodyImageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/white_not_transparent"/>
 
     <RelativeLayout
         android:orientation="horizontal"

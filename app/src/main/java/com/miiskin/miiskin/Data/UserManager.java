@@ -25,12 +25,13 @@ public class UserManager {
 
     }
 
-    public void setUserID(long userID) {
+    public void setUserInfo(UserInfo userInfo) {
         SharedPreferences settings = MiiskinApplication.getAppContext().getSharedPreferences(Preferences.USER_INFO, 0);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putLong(Preferences.UserInfo.CURRENT_USER_ID, userID);
+        editor.putLong(Preferences.UserInfo.CURRENT_USER_ID, userInfo.userId);
+        editor.putString(Preferences.UserInfo.CURRENT_USER_GENDER, userInfo.gender);
         editor.commit();
-        mUserId = userID;
+        mUserId = userInfo.userId;
     }
 
     public long getUserId() {
@@ -41,5 +42,11 @@ public class UserManager {
             mUserId = settings.getLong(Preferences.UserInfo.CURRENT_USER_ID, -1);
             return mUserId;
         }
+    }
+
+    public String getUserGender() {
+        SharedPreferences settings = MiiskinApplication.getAppContext().getSharedPreferences(Preferences.USER_INFO, 0);
+        String gender = settings.getString(Preferences.UserInfo.CURRENT_USER_GENDER, UserInfo.MALE);
+        return gender;
     }
 }

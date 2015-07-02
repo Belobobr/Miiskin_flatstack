@@ -10,13 +10,13 @@ import com.miiskin.miiskin.Storage.MiiskinDatabaseContract.User;
 /**
  * Created by Newshka on 30.06.2015.
  */
-public class SaveUserInfo extends Task {
+public class SaveUserInfoTask extends Task {
 
-    public SaveUserInfo(Context context) {
+    public SaveUserInfoTask(Context context) {
         this(context, null);
     }
 
-    public SaveUserInfo(Context context, Object params[]) {
+    public SaveUserInfoTask(Context context, Object params[]) {
         super(context, params);
     }
 
@@ -38,7 +38,8 @@ public class SaveUserInfo extends Task {
                 User.TABLE_NAME,
                 null,
                 values);
-        return newRowId;
+        userInfo.userId = newRowId;
+        return userInfo;
     }
 
     @Override

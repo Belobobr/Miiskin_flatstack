@@ -2,9 +2,11 @@ package com.miiskin.miiskin.Gui.CreateSequence;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -17,8 +19,12 @@ import android.widget.ImageView;
 
 import com.miiskin.miiskin.Data.BodyHalf;
 import com.miiskin.miiskin.Data.BodyPart;
+import com.miiskin.miiskin.Data.UserInfo;
+import com.miiskin.miiskin.Data.UserManager;
 import com.miiskin.miiskin.Helpers.BitmapDecoder;
 import com.miiskin.miiskin.R;
+
+import java.lang.reflect.Field;
 
 /**
  * Created by Newshka on 24.06.2015.
@@ -31,7 +37,7 @@ public class GeneralAreaFragment extends Fragment {
     private static final String FRONT_MODE = "FRONT_MODE";
 
     private ImageView bodyImageView;
-    private ImageView bodyImageViewOverlay;
+    private ImageView bodyImageViewBackground;
     private FloatingActionButton mFloatingActionButton;
     private Button buttonFront;
     private Button buttonRear;
@@ -49,15 +55,30 @@ public class GeneralAreaFragment extends Fragment {
     private GeneralAreaSelectedListener mListener;
 
     public static class BodyPartColors {
-        public static final int NOT_BODY_COLOR = 0xFFFFFFFF;
-        public static final int RIGHT_ARM_COLOR       = 0xFF0000FF;
-        public static final int LEFT_ARM_COLOR      = 0xFF00FF00;
+        public static final int left_hand_male_front  = 0xff127379;
+        public static final int left_forearm_male_front = 0xff178b92;
+        public static final int left_upper_arm_male_front = 0xff1fa6ae;
+        public static final int right_hand_male_front =0xff117046;
+        public static final int right_forearm_male_front = 0xff178e59;
+        public static final int right_upper_arm_male_front =0xff1fb06f;
+        public static final int face_throat_male_front =0xfffffd2f;
+        public static final int chest_male_front = 0xffffd824;
+        public static final int stomach_male_front = 0xffffb424;
+        public static final int groin_male_front = 0xffff8b24;
+        public static final int genitals_male_front =0xffee7407;
+        public static final int left_thigh_male_front =0xff4381fd;
+        public static final int left_shin_male_front = 0xff376dda;
+        public static final int left_foot_male_front = 0xff2e57a8;
+        public static final int right_thigh_male_front = 0xffc336ec;
+        public static final int right_shin_male_front = 0xffaa30cd;
+        public static final int right_foot_male_front = 0xff871ea5;
+        public static final int not_body = 0xFFFFFFFF;
     }
 
     Integer xCoord;
     Integer yCoord;
     int prevColorTouched;
-    int bodyPartColorTouched = BodyPartColors.NOT_BODY_COLOR;
+    int bodyPartColorTouched = BodyPartColors.not_body;
     BodyPart mBodyPart;
 
     @Override
@@ -92,7 +113,7 @@ public class GeneralAreaFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         bodyImageView = (ImageView)view.findViewById(R.id.bodyImageView);
-        bodyImageViewOverlay = (ImageView)view.findViewById(R.id.bodyImageViewOverlay);
+        bodyImageViewBackground = (ImageView)view.findViewById(R.id.bodyImageViewOverlay);
 
 
         CreateMoleActivity createMoleActivity = (CreateMoleActivity)getActivity();
@@ -115,6 +136,7 @@ public class GeneralAreaFragment extends Fragment {
         buttonFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                bodyPartColorTouched = BodyPartColors.not_body;
                 switchToFrontMode();
             }
         });
@@ -128,15 +150,31 @@ public class GeneralAreaFragment extends Fragment {
     }
 
     private void switchToFrontMode() {
+        switchToFrontMode(false);
+    }
+
+    private void switchToFrontMode(boolean withoutLoadingImage) {
         buttonRear.setSelected(false);
         buttonFront.setSelected(true);
         frontMode = true;
+        if (!withoutLoadingImage) {
+            checkTouchZone();
+            loadBackgroundImage(UserManager.getInstance().getUserGender(), frontMode);
+        }
     }
 
     private void switchToRearMode() {
+        switchToRearMode(false);
+    }
+
+    private void switchToRearMode(boolean withoutLoadingImage) {
         buttonFront.setSelected(false);
         buttonRear.setSelected(true);
         frontMode = false;
+        if (!withoutLoadingImage) {
+            checkTouchZone();
+            loadBackgroundImage(UserManager.getInstance().getUserGender(), frontMode);
+        }
     }
 
     @Override
@@ -150,40 +188,17 @@ public class GeneralAreaFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (frontMode) {
-            switchToFrontMode();
+            switchToFrontMode(true);
         } else {
-            switchToRearMode();
+            switchToRearMode(true);
         }
         bodyImageView.post(new Runnable() {
             @Override
             public void run() {
                 checkTouchZone();
-
-                final Bitmap bm2 = BitmapDecoder.decodeSampledBitmapFromResource(getResources(), R.drawable.lower, bodyImageViewOverlay.getWidth(), bodyImageViewOverlay.getHeight());
-                if (bm2!=null) {
-                    bodyImageViewOverlay.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                    bodyImageViewOverlay.setImageBitmap(bm2);
-
-                    bodyImageView.setOnTouchListener(new View.OnTouchListener() {
-
-                        @Override
-                        public boolean onTouch(View v, MotionEvent mev) {
-                            DecodeActionDownEvent(v, mev, bm2);
-                            return false;
-                        }
-
-                    });
-                }
+                loadBackgroundImage(UserManager.getInstance().getUserGender(), frontMode);
             }
         });
-    }
-
-    private void loadBodyImageView(int resId) {
-        final Bitmap bm = BitmapDecoder.decodeSampledBitmapFromResource(getResources(), resId, bodyImageView.getWidth(), bodyImageView.getHeight());
-        if (bm!=null) {
-            bodyImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            bodyImageView.setImageBitmap(bm);
-        }
     }
 
     private void DecodeActionDownEvent(View v, MotionEvent ev, Bitmap bm2)
@@ -198,10 +213,10 @@ public class GeneralAreaFragment extends Fragment {
 
         try {
             prevColorTouched = bodyPartColorTouched;
-            bodyPartColorTouched = ((BitmapDrawable)bodyImageViewOverlay.getDrawable()).getBitmap().getPixel(xCoord,yCoord);
+            bodyPartColorTouched = ((BitmapDrawable) bodyImageViewBackground.getDrawable()).getBitmap().getPixel(xCoord,yCoord);
         } catch (IllegalArgumentException e) {
             prevColorTouched = bodyPartColorTouched;
-            bodyPartColorTouched = BodyPartColors.NOT_BODY_COLOR; // nothing happens when touching white
+            bodyPartColorTouched = BodyPartColors.not_body; // nothing happens when touching white
         }
 
         if (prevColorTouched != bodyPartColorTouched) {
@@ -210,29 +225,182 @@ public class GeneralAreaFragment extends Fragment {
     }
 
     private void checkTouchZone() {
-        CreateMoleActivity createMoleActivity = (CreateMoleActivity)getActivity();
         switch (bodyPartColorTouched) {
-            case BodyPartColors.LEFT_ARM_COLOR :
+            case BodyPartColors.left_hand_male_front :
+                mBodyPart = BodyPart.LeftHand;
+                break;
+            case BodyPartColors.right_hand_male_front :
+                mBodyPart = BodyPart.RightHand;
+                break;
+            case BodyPartColors.left_forearm_male_front:
+                mBodyPart = BodyPart.LeftForeArm;
+                break;
+            case BodyPartColors.left_upper_arm_male_front:
                 mBodyPart = BodyPart.LeftUpperArm;
-                loadBodyImageView(R.drawable.left_arm_selected);
-                mFloatingActionButton.setEnabled(true);
-                mFloatingActionButton.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab));
-                createMoleActivity.mActionBarToolbar.setTitle(R.string.left_upper_arm_selected);
                 break;
-            case BodyPartColors.RIGHT_ARM_COLOR :
+            case BodyPartColors.right_forearm_male_front:
+                mBodyPart = BodyPart.RightForeArm;
+                break;
+            case BodyPartColors.right_upper_arm_male_front:
                 mBodyPart = BodyPart.RightUpperArm;
-                loadBodyImageView(R.drawable.right_arm_selected);
-                mFloatingActionButton.setEnabled(true);
-                mFloatingActionButton.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab));
-                createMoleActivity.mActionBarToolbar.setTitle(R.string.right_upper_arm_selected);
                 break;
-            case BodyPartColors.NOT_BODY_COLOR :
+            case BodyPartColors.face_throat_male_front:
+                mBodyPart = BodyPart.FaceThroat;
+                break;
+            case BodyPartColors.chest_male_front:
+                mBodyPart = BodyPart.Chest;
+                break;
+            case BodyPartColors.stomach_male_front:
+                mBodyPart = BodyPart.Stomach;
+                break;
+            case BodyPartColors.groin_male_front:
+                mBodyPart = BodyPart.Groin;
+                break;
+            case BodyPartColors.genitals_male_front:
+                mBodyPart = BodyPart.Genitals;
+                break;
+            case BodyPartColors.left_thigh_male_front:
+                mBodyPart = BodyPart.LeftThigh;
+                break;
+            case BodyPartColors.right_thigh_male_front:
+                mBodyPart = BodyPart.RightThigh;
+                break;
+            case BodyPartColors.left_shin_male_front:
+                mBodyPart = BodyPart.LeftShin;
+                break;
+            case BodyPartColors.right_shin_male_front:
+                mBodyPart = BodyPart.RightShin;
+                break;
+            case BodyPartColors.left_foot_male_front:
+                mBodyPart = BodyPart.LeftFoot;
+                break;
+            case BodyPartColors.right_foot_male_front:
+                mBodyPart = BodyPart.RightFoot;
+                break;
+            case BodyPartColors.not_body :
             default:
-                loadBodyImageView(R.drawable.no_body_part_selected);
-                mFloatingActionButton.setEnabled(false);
-                mFloatingActionButton.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab_semitrasparent));
-                createMoleActivity.mActionBarToolbar.setTitle(R.string.please_select_the_general_area);
+                mBodyPart = BodyPart.Main;
                 break;
         }
+        switchToBodyPartImage(mBodyPart);
     }
+
+    private void loadBackgroundImage(String gender, boolean frontMode) {
+        String resourceName = (gender.equals(UserInfo.MALE) ? "male" : "female") + "_color_map_" + (frontMode ? "front" : "rear");
+
+        Resources r = getResources();
+        int drawableResourceId = r.getIdentifier(resourceName, "drawable", "com.miiskin.miiskin");
+
+        final Bitmap bodyBitmapBackground = BitmapDecoder.decodeSampledBitmapFromResource(getResources(), drawableResourceId, bodyImageViewBackground.getWidth(), bodyImageViewBackground.getHeight());
+        if (bodyBitmapBackground!=null) {
+            bodyImageViewBackground.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            bodyImageViewBackground.setImageBitmap(bodyBitmapBackground);
+
+            bodyImageView.setOnTouchListener(new View.OnTouchListener() {
+
+                @Override
+                public boolean onTouch(View v, MotionEvent mev) {
+                    DecodeActionDownEvent(v, mev, bodyBitmapBackground);
+                    return false;
+                }
+
+            });
+        } else {
+            bodyImageViewBackground.setImageBitmap(null);
+        }
+    }
+
+    private void switchToBodyPartImage(BodyPart bodyPart) {
+        String gender = UserManager.getInstance().getUserGender();
+        if (bodyPart.equals(BodyPart.Main)) {
+            String resourceName = (gender.equals(UserInfo.MALE) ? "male" : "female")  + (frontMode ? "_front" : "_rear");
+            Resources r = getResources();
+            int drawableResourceId = r.getIdentifier(resourceName, "drawable", "com.miiskin.miiskin");
+            loadBodyImageView(drawableResourceId);
+
+            mFloatingActionButton.setEnabled(false);
+            mFloatingActionButton.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab_semitrasparent));
+            CreateMoleActivity createMoleActivity = (CreateMoleActivity)getActivity();
+            createMoleActivity.mActionBarToolbar.setTitle(R.string.please_select_the_general_area);
+            return;
+        }
+        String bodyPartString = null;
+        switch (bodyPart) {
+            case LeftHand :
+                bodyPartString = "left_hand";
+                break;
+            case RightHand :
+                bodyPartString = "right_hand";
+                break;
+            case LeftForeArm :
+                bodyPartString = "left_forearm";
+                break;
+            case RightForeArm :
+                bodyPartString = "right_forearm";
+                break;
+            case LeftUpperArm :
+                bodyPartString = "left_upper_arm";
+                break;
+            case RightUpperArm :
+                bodyPartString = "right_upper_arm";
+                break;
+            case FaceThroat :
+                bodyPartString = "face_throat";
+                break;
+            case Chest :
+                bodyPartString = "chest";
+                break;
+            case Stomach :
+                bodyPartString = "stomach";
+                break;
+            case Genitals :
+                bodyPartString = "genitals";
+                break;
+            case Groin :
+                bodyPartString = "groin";
+                break;
+            case RightThigh :
+                bodyPartString = "right_thigh";
+                break;
+            case LeftThigh :
+                bodyPartString = "left_thigh";
+                break;
+            case RightShin :
+                bodyPartString = "right_shin";
+                break;
+            case LeftShin :
+                bodyPartString = "left_shin";
+                break;
+            case RightFoot:
+                bodyPartString = "right_foot";
+                break;
+            case LeftFoot:
+                bodyPartString = "left_foot";
+                break;
+            default:
+                break;
+        }
+        String resourceName = bodyPartString + (gender.equals(UserInfo.MALE) ? "_male" : "_female") + (frontMode ? "_front" : "_rear");
+        Resources r = getResources();
+        int drawableResourceId = r.getIdentifier(resourceName, "drawable", "com.miiskin.miiskin");
+        loadBodyImageView(drawableResourceId);
+
+        mFloatingActionButton.setEnabled(true);
+        mFloatingActionButton.setBackgroundTintList(getResources().getColorStateList(R.color.home_fab));
+        CreateMoleActivity createMoleActivity = (CreateMoleActivity)getActivity();
+        createMoleActivity.mActionBarToolbar.setTitle(getString(R.string.body_part_selected, getString(bodyPart.getResourceIdDescription())));
+    }
+
+    private void loadBodyImageView(int resId) {
+        final Bitmap bm = BitmapDecoder.decodeSampledBitmapFromResource(getResources(), resId, bodyImageView.getWidth(), bodyImageView.getHeight());
+        if (bm!=null) {
+            bodyImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            bodyImageView.setImageBitmap(bm);
+        } else {
+            bodyImageView.setImageBitmap(null);
+        }
+    }
+
+
+
 }

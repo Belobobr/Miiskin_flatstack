@@ -16,6 +16,7 @@
     <string name="how_to_get_started">How to get started</string>
     <string name="how_to_get_started_description">Start by taking a picture of a mole that worries you or that you want to monitor.</string>
     <string name="please_select_the_general_area">Please select the general area of your mole</string>
+    <string name="body_part_selected">%1$s selected</string>
     <string name="left_upper_arm_selected">Left upper arm selected</string>
     <string name="right_upper_arm_selected">Right upper arm selected</string>
     <string name="select_specific_area">Please select the specific area of your mole</string>
@@ -34,6 +35,22 @@
     <!-- !Body Parts!-->
     <string name="right_upper_arm">Right upper arm</string>
     <string name="left_upper_arm">Left upper arm</string>
+    <string name="right_hand">Right hand</string>
+    <string name="left_hand">Left hand</string>
+    <string name="left_forearm">Left forearm</string>
+    <string name="right_forearm">Right forearm</string>
+    <string name="face_throat">Face throat</string>
+    <string name="chest">Chest</string>
+    <string name="stomach">Stomach</string>
+    <string name="groin">Groin</string>
+    <string name="genitals">Genitals</string>
+    <string name="left_thigh">Left thigh</string>
+    <string name="right_thigh">Right thigh</string>
+    <string name="left_shin">Left shin</string>
+    <string name="right_shin">Right shin</string>
+    <string name="left_foot">Left foot</string>
+    <string name="right_foot">Right foot</string>
+
 
     <string-array name="year_of_birth">
         <item>1985</item>

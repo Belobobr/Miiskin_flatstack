@@ -1,7 +1,6 @@
 package com.miiskin.miiskin.Gui.Home;
 
 import android.app.Fragment;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -20,7 +19,7 @@ import com.miiskin.miiskin.Data.UserInfo;
 import com.miiskin.miiskin.Data.UserManager;
 import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.Preferences;
-import com.miiskin.miiskin.Storage.Task.SaveUserInfo;
+import com.miiskin.miiskin.Storage.Task.SaveUserInfoTask;
 import com.miiskin.miiskin.Storage.Task.TaskManager;
 
 import java.util.UUID;
@@ -55,8 +54,6 @@ public class FTEHomeFragment extends Fragment implements TaskManager.DataChangeL
         if (savedInstanceState != null)  {
             mUserInfo = (UserInfo)savedInstanceState.getSerializable(USER_INFO_DATA_TAG);
             mTaskId = savedInstanceState.getString(TASK_ID);
-        } else {
-            mUserInfo = new UserInfo();
         }
     }
 
@@ -94,11 +91,13 @@ public class FTEHomeFragment extends Fragment implements TaskManager.DataChangeL
     }
 
     private void updateUi() {
-        mUserInfo.userId = (Long)TaskManager.getInstance(getActivity().getApplicationContext()).getDataById(mTaskId);
-        if (mUserInfo.userId != null) {
-            UserManager.getInstance().setUserID(mUserInfo.userId);
+        mUserInfo = (UserInfo)TaskManager.getInstance(getActivity().getApplicationContext()).getDataById(mTaskId);
+        if (mUserInfo != null && mUserInfo.userId != null) {
+            UserManager.getInstance().setUserInfo(mUserInfo);
             FteCompleteListener fteCompleteListener = (FteCompleteListener)getActivity();
             fteCompleteListener.onFteCompleteDonePressed();
+        } else {
+            mUserInfo = new UserInfo();
         }
     }
 
@@ -202,6 +201,6 @@ public class FTEHomeFragment extends Fragment implements TaskManager.DataChangeL
 
     private void saveUserInfo() {
         mTaskId = UUID.randomUUID().toString();
-        TaskManager.getInstance(getActivity().getApplicationContext()).executeTask(new SaveUserInfo(getActivity().getApplicationContext(), new Object[] {mUserInfo}), mTaskId);
+        TaskManager.getInstance(getActivity().getApplicationContext()).executeTask(new SaveUserInfoTask(getActivity().getApplicationContext(), new Object[] {mUserInfo}), mTaskId);
     }
 }

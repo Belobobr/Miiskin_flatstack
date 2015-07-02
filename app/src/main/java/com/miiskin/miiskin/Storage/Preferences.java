@@ -21,6 +21,7 @@ public class Preferences {
 
     public static class UserInfo {
         public static final String CURRENT_USER_ID = "CURRENT_USER_ID";
+        public static final String CURRENT_USER_GENDER = "CURRENT_USER_GENDER";
 
         public static int DATE_OF_BIRTH_FROM = 1990;
         public static int DATE_OF_BIRTH_TO = Calendar.getInstance().get(Calendar.YEAR);

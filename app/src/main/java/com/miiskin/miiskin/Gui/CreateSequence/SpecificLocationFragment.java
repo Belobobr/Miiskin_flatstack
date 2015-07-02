@@ -44,7 +44,7 @@ public class SpecificLocationFragment extends Fragment {
 
 
     private PointedImageView bodyImageView;
-    private ImageView bodyImageViewOverlay;
+    private ImageView bodyImageViewBackground;
     private FloatingActionButton mFloatingActionButton;
 
 
@@ -96,10 +96,10 @@ public class SpecificLocationFragment extends Fragment {
                 checkTouchZone();
                 loadBodyImageView(mBodyPart.getDrawableResourceForeground());
 
-                final Bitmap bm2 = BitmapDecoder.decodeSampledBitmapFromResource(getResources(), mBodyPart.getDrawableResourceBackground(), bodyImageViewOverlay.getWidth(), bodyImageViewOverlay.getHeight());
+                final Bitmap bm2 = BitmapDecoder.decodeSampledBitmapFromResource(getResources(), mBodyPart.getDrawableResourceBackground(), bodyImageViewBackground.getWidth(), bodyImageViewBackground.getHeight());
                 if (bm2!=null) {
-                    bodyImageViewOverlay.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                    bodyImageViewOverlay.setImageBitmap(bm2);
+                    bodyImageViewBackground.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    bodyImageViewBackground.setImageBitmap(bm2);
 
                     bodyImageView.setOnTouchListener(new View.OnTouchListener() {
 
@@ -138,7 +138,7 @@ public class SpecificLocationFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         bodyImageView = (PointedImageView)view.findViewById(R.id.bodyImageView);
-        bodyImageViewOverlay = (ImageView)view.findViewById(R.id.bodyImageViewOverlay);
+        bodyImageViewBackground = (ImageView)view.findViewById(R.id.bodyImageViewOverlay);
 
         final CreateMoleActivity createMoleActivity = (CreateMoleActivity)getActivity();
         createMoleActivity.mActionBarToolbar.setNavigationIcon(R.drawable.ic_action_arrow_back);
@@ -197,7 +197,7 @@ public class SpecificLocationFragment extends Fragment {
 
         try {
             prevColorTouched = bodyPartColorTouched;
-            bodyPartColorTouched = ((BitmapDrawable)bodyImageViewOverlay.getDrawable()).getBitmap().getPixel(xCord,yCord);
+            bodyPartColorTouched = ((BitmapDrawable) bodyImageViewBackground.getDrawable()).getBitmap().getPixel(xCord,yCord);
         } catch (IllegalArgumentException e) {
             prevColorTouched = bodyPartColorTouched;
             bodyPartColorTouched = BodyPartColors.NOT_BODY_COLOR; // nothing happens when touching white

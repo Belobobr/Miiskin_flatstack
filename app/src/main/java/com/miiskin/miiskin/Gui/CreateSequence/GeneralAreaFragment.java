@@ -307,6 +307,7 @@ public class GeneralAreaFragment extends Fragment {
             });
         } else {
             bodyImageViewBackground.setImageBitmap(null);
+            bodyImageView.setOnTouchListener(null);
         }
     }
 

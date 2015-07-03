@@ -15,6 +15,20 @@ public class Utils {
         return (int)px;
     }
 
+    public static int getImageResourceId(Context context, BodyPart bodyPart, String gender,  BodyHalf bodyHalf, boolean mask) {
+        Resources r = context.getResources();
+        int drawableResourceId = r.getIdentifier(Utils.getImageName(bodyPart, gender, bodyHalf, mask), "drawable", "com.miiskin.miiskin");
+        return drawableResourceId;
+    }
+
+    public static String getImageName(BodyPart bodyPart, String gender,  BodyHalf bodyHalf, boolean mask) {
+        String bodyPartNamePart = Utils.bodyPartName(bodyPart);
+        String genderPart = gender.equals(UserInfo.MALE) ? "_male" : "_female";
+        String frontModePart = bodyHalf == BodyHalf.Front ? "_front" : "_rear";
+
+        return bodyPartNamePart + genderPart + frontModePart + (mask ? "_mask_zoom" : "_zoom");
+    }
+
     public static String bodyPartName(BodyPart bodyPart) {
         String bodyPartString = null;
         switch (bodyPart) {

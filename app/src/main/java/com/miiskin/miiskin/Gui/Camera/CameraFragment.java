@@ -17,6 +17,8 @@ import android.widget.ProgressBar;
 
 import com.miiskin.miiskin.Data.SavedPhotoInfo;
 import com.miiskin.miiskin.Data.MoleData;
+import com.miiskin.miiskin.Data.UserManager;
+import com.miiskin.miiskin.Data.Utils;
 import com.miiskin.miiskin.Gui.AcceptPhoto.AcceptPhotoActivity;
 import com.miiskin.miiskin.Gui.General.PointedImageView;
 import com.miiskin.miiskin.Helpers.BitmapDecoder;
@@ -121,7 +123,8 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
         bodyPartLocationPreview.post(new Runnable() {
             @Override
             public void run() {
-                loadBodyImageView(bodyPartLocationPreview, mMoleData.mBodyPart.getDrawableResourceForeground());
+                int resourceId = Utils.getImageResourceId(getActivity(), mMoleData.mBodyPart, UserManager.getInstance().getUserGender(), mMoleData.mBodyHalf, false);
+                loadBodyImageView(bodyPartLocationPreview, resourceId);
                 bodyPartLocationPreview.setPoint(mMoleData.bodyPartRelativePointX, mMoleData.bodyPartRelativePointY);
                 bodyPartLocationPreview.invalidate();
             }

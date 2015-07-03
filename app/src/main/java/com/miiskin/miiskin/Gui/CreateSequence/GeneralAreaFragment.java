@@ -145,6 +145,7 @@ public class GeneralAreaFragment extends Fragment {
         buttonRear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                bodyPartColorTouched = BodyPartColors.not_body;
                switchToRearMode();
             }
         });

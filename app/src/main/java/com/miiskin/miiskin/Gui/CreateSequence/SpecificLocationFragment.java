@@ -110,22 +110,13 @@ public class SpecificLocationFragment extends Fragment {
         });
     }
 
-    private String getImageName(boolean mask) {
-        String bodyPartName = Utils.bodyPartName(mBodyPart);
-        String gender = UserManager.getInstance().getUserGender().equals(UserInfo.MALE) ? "_male" : "_female";
-        String frontMode = mBodyHalf == BodyHalf.Front ? "_front" : "_rear";
-
-        return bodyPartName + gender + frontMode + (mask ? "_mask_zoom" : "_zoom");
-    }
-
     private void loadSpecificImages() {
         loadBodyImageView();
         loadBackgroundImageView();
     }
 
     private void loadBodyImageView() {
-        Resources r = getResources();
-        int drawableResourceId = r.getIdentifier(getImageName(false), "drawable", "com.miiskin.miiskin");
+        int drawableResourceId = Utils.getImageResourceId(getActivity(), mBodyPart, UserManager.getInstance().getUserGender(), mBodyHalf, false);
         final Bitmap bm = BitmapDecoder.decodeSampledBitmapFromResource(getResources(), drawableResourceId, bodyImageView.getWidth(), bodyImageView.getHeight());
         if (bm!=null) {
             bodyImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
@@ -134,8 +125,7 @@ public class SpecificLocationFragment extends Fragment {
     }
 
     private void loadBackgroundImageView() {
-        Resources r = getResources();
-        int drawableResourceId = r.getIdentifier(getImageName(true), "drawable", "com.miiskin.miiskin");
+        int drawableResourceId = Utils.getImageResourceId(getActivity(), mBodyPart, UserManager.getInstance().getUserGender(), mBodyHalf, true);
         final Bitmap bm2 = BitmapDecoder.decodeSampledBitmapFromResource(getResources(), drawableResourceId, bodyImageViewBackground.getWidth(), bodyImageViewBackground.getHeight());
         if (bm2!=null) {
             bodyImageViewBackground.setScaleType(ImageView.ScaleType.FIT_CENTER);

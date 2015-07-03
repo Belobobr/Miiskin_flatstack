@@ -12,7 +12,10 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.miiskin.miiskin.Data.BodyHalf;
 import com.miiskin.miiskin.Data.BodyPart;
+import com.miiskin.miiskin.Data.UserManager;
+import com.miiskin.miiskin.Data.Utils;
 import com.miiskin.miiskin.Gui.General.PointedImageView;
 import com.miiskin.miiskin.Helpers.BitmapDecoder;
 import com.miiskin.miiskin.R;
@@ -66,6 +69,7 @@ public class MoleCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         final String anatomicalSection = cursor.getString(cursor.getColumnIndex(MoleLocation.COLUMN_NAME_BODY_PART));
+        final String bodyHalf = cursor.getString(cursor.getColumnIndex(MoleLocation.COLUMN_NAME_BODY_HALF));
         long dateOfCreationSection = cursor.getLong(cursor.getColumnIndex(Mole.COLUMN_NAME_START_OBSERVING_DATE));
         final String molePositionX = cursor.getString(cursor.getColumnIndex(MoleLocation.COLUMN_NAME_X_POSITION_OF_MOLE));
         final String molePositionY = cursor.getString(cursor.getColumnIndex(MoleLocation.COLUMN_NAME_Y_POSITION_OF_MOLE));
@@ -77,7 +81,9 @@ public class MoleCursorAdapter extends CursorAdapter {
         holder.mPointedImageView.post(new Runnable() {
             @Override
             public void run() {
-                loadBodyImageView(holder.mPointedImageView, BodyPart.valueOf(anatomicalSection).getDrawableResourceForeground());
+                int imageResourceId = Utils.getImageResourceId(mContext, BodyPart.valueOf(anatomicalSection),
+                        UserManager.getInstance().getUserGender(), BodyHalf.valueOf(bodyHalf), false);
+                loadBodyImageView(holder.mPointedImageView, imageResourceId);
                 holder.mPointedImageView.setPoint(Float.parseFloat(molePositionX),  Float.parseFloat(molePositionY));
             }
         });

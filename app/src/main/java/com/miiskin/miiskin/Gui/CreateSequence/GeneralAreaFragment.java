@@ -21,6 +21,7 @@ import com.miiskin.miiskin.Data.BodyHalf;
 import com.miiskin.miiskin.Data.BodyPart;
 import com.miiskin.miiskin.Data.UserInfo;
 import com.miiskin.miiskin.Data.UserManager;
+import com.miiskin.miiskin.Data.Utils;
 import com.miiskin.miiskin.Helpers.BitmapDecoder;
 import com.miiskin.miiskin.R;
 
@@ -326,61 +327,8 @@ public class GeneralAreaFragment extends Fragment {
             return;
         }
         String bodyPartString = null;
-        switch (bodyPart) {
-            case LeftHand :
-                bodyPartString = "left_hand";
-                break;
-            case RightHand :
-                bodyPartString = "right_hand";
-                break;
-            case LeftForeArm :
-                bodyPartString = "left_forearm";
-                break;
-            case RightForeArm :
-                bodyPartString = "right_forearm";
-                break;
-            case LeftUpperArm :
-                bodyPartString = "left_upper_arm";
-                break;
-            case RightUpperArm :
-                bodyPartString = "right_upper_arm";
-                break;
-            case FaceThroat :
-                bodyPartString = "face_throat";
-                break;
-            case Chest :
-                bodyPartString = "chest";
-                break;
-            case Stomach :
-                bodyPartString = "stomach";
-                break;
-            case Genitals :
-                bodyPartString = "genitals";
-                break;
-            case Groin :
-                bodyPartString = "groin";
-                break;
-            case RightThigh :
-                bodyPartString = "right_thigh";
-                break;
-            case LeftThigh :
-                bodyPartString = "left_thigh";
-                break;
-            case RightShin :
-                bodyPartString = "right_shin";
-                break;
-            case LeftShin :
-                bodyPartString = "left_shin";
-                break;
-            case RightFoot:
-                bodyPartString = "right_foot";
-                break;
-            case LeftFoot:
-                bodyPartString = "left_foot";
-                break;
-            default:
-                break;
-        }
+        bodyPartString = Utils.bodyPartName(bodyPart);
+
         String resourceName = bodyPartString + (gender.equals(UserInfo.MALE) ? "_male" : "_female") + (frontMode ? "_front" : "_rear");
         Resources r = getResources();
         int drawableResourceId = r.getIdentifier(resourceName, "drawable", "com.miiskin.miiskin");

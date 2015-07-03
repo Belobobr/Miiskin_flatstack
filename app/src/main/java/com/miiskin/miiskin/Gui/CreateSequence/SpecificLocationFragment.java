@@ -2,6 +2,7 @@ package com.miiskin.miiskin.Gui.CreateSequence;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
@@ -14,7 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.miiskin.miiskin.Data.BodyHalf;
 import com.miiskin.miiskin.Data.BodyPart;
+import com.miiskin.miiskin.Data.UserInfo;
+import com.miiskin.miiskin.Data.UserManager;
+import com.miiskin.miiskin.Data.Utils;
 import com.miiskin.miiskin.Gui.General.PointedImageView;
 import com.miiskin.miiskin.Helpers.BitmapDecoder;
 import com.miiskin.miiskin.R;
@@ -30,15 +35,17 @@ public class SpecificLocationFragment extends Fragment {
     private static final String BODY_PART_X_CORD = "BODY_PART_X_CORD";
     private static final String BODY_PART_Y_CORD = "BODY_PART_Y_CORD";
     private static final String CHOSEN_BODY_PART = "CHOSEN_BODY_PART";
+    private static final String CHOSEN_BODY_HALF = "CHOSEN_BODY_HALF";
 
     public static class BodyPartColors {
-        public static final int NOT_BODY_COLOR = 0xFFFFFFFF;
-        public static final int BODY_COLOR = 0xFFFF0000;
+        public static final int NOT_BODY_COLOR = 0xFFedecec;
+        public static final int BODY_COLOR = 0xFF666666;
     }
 
     int prevColorTouched;
     int bodyPartColorTouched = BodyPartColors.NOT_BODY_COLOR;
     BodyPart mBodyPart;
+    BodyHalf mBodyHalf;
     float bodyPartRelativePointX;
     float bodyPartRelativePointY;
 
@@ -48,10 +55,11 @@ public class SpecificLocationFragment extends Fragment {
     private FloatingActionButton mFloatingActionButton;
 
 
-    public static SpecificLocationFragment newInstance(BodyPart bodyPart) {
+    public static SpecificLocationFragment newInstance(BodyPart bodyPart, BodyHalf bodyHalf) {
         SpecificLocationFragment fragment = new SpecificLocationFragment();
         Bundle arguments = new Bundle();
         arguments.putSerializable(CHOSEN_BODY_PART, bodyPart);
+        arguments.putSerializable(CHOSEN_BODY_HALF, bodyHalf);
         fragment.setArguments(arguments);
         return fragment;
     }
@@ -69,12 +77,14 @@ public class SpecificLocationFragment extends Fragment {
         Bundle arguments = getArguments();
         if (arguments != null) {
             mBodyPart = (BodyPart)arguments.getSerializable(CHOSEN_BODY_PART);
+            mBodyHalf = (BodyHalf)arguments.getSerializable(CHOSEN_BODY_HALF);
         }
         if (savedInstanceState != null) {
             bodyPartRelativePointX = savedInstanceState.getFloat(BODY_PART_X_CORD);
             bodyPartRelativePointY = savedInstanceState.getFloat(BODY_PART_Y_CORD);
             bodyPartColorTouched = savedInstanceState.getInt(BODY_PART_COLOR_TOUCHED);
             mBodyPart = (BodyPart)savedInstanceState.getSerializable(CHOSEN_BODY_PART);
+            mBodyHalf = (BodyHalf)savedInstanceState.getSerializable(CHOSEN_BODY_HALF);
         }
     }
 
@@ -85,6 +95,7 @@ public class SpecificLocationFragment extends Fragment {
         outState.putFloat(BODY_PART_X_CORD, bodyPartRelativePointX);
         outState.putFloat(BODY_PART_Y_CORD, bodyPartRelativePointY);
         outState.putSerializable(CHOSEN_BODY_PART, mBodyPart);
+        outState.putSerializable(CHOSEN_BODY_HALF, mBodyHalf);
     }
 
     @Override
@@ -94,25 +105,52 @@ public class SpecificLocationFragment extends Fragment {
             @Override
             public void run() {
                 checkTouchZone();
-                loadBodyImageView(mBodyPart.getDrawableResourceForeground());
-
-                final Bitmap bm2 = BitmapDecoder.decodeSampledBitmapFromResource(getResources(), mBodyPart.getDrawableResourceBackground(), bodyImageViewBackground.getWidth(), bodyImageViewBackground.getHeight());
-                if (bm2!=null) {
-                    bodyImageViewBackground.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                    bodyImageViewBackground.setImageBitmap(bm2);
-
-                    bodyImageView.setOnTouchListener(new View.OnTouchListener() {
-
-                        @Override
-                        public boolean onTouch(View v, MotionEvent mev) {
-                            DecodeActionDownEvent(v, mev, bm2);
-                            return false;
-                        }
-
-                    });
-                }
+                loadSpecificImages();
             }
         });
+    }
+
+    private String getImageName(boolean mask) {
+        String bodyPartName = Utils.bodyPartName(mBodyPart);
+        String gender = UserManager.getInstance().getUserGender().equals(UserInfo.MALE) ? "_male" : "_female";
+        String frontMode = mBodyHalf == BodyHalf.Front ? "_front" : "_rear";
+
+        return bodyPartName + gender + frontMode + (mask ? "_mask_zoom" : "_zoom");
+    }
+
+    private void loadSpecificImages() {
+        loadBodyImageView();
+        loadBackgroundImageView();
+    }
+
+    private void loadBodyImageView() {
+        Resources r = getResources();
+        int drawableResourceId = r.getIdentifier(getImageName(false), "drawable", "com.miiskin.miiskin");
+        final Bitmap bm = BitmapDecoder.decodeSampledBitmapFromResource(getResources(), drawableResourceId, bodyImageView.getWidth(), bodyImageView.getHeight());
+        if (bm!=null) {
+            bodyImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            bodyImageView.setImageBitmap(bm);
+        }
+    }
+
+    private void loadBackgroundImageView() {
+        Resources r = getResources();
+        int drawableResourceId = r.getIdentifier(getImageName(true), "drawable", "com.miiskin.miiskin");
+        final Bitmap bm2 = BitmapDecoder.decodeSampledBitmapFromResource(getResources(), drawableResourceId, bodyImageViewBackground.getWidth(), bodyImageViewBackground.getHeight());
+        if (bm2!=null) {
+            bodyImageViewBackground.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            bodyImageViewBackground.setImageBitmap(bm2);
+
+            bodyImageView.setOnTouchListener(new View.OnTouchListener() {
+
+                @Override
+                public boolean onTouch(View v, MotionEvent mev) {
+                    DecodeActionDownEvent(v, mev, bm2);
+                    return false;
+                }
+
+            });
+        }
     }
 
     @Override
@@ -156,15 +194,6 @@ public class SpecificLocationFragment extends Fragment {
                 mListener.onSpecificLocationSelected(bodyPartRelativePointX, bodyPartRelativePointY);
             }
         });
-    }
-
-
-    private void loadBodyImageView(int resId) {
-        final Bitmap bm = BitmapDecoder.decodeSampledBitmapFromResource(getResources(), resId, bodyImageView.getWidth(), bodyImageView.getHeight());
-        if (bm!=null) {
-            bodyImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            bodyImageView.setImageBitmap(bm);
-        }
     }
 
     private void DecodeActionDownEvent(View v, MotionEvent ev, Bitmap bm2)
@@ -229,4 +258,6 @@ public class SpecificLocationFragment extends Fragment {
                 return BodyPartColors.NOT_BODY_COLOR;
         }
     }
+
+
 }

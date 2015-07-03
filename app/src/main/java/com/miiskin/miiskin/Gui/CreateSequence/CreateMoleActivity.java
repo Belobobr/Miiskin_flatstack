@@ -96,7 +96,7 @@ public class CreateMoleActivity extends AppCompatActivity implements GeneralArea
     }
 
     public void goToSelectSpecificLocationFragment() {
-        Fragment fragment = SpecificLocationFragment.newInstance(mMoleData.mBodyPart);
+        Fragment fragment = SpecificLocationFragment.newInstance(mMoleData.mBodyPart, mMoleData.mBodyHalf);
         getFragmentManager().beginTransaction().replace(R.id.main_layout, fragment, SpecificLocationFragment.TAG).addToBackStack(null).commit();
     }
 

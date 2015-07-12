@@ -21,12 +21,36 @@ public class Utils {
         return drawableResourceId;
     }
 
+    public static int getImageResourceId(Context context, BodyPart bodyPart, String gender,  BodyHalf bodyHalf, boolean zoom, boolean mask) {
+        Resources r = context.getResources();
+        int drawableResourceId = r.getIdentifier(Utils.getImageName(bodyPart, gender, bodyHalf, zoom, mask), "drawable", "com.miiskin.miiskin");
+        return drawableResourceId;
+    }
+
     public static String getImageName(BodyPart bodyPart, String gender,  BodyHalf bodyHalf, boolean mask) {
         String bodyPartNamePart = Utils.bodyPartName(bodyPart);
         String genderPart = gender.equals(UserInfo.MALE) ? "_male" : "_female";
         String frontModePart = bodyHalf == BodyHalf.Front ? "_front" : "_rear";
 
         return bodyPartNamePart + genderPart + frontModePart + (mask ? "_mask_zoom" : "_zoom");
+    }
+
+    public static String getImageName(BodyPart bodyPart, String gender,  BodyHalf bodyHalf, boolean zoom, boolean mask) {
+        String bodyPartNamePart = Utils.bodyPartName(bodyPart);
+        String genderPart = gender.equals(UserInfo.MALE) ? "_male" : "_female";
+        String frontModePart = bodyHalf == BodyHalf.Front ? "_front" : "_rear";
+
+        if (bodyPart.equals(BodyPart.Main)) {
+            bodyPartNamePart = genderPart + frontModePart;
+
+            return bodyPartNamePart.substring(1, bodyPartNamePart.length());
+        }
+
+        if (!zoom) {
+            return bodyPartNamePart + genderPart + frontModePart;
+        } else {
+            return bodyPartNamePart + genderPart + frontModePart + (mask ? "_mask_zoom" : "_zoom");
+        }
     }
 
     public static String bodyPartName(BodyPart bodyPart) {

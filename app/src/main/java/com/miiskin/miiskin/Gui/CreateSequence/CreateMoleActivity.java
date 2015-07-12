@@ -57,7 +57,7 @@ public class CreateMoleActivity extends MiiskinActivity implements GeneralAreaFr
         Fragment fragment = getFragmentManager().findFragmentById(R.id.main_layout);
         if (fragment == null) {
             fragment = GeneralAreaFragment.newInstance();
-            getFragmentManager().beginTransaction().add(R.id.main_layout, fragment).commit();
+            getFragmentManager().beginTransaction().add(R.id.main_layout, fragment, GeneralAreaFragment.TAG).commit();
         }
 
         MiiskinApplication application = (MiiskinApplication)getApplication();

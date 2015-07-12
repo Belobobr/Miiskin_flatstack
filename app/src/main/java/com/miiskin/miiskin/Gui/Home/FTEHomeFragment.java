@@ -15,8 +15,13 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.miiskin.miiskin.Data.AnalyticsNames;
+import com.miiskin.miiskin.Data.L;
 import com.miiskin.miiskin.Data.UserInfo;
 import com.miiskin.miiskin.Data.UserManager;
+import com.miiskin.miiskin.MiiskinApplication;
 import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.Preferences;
 import com.miiskin.miiskin.Storage.Task.SaveUserInfoTask;
@@ -37,6 +42,7 @@ public class FTEHomeFragment extends Fragment implements TaskManager.DataChangeL
     private static final String TASK_ID = "TASK_ID";
     private String mTaskId;
     private UserInfo mUserInfo;
+    private Tracker mTracker;
 
     public interface FteCompleteListener {
         public void onFteCompleteDonePressed() ;
@@ -55,6 +61,9 @@ public class FTEHomeFragment extends Fragment implements TaskManager.DataChangeL
             mUserInfo = (UserInfo)savedInstanceState.getSerializable(USER_INFO_DATA_TAG);
             mTaskId = savedInstanceState.getString(TASK_ID);
         }
+
+        MiiskinApplication application = (MiiskinApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
     }
 
     @Override
@@ -67,6 +76,10 @@ public class FTEHomeFragment extends Fragment implements TaskManager.DataChangeL
     @Override
     public void onResume() {
         super.onResume();
+        L.i("Setting screen name: " + AnalyticsNames.HOME_ACTIVITY_FTE_SCREEN_NAME);
+        mTracker.setScreenName(AnalyticsNames.HOME_ACTIVITY_FTE_SCREEN_NAME);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
         if (mFemaleRadioButton.isChecked()) {
             mFemaleImageView.setSelected(true);
         }

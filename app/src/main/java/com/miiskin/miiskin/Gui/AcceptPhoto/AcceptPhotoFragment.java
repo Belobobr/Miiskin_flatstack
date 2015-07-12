@@ -10,6 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.miiskin.miiskin.Data.AnalyticsNames;
+import com.miiskin.miiskin.Data.L;
 import com.miiskin.miiskin.Data.SavedPhotoInfo;
 import com.miiskin.miiskin.Data.MoleData;
 import com.miiskin.miiskin.Gui.ViewSequence.ViewMoleActivity;
@@ -36,6 +40,7 @@ public class AcceptPhotoFragment extends Fragment implements TaskManager.DataCha
 
     private String taskId;
     private Long imageId;
+    private Tracker mTracker;
 
     public static AcceptPhotoFragment newInstance(SavedPhotoInfo savedPhotoInfo, MoleData moleData) {
         AcceptPhotoFragment fragment = new AcceptPhotoFragment();
@@ -49,6 +54,9 @@ public class AcceptPhotoFragment extends Fragment implements TaskManager.DataCha
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MiiskinApplication application = (MiiskinApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+
         setRetainInstance(true);
 
         Bundle arguments = getArguments();
@@ -61,6 +69,10 @@ public class AcceptPhotoFragment extends Fragment implements TaskManager.DataCha
     @Override
     public void onResume() {
         super.onResume();
+        L.i("Setting screen name: " + AnalyticsNames.APPROVE_PHOTO_SCREEN);
+        mTracker.setScreenName(AnalyticsNames.APPROVE_PHOTO_SCREEN);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
         TaskManager.getInstance(MiiskinApplication.getAppContext()).addDataChangeListener(this);
         mImageView.post(new Runnable() {
             @Override
@@ -73,6 +85,7 @@ public class AcceptPhotoFragment extends Fragment implements TaskManager.DataCha
                 }
             }
         });
+        updateUi();
     }
 
     @Override
@@ -91,6 +104,16 @@ public class AcceptPhotoFragment extends Fragment implements TaskManager.DataCha
     private void updateUi() {
         imageId = (Long) TaskManager.getInstance(MiiskinApplication.getAppContext()).getDataById(taskId);
         if (imageId != null) {
+            Long picturesTaken = imageId + 1;
+            L.i("Custom dimension change: " + AnalyticsNames.CustomDimension.PICTURES_TAKEN + ": " + picturesTaken);
+            L.i("Custom metric change: " + AnalyticsNames.CustomMetrics.PICTURES_TAKEN + ": " + picturesTaken);
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory(AnalyticsNames.EventCategory.PICTURES)
+                    .setAction(AnalyticsNames.EventAction.PICTURES_TAKEN)
+                    .setCustomDimension(AnalyticsNames.CustomDimension.PICTURES_TAKEN_ID, picturesTaken.toString())
+                    .setCustomMetric(AnalyticsNames.CustomMetrics.PICTURES_TAKEN_ID, picturesTaken)
+                    .setValue(1)
+                    .build());
             Intent intent  = new Intent(getActivity(), ViewMoleActivity.class);
             intent.putExtra(ViewMoleActivity.EXTRA_MOLE_ID, Long.parseLong(mMoleData.mId));
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

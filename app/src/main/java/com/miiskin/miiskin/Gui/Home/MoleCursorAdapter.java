@@ -97,8 +97,8 @@ public class MoleCursorAdapter extends CursorAdapter {
             holder.mNextPhotoTextView.setTextColor(mContext.getResources().getColor(android.R.color.black));
             return;
         }
-        long nextPhotoDate  = new Date().getTime() + TimeUnit.MILLISECONDS.convert(30, TimeUnit.DAYS);
-        long diff = nextPhotoDate - lastPictureTime;
+        long nextPhotoDate  =  lastPictureTime + TimeUnit.MILLISECONDS.convert(30, TimeUnit.DAYS);
+        long diff = nextPhotoDate - new Date().getTime();
         long diffInDays = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         holder.mNextPhotoTextView.setText(mContext.getString(R.string.next_photo_in, diffInDays));
         if (diffInDays < 5) {

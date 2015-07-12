@@ -22,8 +22,9 @@ public class Preferences {
     public static class UserInfo {
         public static final String CURRENT_USER_ID = "CURRENT_USER_ID";
         public static final String CURRENT_USER_GENDER = "CURRENT_USER_GENDER";
+        public static final String TOTAL_TIME_SPEND_IN_APP = "TOTAL_TIME_SPEND_IN_APP";
 
-        public static int DATE_OF_BIRTH_FROM = 1990;
+        public static int DATE_OF_BIRTH_FROM = 1965;
         public static int DATE_OF_BIRTH_TO = Calendar.getInstance().get(Calendar.YEAR);
     }
 }

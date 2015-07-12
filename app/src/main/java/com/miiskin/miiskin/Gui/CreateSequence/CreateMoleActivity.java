@@ -8,10 +8,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.miiskin.miiskin.Data.AnalyticsNames;
 import com.miiskin.miiskin.Data.BodyHalf;
 import com.miiskin.miiskin.Data.BodyPart;
+import com.miiskin.miiskin.Data.L;
 import com.miiskin.miiskin.Data.MoleData;
+import com.miiskin.miiskin.Gui.MiiskinActivity;
 import com.miiskin.miiskin.Gui.ViewSequence.ViewMoleActivity;
+import com.miiskin.miiskin.MiiskinApplication;
 import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.Task.SaveMoleToDatabaseTask;
 import com.miiskin.miiskin.Storage.Task.TaskManager;
@@ -22,7 +28,7 @@ import java.util.UUID;
 /**
  * Created by Newshka on 24.06.2015.
  */
-public class CreateMoleActivity extends AppCompatActivity implements GeneralAreaFragment.GeneralAreaSelectedListener, SpecificLocationFragment.SpecificLocationSelectedListener,
+public class CreateMoleActivity extends MiiskinActivity implements GeneralAreaFragment.GeneralAreaSelectedListener, SpecificLocationFragment.SpecificLocationSelectedListener,
     TaskManager.DataChangeListener {
 
     Toolbar mActionBarToolbar;
@@ -31,6 +37,7 @@ public class CreateMoleActivity extends AppCompatActivity implements GeneralArea
     private static final String TASK_ID = "TASK_ID";
     private MoleData mMoleData;
     private String taskId;
+    private Tracker mTracker;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +59,9 @@ public class CreateMoleActivity extends AppCompatActivity implements GeneralArea
             fragment = GeneralAreaFragment.newInstance();
             getFragmentManager().beginTransaction().add(R.id.main_layout, fragment).commit();
         }
+
+        MiiskinApplication application = (MiiskinApplication)getApplication();
+        mTracker = application.getDefaultTracker();
     }
 
     @Override
@@ -85,8 +95,19 @@ public class CreateMoleActivity extends AppCompatActivity implements GeneralArea
         Long moleId = (Long)TaskManager.getInstance(getApplicationContext()).getDataById(taskId);
         mMoleData.mId = String.valueOf(moleId);
         if (moleId != null) {
-            if (moleId != -1)
+            if (moleId != -1) {
                 showCreatedMoleScreen(moleId);
+                Long moleCount = moleId + 1;
+                L.i("Custom dimension change: " + AnalyticsNames.CustomDimension.SEQUENCES_CREATED + ": " + moleCount);
+                L.i("Custom metric change: " + AnalyticsNames.CustomMetrics.SEQUENCES_CREATED + ": " + moleCount);
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory(AnalyticsNames.EventCategory.SEQUENCES)
+                        .setAction(AnalyticsNames.EventAction.SEQUENCE_CREATED)
+                        .setCustomDimension(AnalyticsNames.CustomDimension.SEQUENCES_CREATED_ID, moleCount.toString())
+                        .setCustomMetric(AnalyticsNames.CustomMetrics.SEQUENCES_CREATED_ID, moleCount)
+                        .setValue(1)
+                        .build());
+            }
             else {
                 finish();
                 Toast toast = Toast.makeText(this, getString(R.string.error_creating_mole), Toast.LENGTH_SHORT);

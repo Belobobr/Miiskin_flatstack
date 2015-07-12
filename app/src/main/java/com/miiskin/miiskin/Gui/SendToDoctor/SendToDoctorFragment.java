@@ -10,7 +10,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 
-import com.miiskin.miiskin.Gui.Camera.FteCameraTipsFragment;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.miiskin.miiskin.Data.AnalyticsNames;
+import com.miiskin.miiskin.Data.L;
+import com.miiskin.miiskin.MiiskinApplication;
 import com.miiskin.miiskin.R;
 
 /**
@@ -26,11 +30,28 @@ public class SendToDoctorFragment extends Fragment{
     }
 
     private CheckBox mLicenseAgreementCheckBox;
+    private Tracker mTracker;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_send_to_doctor, container, false);
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        MiiskinApplication application = (MiiskinApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        L.i("Setting screen name: " + AnalyticsNames.SEND_TO_DOCTOR);
+        mTracker.setScreenName(AnalyticsNames.SEND_TO_DOCTOR);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
@@ -46,6 +67,12 @@ public class SendToDoctorFragment extends Fragment{
                 } else {
                     aboutOurDoctorDescription.setVisibility(View.VISIBLE);
                 }
+                L.i("Event occur: " + "Category: " + AnalyticsNames.EventCategory.INFORMATION + ";Action : " + AnalyticsNames.EventAction.ABOUT_DOCTOR_ACTION);
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory(AnalyticsNames.EventCategory.INFORMATION)
+                        .setAction(AnalyticsNames.EventAction.ABOUT_DOCTOR_ACTION)
+                        .setValue(1)
+                        .build());
             }
         });
         Button sendToDoctorButton = (Button)view.findViewById(R.id.send_to_doctor_button);
@@ -56,6 +83,11 @@ public class SendToDoctorFragment extends Fragment{
                     DialogFragment dialog = new UnderDevelopmentDialog();
                     dialog.show(getActivity().getFragmentManager(), UnderDevelopmentDialog.TAG);
                 }
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory(AnalyticsNames.EventCategory.ASSESSMENT)
+                        .setAction(AnalyticsNames.EventAction.PAY_AND_SEND_PHOTO)
+                        .setValue(1)
+                        .build());
             }
         });
         mLicenseAgreementCheckBox = (CheckBox)view.findViewById(R.id.licence_agreement_check_box);

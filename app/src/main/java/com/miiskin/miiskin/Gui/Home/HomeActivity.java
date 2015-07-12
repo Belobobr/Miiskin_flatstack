@@ -2,18 +2,18 @@ package com.miiskin.miiskin.Gui.Home;
 
 import android.app.DialogFragment;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.miiskin.miiskin.Gui.MiiskinActivity;
 import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.Preferences;
 
 
-public class HomeActivity extends AppCompatActivity implements FTEHomeFragment.FteCompleteListener, DisclaimerDialogFragment.DisclaimerDialogListener{
+public class HomeActivity extends MiiskinActivity implements FTEHomeFragment.FteCompleteListener, DisclaimerDialogFragment.DisclaimerDialogListener{
 
     private Toolbar mMActionBarToolbar;
 
@@ -23,6 +23,8 @@ public class HomeActivity extends AppCompatActivity implements FTEHomeFragment.F
         HomeFragment homeFragment = HomeFragment.newInstance();
         getFragmentManager().beginTransaction().replace(R.id.main_layout, homeFragment).commit();
     }
+
+
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
@@ -63,6 +65,8 @@ public class HomeActivity extends AppCompatActivity implements FTEHomeFragment.F
             }
 
         }
+
+
     }
 
     @Override

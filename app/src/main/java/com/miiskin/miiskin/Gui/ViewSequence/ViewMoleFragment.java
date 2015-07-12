@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -29,7 +28,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.miiskin.miiskin.Data.AnalyticsNames;
 import com.miiskin.miiskin.Data.BodyPart;
+import com.miiskin.miiskin.Data.L;
 import com.miiskin.miiskin.Data.MoleData;
 import com.miiskin.miiskin.Data.Paths;
 import com.miiskin.miiskin.Gui.Camera.CameraActivity;
@@ -83,6 +86,7 @@ public class ViewMoleFragment extends Fragment implements TaskManager.DataChange
 
     LoadMoleInfoTask.Result mMoleInfo;
     String taskId;
+    private Tracker mTracker;
 
 
     public static ViewMoleFragment newInstance(Long moleId) {
@@ -105,6 +109,9 @@ public class ViewMoleFragment extends Fragment implements TaskManager.DataChange
             taskId = UUID.randomUUID().toString();
             TaskManager.getInstance(getActivity().getApplicationContext()).executeTask(new LoadMoleInfoTask(getActivity().getApplicationContext(), new Object[] {mMoleId}), taskId);
         }
+
+        MiiskinApplication application = (MiiskinApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
     }
 
     private void switchToNotFullScreenMode() {
@@ -189,6 +196,10 @@ public class ViewMoleFragment extends Fragment implements TaskManager.DataChange
     @Override
     public void onResume() {
         super.onResume();
+        L.i("Setting screen name: " + AnalyticsNames.VIEW_MOLE);
+        mTracker.setScreenName(AnalyticsNames.VIEW_MOLE);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
         final ViewMoleActivity viewMoleActivity = (ViewMoleActivity)getActivity();
         if (mYDoctorInitialPosition == -1 && mYPhotoInitialPosition == -1) {
             mFloatingActionButton.post(new Runnable() {
@@ -284,6 +295,12 @@ public class ViewMoleFragment extends Fragment implements TaskManager.DataChange
             @Override
             public void onClick(View v) {
                 sendToDoctor();
+                L.i("Event occur: " + "Category: " + AnalyticsNames.EventCategory.ASSESSMENT + "; Action : " + AnalyticsNames.EventAction.DERMATOLOGICAL_ASSESSMENT);
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory(AnalyticsNames.EventCategory.ASSESSMENT)
+                        .setAction(AnalyticsNames.EventAction.DERMATOLOGICAL_ASSESSMENT)
+                        .setValue(1)
+                        .build());
             }
         });
         mTakePhoto = (FloatingActionButton)view.findViewById(R.id.takePhoto);

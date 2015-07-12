@@ -14,8 +14,13 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.miiskin.miiskin.Data.AnalyticsNames;
+import com.miiskin.miiskin.Data.L;
 import com.miiskin.miiskin.Gui.CreateSequence.CreateMoleActivity;
 import com.miiskin.miiskin.Gui.ViewSequence.ViewMoleActivity;
+import com.miiskin.miiskin.MiiskinApplication;
 import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.MiiskinDatabaseContract;
 import com.miiskin.miiskin.Storage.Task.LoadMolesListTask;
@@ -34,6 +39,7 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
     FloatingActionButton mNoSequenceFab;
     FloatingActionButton mManySequenceFab;
     MoleCursorAdapter mMoleCursorAdapter;
+    private Tracker mTracker;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -47,11 +53,18 @@ public class HomeFragment extends Fragment implements TaskManager.DataChangeList
         if (moleSequenceListCursor == null) {
             TaskManager.getInstance(getActivity().getApplicationContext()).executeTask(new LoadMolesListTask(getActivity().getApplicationContext()), LoadMolesListTask.TASK_ID);
         }
+
+        MiiskinApplication application = (MiiskinApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        L.i("Setting screen name: " + AnalyticsNames.HOME_ACTIVITY_SCREEN_NAME);
+        mTracker.setScreenName(AnalyticsNames.HOME_ACTIVITY_SCREEN_NAME);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
         TaskManager.getInstance(getActivity().getApplicationContext()).addDataChangeListener(this);
         updateGui();
     }

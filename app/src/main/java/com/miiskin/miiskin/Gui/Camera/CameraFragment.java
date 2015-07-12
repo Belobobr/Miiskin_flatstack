@@ -15,6 +15,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.miiskin.miiskin.Data.AnalyticsNames;
+import com.miiskin.miiskin.Data.L;
 import com.miiskin.miiskin.Data.SavedPhotoInfo;
 import com.miiskin.miiskin.Data.MoleData;
 import com.miiskin.miiskin.Data.UserManager;
@@ -55,6 +59,7 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
     private boolean mPhotoTaken = false;
     private String taskId;
     private boolean mIsSavePhoto = false;
+    private Tracker mTracker;
 
     public static CameraFragment newInstance(int pMode, File dirToSavePhoto, MoleData moleData) {
         CameraFragment fragment = new CameraFragment();
@@ -80,6 +85,9 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
             mDirToSave = (File)arguments.getSerializable(CameraActivity.DIR_TO_SAVE);
             mMoleData = (MoleData)arguments.getSerializable(CameraActivity.EXTRA_MOLE_DATE);
         }
+
+        MiiskinApplication application = (MiiskinApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
     }
 
     @Override
@@ -149,6 +157,10 @@ public class CameraFragment extends Fragment implements TaskManager.DataChangeLi
     @Override
     public void onResume() {
         super.onResume();
+        L.i("Setting screen name: " + AnalyticsNames.CAMERA_SCREEN);
+        mTracker.setScreenName(AnalyticsNames.CAMERA_SCREEN);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
         TaskManager.getInstance(MiiskinApplication.getAppContext()).addDataChangeListener(this);
         mCameraView = new CameraView(this.getActivity(), 0, CameraView.LayoutMode.FitToParent);
         mCameraView.setFocusBorderView(mFocusBorderView);

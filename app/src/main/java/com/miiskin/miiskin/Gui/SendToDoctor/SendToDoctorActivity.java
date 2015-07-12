@@ -7,9 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.miiskin.miiskin.Gui.MiiskinActivity;
 import com.miiskin.miiskin.R;
 
-public class SendToDoctorActivity extends AppCompatActivity implements UnderDevelopmentDialog.UnderDevelopmentDialogListener {
+public class SendToDoctorActivity extends MiiskinActivity implements UnderDevelopmentDialog.UnderDevelopmentDialogListener {
 
     Toolbar mActionBarToolbar;
 

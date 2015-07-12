@@ -6,9 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import com.miiskin.miiskin.Data.SavedPhotoInfo;
 import com.miiskin.miiskin.Data.MoleData;
 import com.miiskin.miiskin.Gui.Camera.CameraFragment;
+import com.miiskin.miiskin.Gui.MiiskinActivity;
 import com.miiskin.miiskin.R;
 
-public class AcceptPhotoActivity extends AppCompatActivity {
+public class AcceptPhotoActivity extends MiiskinActivity {
 
     public static final String ARG_TAKEN_PHOTO_IMAGE_INFO = "ARG_TAKEN_PHOTO_IMAGE_INFO";
     public static final String ARG_SEQUENCE_DATA = "ARG_SEQUENCE_DATA";

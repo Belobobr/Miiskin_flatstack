@@ -10,9 +10,10 @@ import android.view.MenuItem;
 
 import com.miiskin.miiskin.Data.MoleData;
 import com.miiskin.miiskin.Gui.Home.HomeActivity;
+import com.miiskin.miiskin.Gui.MiiskinActivity;
 import com.miiskin.miiskin.R;
 
-public class ViewMoleActivity extends AppCompatActivity {
+public class ViewMoleActivity extends MiiskinActivity {
 
     public static final String EXTRA_MOLE_ID = "EXTRA_MOLE_ID";
 

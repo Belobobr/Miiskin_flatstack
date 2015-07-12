@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -17,15 +16,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.miiskin.miiskin.Data.AnalyticsNames;
 import com.miiskin.miiskin.Data.BodyHalf;
 import com.miiskin.miiskin.Data.BodyPart;
+import com.miiskin.miiskin.Data.L;
 import com.miiskin.miiskin.Data.UserInfo;
 import com.miiskin.miiskin.Data.UserManager;
 import com.miiskin.miiskin.Data.Utils;
 import com.miiskin.miiskin.Helpers.BitmapDecoder;
+import com.miiskin.miiskin.MiiskinApplication;
 import com.miiskin.miiskin.R;
-
-import java.lang.reflect.Field;
 
 /**
  * Created by Newshka on 24.06.2015.
@@ -43,6 +45,7 @@ public class GeneralAreaFragment extends Fragment {
     private Button buttonFront;
     private Button buttonRear;
     private boolean frontMode = true;
+    private Tracker mTracker;
 
     public static GeneralAreaFragment newInstance() {
         GeneralAreaFragment fragment = new GeneralAreaFragment();
@@ -89,6 +92,8 @@ public class GeneralAreaFragment extends Fragment {
             bodyPartColorTouched = savedInstanceState.getInt(BODY_PART_COLOR_TOUCHED);
             frontMode = savedInstanceState.getBoolean(FRONT_MODE);
         }
+        MiiskinApplication application = (MiiskinApplication)getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
     }
 
     @Override
@@ -189,6 +194,10 @@ public class GeneralAreaFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        L.i("Setting screen name: " + AnalyticsNames.CREATE_MOLE_GENERAL_AREA);
+        mTracker.setScreenName(AnalyticsNames.CREATE_MOLE_GENERAL_AREA);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
         if (frontMode) {
             switchToFrontMode(true);
         } else {

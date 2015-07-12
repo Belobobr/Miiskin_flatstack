@@ -4,9 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.miiskin.miiskin.Data.AnalyticsNames;
 import com.miiskin.miiskin.Data.L;
 import com.miiskin.miiskin.Data.MoleData;
 import com.miiskin.miiskin.Data.SavedPhotoInfo;
+import com.miiskin.miiskin.MiiskinApplication;
 import com.miiskin.miiskin.Storage.MiiskinDatabaseContract;
 
 import java.util.Date;
@@ -44,7 +47,6 @@ public class SavePhotoMetaDataToDatabase  extends Task{
         if (imageId == -1) {
             L.e("Can't save photo to database");
         }
-
         return imageId;
     }
 

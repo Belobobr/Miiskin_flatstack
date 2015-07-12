@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
 import com.miiskin.miiskin.Data.MoleData;
+import com.miiskin.miiskin.Gui.MiiskinActivity;
 import com.miiskin.miiskin.R;
 import com.miiskin.miiskin.Storage.Preferences;
 
@@ -15,7 +16,7 @@ import java.io.File;
 /**
  * Created by Newshka on 26.06.2015.
  */
-public class CameraActivity extends AppCompatActivity implements FteCameraTipsFragment.FteCameraTipsListener{
+public class CameraActivity extends MiiskinActivity implements FteCameraTipsFragment.FteCameraTipsListener{
     public static final String EXTRA_MOLE_DATE = "EXTRA_MOLE_DATE";
     public static final String DIR_TO_SAVE = "DIR_TO_SAVE";
 

@@ -200,12 +200,24 @@ public class SpecificLocationFragment extends Fragment {
     private void DecodeActionDownEvent(View v, MotionEvent ev, Bitmap bm2)
     {
         //Something a little bit difficult
+        //convert touch event coordinates to bitmap coordinates
         Matrix inverse = new Matrix();
         bodyImageView.getImageMatrix().invert(inverse);
         float[] touchPoint = new float[] {ev.getX(), ev.getY()};
         inverse.mapPoints(touchPoint);
         int xCord = Integer.valueOf((int)touchPoint[0]);
         int yCord = Integer.valueOf((int)touchPoint[1]);
+
+        checkPointOnBitmap(xCord, yCord);
+    }
+
+    /**
+     *
+     * @param xCord
+     * @param yCord
+     * @return true if pointed match body part, else otherwise
+     */
+    public boolean checkPointOnBitmap(int xCord, int yCord) {
         int bitmapWidth = ((BitmapDrawable)bodyImageView.getDrawable()).getBitmap().getWidth();
         int bitmapHeight = ((BitmapDrawable)bodyImageView.getDrawable()).getBitmap().getHeight();
 
@@ -237,9 +249,11 @@ public class SpecificLocationFragment extends Fragment {
         if (bodyPartColor == BodyPartColors.BODY_COLOR) {
             bodyImageView.setPoint(bodyPartRelativePointX, bodyPartRelativePointY);
             bodyImageView.invalidate();
+            return true;
         } else {
             bodyImageView.removePoint();
             bodyImageView.invalidate();
+            return false;
         }
     }
 

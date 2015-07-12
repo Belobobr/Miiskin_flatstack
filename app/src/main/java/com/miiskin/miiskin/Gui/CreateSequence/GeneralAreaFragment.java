@@ -85,6 +85,14 @@ public class GeneralAreaFragment extends Fragment {
     int bodyPartColorTouched = BodyPartColors.not_body;
     BodyPart mBodyPart;
 
+    public BodyPart getBodyPart() {
+        return mBodyPart;
+    }
+
+    public void setBodyPart(BodyPart bodyPart) {
+        mBodyPart = bodyPart;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -322,7 +330,7 @@ public class GeneralAreaFragment extends Fragment {
         }
     }
 
-    private void switchToBodyPartImage(BodyPart bodyPart) {
+    public void switchToBodyPartImage(BodyPart bodyPart) {
         String gender = UserManager.getInstance().getUserGender();
         if (bodyPart.equals(BodyPart.Main)) {
             String resourceName = (gender.equals(UserInfo.MALE) ? "male" : "female")  + (frontMode ? "_front" : "_rear");

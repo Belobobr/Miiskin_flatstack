@@ -65,8 +65,6 @@ public class HomeActivity extends MiiskinActivity implements FTEHomeFragment.Fte
             }
 
         }
-
-
     }
 
     @Override

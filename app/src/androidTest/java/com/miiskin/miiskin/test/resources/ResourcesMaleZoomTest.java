@@ -1,4 +1,4 @@
-package com.miiskin.miiskin.test;
+package com.miiskin.miiskin.test.resources;
 
 import com.miiskin.miiskin.Data.BodyHalf;
 import com.miiskin.miiskin.Data.BodyPart;

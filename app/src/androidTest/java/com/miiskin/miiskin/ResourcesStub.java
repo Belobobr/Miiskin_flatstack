@@ -42,6 +42,13 @@ public abstract class ResourcesStub extends ActivityInstrumentationTestCase2<Hom
         super.tearDown();
     }
 
+    /*
+    Don't work without it
+     */
+    public void testRun() {
+
+    }
+
     @Override
     protected void runTest() throws Throwable {
         super.runTest();

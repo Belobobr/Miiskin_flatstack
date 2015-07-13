@@ -1,4 +1,4 @@
-package com.miiskin.miiskin.test;
+package com.miiskin.miiskin.test.resources;
 
 import com.miiskin.miiskin.Data.BodyHalf;
 import com.miiskin.miiskin.Data.BodyPart;
@@ -24,6 +24,9 @@ public class ResourcesMaleGeneralTest extends ResourcesStub {
 
     private void checkResources(BodyHalf bodyHalf) {
         for (BodyPart bodyPart :BodyPart.values()) {
+            if (bodyHalf.equals(BodyHalf.Rear) && (bodyPart.equals(BodyPart.Genitals) || bodyPart.equals(BodyPart.Groin))) {
+                continue;
+            }
             mImageName = Utils.getImageName(bodyPart, UserInfo.MALE, bodyHalf, false, false);
             populateMessage();
         }

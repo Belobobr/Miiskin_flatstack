@@ -49,5 +49,7 @@ public class AnalyticsNames {
         public static final String SEQUENCES_CREATED = "SEQUENCES_CREATED";
         public static final int PICTURES_TAKEN_ID = 2;
         public static final String PICTURES_TAKEN = "PICTURES TAKEN";
+        public static final int OPEN_TIME_ID = 3;
+        public static final String OPEN_TIME = "OPEN_TIME";
     }
 }

@@ -47,6 +47,7 @@ public class MiiskinActivity extends AppCompatActivity {
         mTracker.send(new HitBuilders.TimingBuilder()
                 .setCategory(AnalyticsNames.TimingsCategory.USER_ENGAGEMENT)
                 .setVariable(AnalyticsNames.TimingsNames.OPEN_TIME)
+                .setCustomMetric(AnalyticsNames.CustomMetrics.OPEN_TIME_ID, timeInAppInSeconds)
                 .setValue(timeInAppInSeconds)
                 .build());
 

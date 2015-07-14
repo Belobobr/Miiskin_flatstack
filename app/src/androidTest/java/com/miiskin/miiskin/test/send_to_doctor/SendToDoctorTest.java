@@ -42,8 +42,6 @@ public class SendToDoctorTest extends ActivityInstrumentationTestCase2<HomeActiv
 
         PagerContainer pagerContainer = (PagerContainer)solo.getView(R.id.pager_container);
 
-        int photoCountBeforeTakeNewPhoto = pagerContainer.getViewPager().getChildCount();
-
         solo.clickOnView(solo.getView(R.id.fab));
 
         solo.clickOnView(solo.getView(R.id.sendDoctor));

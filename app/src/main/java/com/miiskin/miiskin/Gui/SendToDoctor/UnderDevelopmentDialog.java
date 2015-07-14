@@ -14,7 +14,7 @@ import com.miiskin.miiskin.R;
  */
 public class UnderDevelopmentDialog extends DialogFragment {
 
-    public final static String TAG = "FTE_CAMERA_TIP_DIALOG";
+    public final static String TAG = "UNDER_DEVELOPMENT_DIALOG";
 
     public interface UnderDevelopmentDialogListener {
         public void onDialogPositiveClick(DialogFragment dialog);

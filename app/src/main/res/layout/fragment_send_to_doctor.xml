@@ -121,7 +121,8 @@
             android:id="@+id/licence_agreement_check_box"
             android:tint="@color/purple"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:checked="false"/>
 
         <TextView
             android:layout_gravity="center_vertical"
